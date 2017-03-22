@@ -1,0 +1,66 @@
+﻿body {
+    padding-top: 50px;
+    background-color:black;
+   
+    
+}
+
+/* Set padding to keep content from hitting the edges */
+.body-content {
+     
+    
+}
+
+.body-cont{
+    background-color:white;
+    padding-left:0px;
+    padding-right:0px;
+    
+}
+/* Override the default bootstrap behavior where horizontal description lists 
+   will truncate terms that are too long to fit in the left column 
+*/
+.dl-horizontal dt {
+    white-space: normal;
+}
+
+/* Set width on the form input elements since they're 100% wide by default */
+input,
+select,
+textarea {
+    max-width: 280px;
+}
+.emboss {
+    box-shadow: 0 -30px 50px #777 inset;
+    border: 15px solid #bbb;
+}
+
+#bar{
+    color:white;
+    background-color:cornflowerblue;
+    
+   
+}
+#bar:hover{
+    color:cornflowerblue ;
+    background-color:white;
+}
+
+#login{
+    background-image:url('../image/login.jpg');
+    height:350px;
+}
+
+#login-form{
+    background-color:white;
+    border-radius:4px 4px;
+    opacity:0.9;
+    margin-top:50px;
+}
+
+#login-form:hover{
+    background-color:white;
+    
+    opacity:1;
+   
+}

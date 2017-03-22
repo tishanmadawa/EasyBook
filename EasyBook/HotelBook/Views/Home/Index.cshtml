@@ -1,0 +1,61 @@
+﻿@{
+    Layout = "~/Views/Shared/_Header.cshtml";
+}
+
+@{
+    ViewBag.Title = "Index";
+}
+
+    <div class="row">
+        <div class="col-md-12" style="height:450px;overflow:hidden;">
+
+            <img style="width:100%;" src="~/image/67567053-hotel-wallpapers.jpg" />
+
+        </div>
+
+    </div>
+<div class="row">
+
+    <div class="col-md-12" style="background-color:#1A5276;height:150px;overflow:hidden">
+        <div class="col-md-12" style="height:50px;overflow:hidden;">
+
+            
+
+        </div>
+        @using (Html.BeginForm("Search", "Home", FormMethod.Post, new { @class = "form-inline", role = "form", style = "color:white;" }))
+        {
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label>Name:</label>
+                    @Html.TextBox("searchstring", "", new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="col-md-1">
+                    <div class="form-group">
+                        <label style="margin-top:5px;">Or</label>
+                </div>
+                </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label>City:</label>
+                    @Html.TextBox("searchstring1", "", new { @class = "form-control" })
+
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label>Date:</label>
+                    @Html.TextBox("searchstring2", "", new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="col-md-2">
+
+                <button type="submit" class="btn btn-default">Search</button>
+            </div>
+                            
+                                }
+
+
+                            </div>
+
+</div>

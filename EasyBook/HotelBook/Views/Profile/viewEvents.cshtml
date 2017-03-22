@@ -1,0 +1,87 @@
+﻿@{
+    Layout = "~/Views/Profile/Index.cshtml";
+}
+@using HotelBook.Models;
+@model customerProfile
+<div class="col-md-12">
+    <div class="col-md-9" style="height:50px;"></div>
+    @if (Session["Email"].ToString() == Model.customer.email)
+    {
+        <div class="col-md-4" style="height:50px;"></div>
+        <div class="col-md-3" style="height:50px;">
+            <a href="@Url.Action("events", "Profile", new { email = Model.customer.email })"><button class="btn btn-primary">Add New Events</button></a>
+        </div>
+    }
+    <div class="col-md-1"></div>
+        <div class="col-md-11">
+           
+                @foreach (var events in Model.allEvents)
+                {
+                    <div class="panel panel-primary">
+                        <div class="panel panel-heading" style="height:50px;">
+                           
+
+                                <div class="col-md-4 "><p>Date</p></div>
+                                <div class="col-md-8"><p>@events.date.Year/@events.date.Month/@events.date.Day</p></div>
+                            @if (Session["Email"] != null)
+                            {
+                                if (Session["Email"].ToString() == Model.customer.email)
+                                {
+                                    <div class="dropdown" style="float:right;margin-right:10%;margin-top:-23px;">
+                                        <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
+
+                                            <span class="caret"></span>
+                                        </button>
+                                        <ul class="dropdown-menu">
+                                            <li>
+                                                @Html.ActionLink("delete", "deleteEvents", "Profile", new
+                                  {                                                     // routeValues
+                                      blogPostId = @events.id,
+                                      customerprofile = @events.user
+
+                                  },
+null)
+                                        </li>
+
+                                    </ul>
+                                </div>}
+                            }
+                           
+                        </div>
+                        <div class="panel panel-body">
+                            
+                                <div class="col-md-4"><p>No of Event Days</p></div>
+                                <div class="col-md-8"><p>@events.noDates</p></div>
+
+                           
+                                <div class="col-md-4"><p>Event Start Time</p></div>
+                                <div class="col-md-8"><p>@events.startTime</p></div>
+
+                           
+                                <div class="col-md-4"><p>Event End Time</p></div>
+                                <div class="col-md-8"><p>@events.endTime</p></div>
+
+                            
+                                <div class="col-md-4"><p>Accomadation</p></div>
+                                <div class="col-md-8"><p>@events.accomadation</p></div>
+
+                           
+                                <div class="col-md-4"><p> Location</p></div>
+                                <div class="col-md-8"><p>@events.location</p></div>
+
+                            
+                                <div class="col-md-4"><p>Event For</p></div>
+                                <div class="col-md-8"><p>@events.meant</p></div>
+
+                            
+                                <div class="col-md-4"><p>Description</p></div>
+                                <div class="col-md-8"><p>@events.description</p></div>
+
+                            
+                        </div>
+                    </div>
+
+                }
+           
+        </div>
+    </div>

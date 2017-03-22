@@ -1,0 +1,164 @@
+﻿@{
+    Layout = "~/Views/Shared/_Header.cshtml";
+}
+@{
+    ViewBag.Title = "Index";
+}
+@using HotelBook.Models;
+@model customerProfile
+
+<link href="@Url.Content("~/Styles/Site.css")" rel="stylesheet" />
+<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false">
+</script>
+
+<script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB7khgNytj9WTAk1r8lleyjES1S2ruAMHU&callback=initMap">
+</script>
+
+<script type="text/javascript">
+    //6.9020268,79.8619555
+var map;
+    function initialize() {
+        var latlng = new google.maps.LatLng(6.9020268, 79.8619555);
+        var myOptions = {
+            zoom: 14,
+            center: latlng,
+            mapTypeId: google.maps.MapTypeId.ROADMAP
+        };
+        map = new google.maps.Map(document.getElementById("map"), myOptions);
+        var marker = new google.maps.Marker
+        (
+            {
+                position: new google.maps.LatLng(6.9020268, 79.8619555),
+                map: map,
+                title: 'Click me'
+            }
+        );
+        var infowindow = new google.maps.InfoWindow({
+            content: 'Location info:<br/>Country Name:<br/>LatLng:'
+        });
+        google.maps.event.addListener(marker, 'click', function () {
+            // Calling the open method of the infoWindow 
+            infowindow.open(map, marker);
+        });
+    }
+    window.onload = initialize;
+
+</script>
+
+<div class="body-cont" style="background-color:white;" >
+
+
+    <div class="col-md-3" id="map" style="height:350px;overflow:hidden;border-right:2px solid black;background-color:gray;">
+    </div>
+
+
+    <div class="col-md-9" style="height:350px;overflow:hidden;border:2px solid black; ">
+
+        <div id="d1" style="">
+            <img style="width:110%;margin-left:-15px;" src="~/image/@Html.DisplayFor(m=>m.customer.image)" />
+
+
+        </div>
+
+    </div>
+
+
+
+
+    @*@if (@Session["Email"] != null)
+        {
+
+            <script type="text/javascript">
+
+                    $(function () {
+
+                        $("#d1").draggable();
+
+                    });</script>
+                    using (Html.BeginForm("cover", "Profile", FormMethod.Post, new { @class = "form-horizontal", enctype = "multipart/form-data" }))
+                    {
+                        @Html.AntiForgeryToken()
+                        @Html.TextBox("File", "", new { id = "blah", type = "file", @class = "glyphicon glyphicon-open", style = "float:right" })
+                        @Html.HiddenFor(m => m.email, Session["Email"]);
+                <input type="submit" value="Submit" class="btn btn-primary" />
+
+            }
+
+        }*@
+
+    <div class="col-md-3" style="height:400px;overflow:hidden;border-right:2px solid black;background-color:grey;color:white;">
+        <h3>Search Panel</h3>
+    </div>
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <link href="@Url.Content("~/Styles/boostrap.min.css")" rel="stylesheet" />
+    <link href="@Url.Content("~/Styles/Site.css")" rel="stylesheet" />
+    <div class="col-md-9 body-content" style="height:70px;background-color:cornflowerblue;">
+
+
+
+        <a href="@Url.Action("post","Profile", new { email = Model.customer.email })">
+            <div class="col-md-2" style="height:70px;" id="bar">
+                <p></p>
+                <span style="font-size:35px; margin-left:30%;" class="glyphicon glyphicon-home"></span>
+                <p style="margin-left:30%;">Profile</p>
+
+            </div>
+        </a>
+        <a href="@Url.Action("photo","Profile", new { email = Model.customer.email })">
+            <div class="col-md-2" style="height:70px;" id="bar">
+                <p></p>
+                <span style="font-size:35px; margin-left:30%;" class="glyphicon glyphicon-picture"></span>
+                <p style="margin-left:28%;">Photos</p>
+
+            </div>
+        </a>
+        <a href="@Url.Action("photo","Profile", new { email = Model.customer.email })">
+            <div class="col-md-2" style="height:70px;" id="bar">
+                <p></p>
+                <span style="font-size:35px; margin-left:30%;" class="glyphicon glyphicon-shopping-cart"></span>
+                <p style="margin-left:28%;">Packages</p>
+
+            </div>
+        </a>
+        <a href="@Url.Action("viewEvents","Profile", new { email = Model.customer.email })">
+            <div class="col-md-2" style="height:70px;" id="bar">
+                <p></p>
+                <span style="font-size:35px; margin-left:30%;" class="glyphicon glyphicon-music"></span>
+                <p style="margin-left:28%;">Events</p>
+
+            </div>
+        </a>
+   
+
+    @if (Session["Email"] != null)
+    {
+        if (Session["Email"].ToString() == Model.customer.email)
+        {
+    <a href="@Url.Action("viewEvents", "Profile", new { email = Model.customer.email })">
+        <div class="col-md-2" style="height:70px;" id="bar">
+            <p></p>
+            <span style="font-size:35px; margin-left:30%;" class="glyphicon glyphicon-cog"></span>
+            <p style="margin-left:28%;">Setting</p>
+
+        </div>
+    </a>
+        }
+        else
+        {
+            <a href="@Url.Action("viewEvents", "Profile", new { email = Model.customer.email })">
+                <div class="col-md-2" style="height:70px;" id="bar">
+                    <p></p>
+                    <span style="font-size:35px; margin-left:30%;" class="glyphicon glyphicon-music"></span>
+                    <p style="margin-left:28%;">Events</p>
+
+                </div>
+            </a>
+        }
+    }
+</div>
+<div class="col-md-9">
+    @RenderBody()
+    @RenderSection("scripts", required: false)
+    </div>
+</div>

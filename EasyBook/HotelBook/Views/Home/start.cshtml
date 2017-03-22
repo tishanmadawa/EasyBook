@@ -1,0 +1,159 @@
+﻿@{
+    Layout = "~/Views/Shared/_Header.cshtml";
+}
+<style type="text/css">
+
+
+.view {
+    width:100%;
+    height: 100%;
+    margin: 5px;
+    float: left;
+    border: 10px solid lightgray;
+    overflow: hidden;
+    position: relative;
+    text-align: center;
+    box-shadow: 1px 1px 2px #e6e6e6;
+    cursor: default;
+    background: black  no-repeat center center;
+    opacity:0.8;
+}
+.view .mask, .view .content {
+    margin-top:50px;
+    width: 100%;
+    height: 150px;
+    position: absolute;
+    overflow: hidden;
+    top: 0;
+    left: 0
+}
+.view img {
+    display: block;
+    position: relative;
+    opacity:0.9;
+}
+.view h2 {
+    text-transform: uppercase;
+    color: white;
+    text-align: center;
+    position: relative;
+    font-size: 17px;
+    padding: 10px;
+    background: rgba(0, 0, 0, 0.8);
+    margin: 20px 0 0 0
+}
+.view p {
+    font-family: Georgia, serif;
+    font-style: italic;
+    font-size: 12px;
+    position: relative;
+    color: white;
+    padding: 10px 20px 20px;
+    text-align: center
+}
+.view a.info {
+    display: inline-block;
+    text-decoration: none;
+    padding: 7px 14px;
+    background: #000;
+    color: white;
+    text-transform: uppercase;
+    box-shadow: 0 0 1px #000
+}
+.view a.info:hover {
+    box-shadow: 0 0 5px #000
+}
+.view-tenth img { 
+	transform: scaleY(1);
+	transition: all 0.7s ease-in-out;
+}
+.view-tenth .mask { 
+    background-color: black; 
+    transition: all 0.5s linear;
+    opacity: 0;
+}	
+.view-tenth h2{
+    border-bottom: 1px solid rgba(0, 0, 0, 0.3);
+    background: transparent;
+    margin: 20px 40px 0px 40px;
+    transform: scale(0);
+    color: white;
+    transition: all 0.5s linear;
+    opacity: 0;
+}
+.view-tenth p {
+    color: white;
+    opacity: 0;
+    transform: scale(0);
+    transition: all 0.5s linear;
+}
+.view-tenth a.info { 
+    opacity: 0;
+    transform: scale(0);
+    transition: all 0.5s linear;
+}
+.view-tenth:hover img { 
+	transform: scale(10);
+    opacity: 0;
+}
+.view-tenth:hover .mask { 
+	opacity: 1;
+}																			 
+.view-tenth:hover h2,
+.view-tenth:hover p,
+.view-tenth:hover a.info{ 
+    transform: scale(1);
+    opacity: 1;
+}
+    </style>
+<div class="row">
+    <div class="col-md-12" style="height:450px;overflow:hidden;">
+
+        <img style="margin-left:-15px;margin-top:-200px;width:110%;position:absolute"src="~/image/simple-house-decorating-stunning-guest-bedroom-ideas-decorating-best-living-room-simple-decorating-ideas.jpg" />
+        <div style="height:75px;;" class="col-md-12"></div>
+        <div style="height:300px;" class="col-md-1"></div>
+        <div style="height:300px;" class="col-md-4 box">
+            <a href="@Url.Action("Index", "Home")" class="elements">
+                <div style="width:100%;height:100%;">
+                    <div class="view view-tenth">
+                        <img style="margin-top:50px;"width="100%" height="150px" src="~/image/hotel.jpg"  />
+
+                        <div class="mask mask-1"></div>
+                        <div class="mask mask-2"></div>
+                        <div class="content">
+                            <h2>Booking Your Hotel Room </h2>
+                            <p>Click Here</p>
+                            
+                        </div>
+                    </div>
+                </div>
+            </a>
+
+        </div>
+        <div style="height:300px;" class="col-md-2"></div>
+        <div style="height:300px;overflow:hidden" class="col-md-4 ">
+            <a href="@Url.Action("Index", "Home")" class="elements">
+                <div style="width:100%;height:100%;">
+                    <div class="view view-tenth">
+                        <img style="margin-top:50px;" width="100%" height="150px" src="~/image/rent.jpg" />
+
+                        <div class="mask mask-1"></div>
+                        <div class="mask mask-2"></div>
+                        <div class="content">
+                            <h2>Rent House or Annex</h2>
+                            <p>Click Here</p>
+
+                        </div>
+                    </div>
+                </div>
+            </a>
+            
+
+        </div>
+       
+    </div>
+
+
+</div>
+
+

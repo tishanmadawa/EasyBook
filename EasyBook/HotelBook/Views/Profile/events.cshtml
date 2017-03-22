@@ -1,0 +1,125 @@
+﻿@{
+    Layout = "~/Views/Profile/Index.cshtml";
+}
+@using HotelBook.Models;
+@model customerProfile
+
+<script>
+    function validateForm() {
+        var now = new Date();
+
+        var old = new Date($('#dateofEvent').val());
+       
+        if (old < now) {
+            
+            document.getElementById("dateof").innerHTML = "Enter Valid Date";
+            return false;
+        };
+       
+        
+    }
+</script>
+<div class="col-md-12">
+    <div class="col-md-12" style="height:50px;"></div>
+@using(Html.BeginForm("events","Profile", FormMethod.Post, new { name="eventForm", @class = "form-horizontal", role = "form" , onsubmit ="return validateForm()" }))
+{
+    <div class="col-md-12" style="height:50px;background-color:lightgray;"><h3 style="margin-left:40%"> Add Event</h3></div>
+    <div class="col-md-12" style="height:20px;"></div>
+    <div class="col-md-1"></div>
+    <div class="col-md-11">
+        <div class="col-md-3">
+            <p>Date </p>
+        </div>
+        <div class="col-md-6">
+            <p>@Html.TextBoxFor(m => m.events.date, new { id="dateofEvent",type="Date",@style = "max-width:500px;min-width:300px;", @class = "form-control", Required = "true" })</p>
+        </div>
+        <div class="col-md-3" style="height:50px;">
+            <p style="color:red;" id="dateof"></p>
+        </div>
+        <div class="col-md-3">
+            <p>No. of Event Days </p>
+        </div>
+        <div class="col-md-6">
+            <p>@Html.TextBoxFor(m => m.events.noDates, new { id= "noDateInput", type = "number", @style = "max-width:500px;min-width:300px;", @class = "form-control", Required = "true" })</p>
+        </div>
+        <div class="col-md-3" style="height:50px;">
+            <p style="color:red;" id="noDate"></p>
+        </div>
+        <div class="col-md-3">
+            <p>Event Start Time</p>
+        </div>
+        <div class="col-md-6">
+            <p>@Html.TextBoxFor(m => m.events.startTime, new { id="startTimeInput",type = "time", @style = "max-width:500px;min-width:300px;", @class = "form-control", Required = "true" })</p>
+        </div>
+        <div class="col-md-3" style="height:50px;">
+            <p style="color:red;" id="dateof"></p>
+        </div>
+        <div class="col-md-3">
+            <p>Event End Time</p>
+        </div>
+        <div class="col-md-6">
+            <p>@Html.TextBoxFor(m => m.events.endTime, new { type = "time", @style = "max-width:500px;min-width:300px;", @class = "form-control", Required = "true" })</p>
+        </div>
+        <div class="col-md-3" style="height:50px;">
+            <p style="color:red;" id="dateof"></p>
+        </div>
+        <div class="col-md-3">
+            <p>Event meant for</p>
+        </div>
+        <div class="col-md-6">
+            <p>@Html.DropDownListFor(m => m.events.meant, new List<SelectListItem> {
+                       new SelectListItem { Value = "Adult" , Text = "Adult" },
+                       new SelectListItem { Value = "Children" , Text = "Children" },
+                       new SelectListItem { Value = "Adult & Children" , Text = "Adult & Children" },
+                        new SelectListItem { Value = "Senior citizen" , Text = "Senior citizen" },
+                       new SelectListItem { Value = "All" , Text = "All" }
+                    }, new { @style = "max-width:500px;min-width:300px;", @class = "form-control", Required = "true" })
+</p>
+        </div>
+        <div class="col-md-3" style="height:50px;">
+            <p style="color:red;" id="dateof"></p>
+        </div>
+        <div class="col-md-3">
+            <p>Need Accomadation</p>
+        </div>
+        <div class="col-md-6">
+            <p>
+                @Html.DropDownListFor(m => m.events.accomadation, new List<SelectListItem> {
+                       new SelectListItem { Value = "YES" , Text = "YES" },
+                       new SelectListItem { Value = "NO" , Text = "NO" }
+                    }, new { @style = "max-width:500px;min-width:300px;", @class = "form-control", Required = "true" })
+        </p>
+    </div>
+        <div class="col-md-3" style="height:50px;">
+            <p style="color:red;" id="dateof"></p>
+        </div>
+        <div class="col-md-3">
+            <p>Event Location</p>
+        </div>
+        <div class="col-md-6">
+            <p>@Html.TextBoxFor(m => m.events.location, new {  @style = "max-width:500px;min-width:300px;", @class = "form-control", Required = "true" })</p>
+        </div>
+        <div class="col-md-3" style="height:50px;">
+            <p style="color:red;" id="dateof"></p>
+        </div>
+        <div class="col-md-3">
+            <p>Event Description</p>
+        </div>
+        <div class="col-md-6">
+            <p>@Html.TextAreaFor(m => m.events.description, new { @style = "max-width:500px;min-width:300px;", @class = "form-control", Required = "true" })</p>
+        </div>
+        <div class="col-md-3" style="height:50px;">
+            <p style="color:red;" id="dateof"></p>
+        </div>
+        <div class="col-md-8" style="height:50px;">
+           
+        </div>
+        <div class="col-md-3">
+            <input class="btn btn-primary" type="submit" name="Submit" value="Submit" />
+        </div>
+
+
+        </div>
+        }
+    <div class="col-md-12" style="height:20px;"></div>
+    </div>

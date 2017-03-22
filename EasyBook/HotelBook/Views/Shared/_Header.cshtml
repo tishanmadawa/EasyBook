@@ -1,0 +1,72 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title = EasyBook</title>
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+
+    <link href="@Url.Content("~/Styles/boostrap.css")" rel="stylesheet" />
+    <link href="@Url.Content("~/Styles/Site.css")" rel="stylesheet" />
+    <script src="@Url.Content("~/Script/modernizr-2.6.2.js")" language="javascript" type="text/javascript"></script>
+    <script src="https://code.jquery.com/jquery-1.12.4.js" language="javascript" type="text/javascript"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js" language="javascript" type="text/javascript"></script>
+
+
+</head>
+<body >
+    <div class="col-md-12 navbar navbar-inverse navbar-fixed-top" style="height:50px;">
+        <div class="container">
+            
+                
+            
+                <ul class="nav navbar-nav navbar-right" style="margin-right:10px;" >
+                    @if(@Session["Email"]==null){
+                    <li>@Html.ActionLink("LogIn", "Index", "Login")</li>
+                    <li>@Html.ActionLink("SignUp", "Signup", "Login")</li>
+                    }else{
+
+                    <li><p class = "navbar-brand" style="font-size:12px;">Logged In as @Session["Email"]</p></li>
+                    <li>@Html.ActionLink("LogOut", "LogOut", "Login")</li>
+                    }
+
+                </ul>
+                </div>
+        </div>
+    <div class="col-md-12 navbar-inverse navbar-top" style="height:100px;padding-top:5px;">
+        <div  align="center">
+
+            <p align="center" style="color:yellow"><span class="glyphicon glyphicon-star"></span>   <span class="glyphicon glyphicon-star"></span>   <span class="glyphicon glyphicon-star"></span>   <span class="glyphicon glyphicon-star"></span>   <span class="glyphicon glyphicon-star"></span>   </p>
+            @Html.ActionLink("EasyBook", "start", "Home", "", new { align = "center", style = "font-size:24px;color:white;" })
+
+            <hr style="border:1px solid yellow" />
+
+        </div>
+
+
+    </div>
+    <div class="col-lg-12 " style="padding-left:20px;padding-right:20px;">
+      
+    <div class="col-lg-12 body-cont" style="">
+        @RenderBody()
+    @RenderSection("scripts", required: false)
+</div>
+        </div>
+
+<div style="color:white;">
+
+    <hr />
+    <footer>
+        <p>&copy; @DateTime.Now.Year - EasyBook</p>
+    </footer>
+</div>
+<script src="@Url.Content("~/Scripts/jquery.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/bootstrap.js")" type="text/javascript"></script>
+
+<script src="@Url.Content("~/Script/jquery.js")" language="javascript" type="text/javascript"></script>
+<script src="@Url.Content("~/Script/boostrap.js")" language="javascript" type="text/javascript"></script>
+
+
+
+</body>
+</html>
