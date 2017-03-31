@@ -133,7 +133,7 @@ namespace HotelBook.Controllers
             return View( customer);
         }
         [HttpPost]
-        public ActionResult settings(Customer customer)
+        public void upsettings(Customer customer)
         {
             string ss = Session["email"].ToString();
             string base64 = Request.Form["imgCropped"];
@@ -146,7 +146,7 @@ namespace HotelBook.Controllers
             customer.image = customer.ProfileName + ".jpg";
             HotelDBContext hotelDb = new HotelDBContext();
             hotelDb.upsetting(customer, ss);
-            return View("~/Views/Profile/settings.cshtml");
+           
         }
         [HttpPost]
         public ActionResult addAlbum(IEnumerable<HttpPostedFileBase> fileupload, customerProfile customerpro)
