@@ -1,0 +1,101 @@
+﻿
+@{
+    ViewBag.Title = "AddPackage";
+    Layout = "~/Views/Shared/_Header.cshtml";
+}
+@using HotelBook.Models
+@model Package
+<div class="row">
+    <div class="col-md-2">
+
+        <p>
+
+        </p>
+    </div>
+    <div class="col-md-8">
+        <h3>Add New Packages</h3>
+        
+            <div>
+                <section id="loginForm">
+                    @using (Html.BeginForm("addPackage", "Home", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                    {
+                        @Html.AntiForgeryToken()
+
+                        <div>
+                            <div class="col-md-8">
+
+                                <h3 style="margin-left:40%;">Packages</h3>
+                                <h4>Please enter the Correct information</h4>
+                            </div>
+                            <div class="form-group">
+                               
+                                <div class="col-md-5">
+                                    @Html.Label("Package Name", new { @class = "col-md-6" })
+
+                                </div>
+                                <div class="col-md-6">
+                                    @Html.TextBoxFor(m=>m.name, new { @class = "form-control" })
+
+                                </div>
+                            </div>
+
+
+                            <div class="form-group">
+                                <div class="col-md-5">
+                                    @Html.Label("Price   ", new { @class = "col-md-6 " })
+                                </div><div class="col-md-6">
+                                    @Html.TextBoxFor(m=>m.price, new { @class = "form-control" })
+                                </div>
+
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-5">
+                                    @Html.Label("Description  ", new { @class = "col-md-6 " })
+                                </div><div class="col-md-6">
+                                    @Html.TextAreaFor(m=>m.description, new { @class = "form-control" })
+                                </div>
+
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-5">
+                                    @Html.Label("Type  ", new { @class = "col-md-6 " })
+                                </div><div class="col-md-6">
+                                    @Html.TextBoxFor(m=>m.type, new { @class = "form-control" })
+                                </div>
+
+                            </div>
+							<div class="form-group">
+                                <div class="col-md-5">
+                                    @Html.Label("Available Number  ", new { @class = "col-md-6 " })
+                                </div><div class="col-md-6">
+                                    @Html.TextBoxFor(m=>m.availableNo, new { @class = "form-control" })
+                                </div>
+
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-5">
+
+
+                                </div>
+                                <div class="col-md-2">
+                                    <input type="submit" value="Save" class="btn btn-primary" />
+                                </div>
+                            </div>
+                        </div>
+                    }
+</section>
+
+</div>
+        </div>
+    
+    <div class="col-md-4">
+        <section id="socialLoginForm">
+            
+        </section>
+    </div>
+
+</div>
+
+
+
+

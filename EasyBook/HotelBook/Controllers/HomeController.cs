@@ -26,7 +26,26 @@ namespace HotelBook.Controllers
 
             return View();
         }
+        [HttpPost]
+        public ActionResult Search(string searchstring, string searchstring1)
+        {
+            HotelDBContext hotelDb = new HotelDBContext();
+            String name = "Null";
+            String city = "Null";
+            if (!String.IsNullOrEmpty(searchstring))
+            {
+                name = searchstring;
+            }
+            if (!String.IsNullOrEmpty(searchstring1))
+            {
+                city = searchstring1;
+            }
+            List<Customer> range = hotelDb.searchCustomer(name, city);
 
+            return View("~/Views/Home/SearchView.cshtml", range);
+        }
+        [HttpGet]
         
+
     }
 }

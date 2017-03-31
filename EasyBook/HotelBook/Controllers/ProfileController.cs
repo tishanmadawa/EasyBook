@@ -247,6 +247,49 @@ namespace HotelBook.Controllers
             
             return View(customer);
         }
+        public ActionResult Package()
+        {
+            HotelDBContext hotelDb = new HotelDBContext();
+            List<Package> range = hotelDb.Viewpackage();
+            return View(range);
+        }
+        [HttpGet]
+        public ActionResult AddPackage()
+        {
+            return View();
+        }
+        [HttpPost]
+        public ActionResult AddPackage(Package pack)
+        {
+            HotelDBContext hotelDb = new HotelDBContext();
+            hotelDb.InsertPack(pack);
+            return View("~/Views/Profile/Package.cshtml");
+        }
+        [HttpGet]
+        public ActionResult EditPackage(int id)
+        {
+            HotelDBContext hotelDb = new HotelDBContext();
+            Package pack = hotelDb.PackView(id);
+            Debug.WriteLine("aaaaa" + pack.id);
+            pack.id = id;
+            return View(pack);
+        }
+
+        [HttpPost]
+        public ActionResult EditPack(Package pac)
+        {
+            Debug.WriteLine(pac.id);
+            HotelDBContext hotelDb = new HotelDBContext();
+            hotelDb.EditPack(pac);
+
+            return View("~/Views/Profile/Package.cshtml");
+        }
+        public ActionResult DeletePackage(int id)
+        {
+            HotelDBContext hotelDb = new HotelDBContext();
+            hotelDb.DeletePackage(id);
+            return View("~/Views/Profile/Package.cshtml");
+        }
 
     }
 }
