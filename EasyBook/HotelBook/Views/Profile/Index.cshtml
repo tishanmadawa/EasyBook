@@ -1,9 +1,7 @@
 ﻿@{
     Layout = "~/Views/Shared/_Header.cshtml";
 }
-@{
-    ViewBag.Title = "Index";
-}
+
 @using HotelBook.Models;
 @model customerProfile
 
@@ -135,7 +133,7 @@ var map;
     {
         if (Session["Email"].ToString() == Model.customer.email)
         {
-    <a href="@Url.Action("viewEvents", "Profile", new { email = Model.customer.email })">
+    <a href="@Url.Action("settings", "Profile", new { email = Model.customer.email })">
         <div class="col-md-2" style="height:70px;" id="bar">
             <p></p>
             <span style="font-size:35px; margin-left:30%;" class="glyphicon glyphicon-cog"></span>

@@ -124,7 +124,30 @@ namespace HotelBook.Controllers
             customer.customer = cus;
             return View("~/Views/Profile/photo.cshtml", customer);
         }
-
+        [HttpGet]
+        public ActionResult settings(customerProfile customer, string email)
+        {
+            HotelDBContext hotel = new HotelDBContext();
+            Customer cus = hotel.Search(email);
+            customer.customer = cus;
+            return View( customer);
+        }
+        [HttpPost]
+        public ActionResult settings(Customer customer)
+        {
+            string ss = Session["email"].ToString();
+            string base64 = Request.Form["imgCropped"];
+            byte[] bytes = Convert.FromBase64String(base64.Split(',')[1]);
+            using (FileStream stream = new FileStream(Server.MapPath("~/image/" + customer.ProfileName + ".jpg"), FileMode.Create))
+            {
+                stream.Write(bytes, 0, bytes.Length);
+                stream.Flush();
+            }
+            customer.image = customer.ProfileName + ".jpg";
+            HotelDBContext hotelDb = new HotelDBContext();
+            hotelDb.upsetting(customer, ss);
+            return View("~/Views/Profile/settings.cshtml");
+        }
         [HttpPost]
         public ActionResult addAlbum(IEnumerable<HttpPostedFileBase> fileupload, customerProfile customerpro)
         {

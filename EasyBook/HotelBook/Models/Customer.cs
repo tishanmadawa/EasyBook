@@ -21,8 +21,8 @@ namespace HotelBook.Models
         public string cPassword { get; set; }
         public int attempt { get; set; }
         public string image { get; set; }
-
-
+        public string rating { get; set; }
+        public string ProfileName { get; set; }
     }
 
     public class events
@@ -91,6 +91,13 @@ namespace HotelBook.Models
                         customer.email = Convert.ToString(dt.Rows[0]["Email"]);
                         customer.attempt = Convert.ToInt32(dt.Rows[0]["Attempt"]);
                         customer.image = Convert.ToString(dt.Rows[0]["Image"]);
+                        customer.address = Convert.ToString(dt.Rows[0]["Address"]);
+                        customer.ProfileName= Convert.ToString(dt.Rows[0]["ProfileName"]);
+                        customer.rating= Convert.ToString(dt.Rows[0]["Rating"]);
+                        customer.state= Convert.ToString(dt.Rows[0]["State"]);
+                        customer.city= Convert.ToString(dt.Rows[0]["City"]);
+
+
                         return customer;
                     }else
                     {
@@ -258,6 +265,30 @@ namespace HotelBook.Models
                 }
             }
         }
+        public void upsetting(Customer customer, string ee)
+        {
+            Debug.WriteLine(ee);
+            string constr = ConfigurationManager.ConnectionStrings["HotelDBContext"].ConnectionString;
+            using (SqlConnection con = new SqlConnection(constr))
+            {
+
+                using (SqlCommand cmd = new SqlCommand("UPDATE Customer SET ProfileName=@proname,Rating=@rating,City=@city,State=@state,Address=@address,Image=@image WHERE Email=@ee"))
+                {
+                    cmd.Parameters.AddWithValue("@ee", ee);
+                    cmd.Parameters.AddWithValue("@proname", customer.ProfileName);
+                    cmd.Parameters.AddWithValue("@rating", customer.rating);
+                    cmd.Parameters.AddWithValue("@city", customer.city);
+                    cmd.Parameters.AddWithValue("@state", customer.state);
+                    cmd.Parameters.AddWithValue("@address", customer.address);
+                    cmd.Parameters.AddWithValue("@image", customer.image);
+                    cmd.Connection = con;
+                    con.Open();
+                    cmd.ExecuteNonQuery();
+                    con.Close();
+                }
+            }
+        }
+
     }
     public class Post
     {
@@ -365,5 +396,6 @@ namespace HotelBook.Models
         public events events { get; set; }
         public List<events> allEvents { get; set; }
     }
+   
 
 }

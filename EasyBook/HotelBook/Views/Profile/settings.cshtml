@@ -1,0 +1,213 @@
+﻿@{
+    Layout = "~/Views/Profile/Index.cshtml";
+}
+
+@using HotelBook.Models
+@model customerProfile
+<!DOCTYPE html>
+
+
+    <meta name="viewport" content="width=device-width" />
+    <title>viewSetting</title>
+   <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+<script type="text/javascript" src="http://cdn.rawgit.com/tapmodo/Jcrop/master/js/jquery.Jcrop.min.js"></script>
+<script type="text/javascript" src="http://cdn.rawgit.com/tapmodo/Jcrop/master/js/jquery.Jcrop.js"></script>
+
+<script type="text/javascript">
+        var size;
+        $(window).load(function () {
+    $('#FileUpload1').change(function () {
+        var t;
+
+        $('#Image1').hide();
+        var reader = new FileReader();
+        reader.onload = function (e) {
+            var d = $('#Image1');
+            $('#Image1').show();
+
+            $('#Image2').hide();
+
+
+            $('#Image1').attr("src", e.target.result);
+            $('#Image2').attr("src", e.target.result);
+            $('#Image1').height(500);
+            size = $('#Image2').height();
+            t = $.Jcrop($('#Image1'),{
+                onSelect: SetCoordinates,
+                onChange: SetCoordinates
+            });
+         t.setOptions({ aspectRatio: 2 / 1 });
+        t.setOptions({
+                minSize: [750, 250],
+                maxSize: [750, 350]
+            });
+          t.setSelect([140, 180, 160, 180]);
+
+        }
+        reader.readAsDataURL($(this)[0].files[0]);
+    });
+
+    $('#btnCrop').click(function () {
+        var x1 = $('#imgX1').val();
+        var y1 = $('#imgY1').val();
+        var width = $('#imgWidth').val();
+        var height = $('#imgHeight').val();
+        var canvas = $("#canvas")[0];
+        $("#canvas").hide();
+        var context = canvas.getContext('2d');
+        var img = new Image();
+        img.onload = function () {
+
+            canvas.height = height;
+            canvas.width = width;
+            context.drawImage(img, x1, y1, width, height, 0, 0, width, height);
+            $('#imgCropped').val(canvas.toDataURL());
+            //$('[id*=btnUpload]').show();/
+        };
+        img.src = $('#Image1').attr("src");
+    });
+});
+        function SetCoordinates(c) {
+
+    $('#imgX1').val((c.x)*(size/500));
+    $('#imgY1').val((c.y) * (size / 500));
+    $('#imgWidth').val((c.w) * (size / 500));
+    $('#imgHeight').val((c.h) * (size / 500));
+    $('#btnCrop').show();
+};
+</script>
+
+    <div class="row">
+        <div class="col-md-2">
+        </div>
+        <div class="col-md-8">
+          
+
+
+
+            <div>
+                <section id="loginForm">
+
+                    @using (Html.BeginForm("settings", "Profile", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                    {
+                        @Html.AntiForgeryToken()
+                        <div>
+                            <div class="col-md-8" style="height:50px;">
+
+                                <h3 style="margin-left:40%;">Update Your Info</h3>
+
+                            </div>
+                            <div class="col-md-12" style="height:50px;">
+                            </div>
+
+
+                            <div class="form-group">
+                                <div class="col-md-6" style="height:50px;">
+                                    @Html.Label("Profile Picture", new { @class = "col-md-6" })
+                                </div>
+                                <div class="col-md-6" style="height:100px;width:100px;border-style:solid; border-color:black; border-width:3px;">
+                                    <img src="~/image/@Html.DisplayFor(model=>model.customer.image)" style="width:100px; height:100px" />
+                                </div>
+                                <div class="col-md-12" style="height:50px;">
+                                </div>
+
+                                <div class="col-md-5" style="height:50px;">
+                                    @Html.Label("Profile Name", new { @class = "col-md-6" })
+                                </div>
+                                <div class="col-md-6" style="height:50px;">
+                                    @Html.TextBoxFor(model => model.customer.ProfileName, new { @class = "form-control" })
+
+                                </div>
+
+                                <div class="col-md-5" style="height:50px;">
+                                    @Html.Label("Address", new { @class = "col-md-6" })
+                                </div>
+                                <div class="col-md-6" style="height:50px;">
+                                    @Html.TextBoxFor(model => model.customer.address, new { @class = "form-control" })
+                                </div>
+
+                                <div class="col-md-5" style="height:50px;">
+                                    @Html.Label("State", new { @class = "col-md-6" })
+                                </div>
+                                <div class="col-md-6" style="height:50px;">
+                                    @Html.TextBoxFor(model => model.customer.state, new { @class = "form-control" })
+                                </div>
+
+                                <div class="col-md-5" style="height:50px;">
+                                    @Html.Label("City", new { @class = "col-md-6" })
+                                </div>
+                                <div class="col-md-6" style="height:50px;">
+                                    @Html.TextBoxFor(model => model.customer.city, new { @class = "form-control" })
+                                </div>
+
+                                <div class="col-md-5" style="height:50px;">
+                                    @Html.Label("Rating", new { @class = "col-md-6" })
+                                </div>
+                                <div class="col-md-6" style="height:50px;">
+                                    @Html.TextBoxFor(model => model.customer.rating, new { @class = "form-control" })
+                                </div>
+                                
+                                <div class="col-md-7" style="height:50px;">
+                                    @Html.Label("Change Profile Picture", new { @class = "col-md-8" })
+                                </div>
+                                <div class="col-md-5">
+                                    <input type="file" id="FileUpload1" accept=".jpg,.png,.gif" />
+                                </div>  
+                                
+                               
+                                <div class="col-md-12"  style="height:540px;">
+
+                                   
+                                  
+                                    <table border="0" cellpadding="0" cellspacing="5">
+                                        <tr>
+
+                                            <td>
+                                                <img id="Image1" src="" alt="" style="display: none;float:left" />
+                                            </td>
+
+                                            <td>
+                                                <canvas id="canvas" height="5" width="5"></canvas>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <img id="Image2" alt="" style="float:left;" />
+
+                                            </td>
+                                        </tr>
+                                    </table>
+                                    <br />
+
+
+                                    <input type="hidden" name="imgX1" id="imgX1" />
+                                    <input type="hidden" name="imgY1" id="imgY1" />
+                                    <input type="hidden" name="imgWidth" id="imgWidth" />
+                                    <input type="hidden" name="imgHeight" id="imgHeight" />
+                                    <input type="hidden" name="imgCropped" id="imgCropped" />
+
+                                </div>
+
+
+
+                                <div class="col-md-8">
+                                </div>
+                                <div class="col-md-2">
+                                    <input type="button" id="btnCrop" value="Crop" style="display: none" class="btn btn-primary" />
+                                </div>
+                                <div class="col-md-2">
+                                   
+                                    <input type="submit" ID="btnUpload" value="Update" class="btn btn-primary" />
+
+
+                                </div>
+                                
+                            </div>
+
+                        </div>
+                    }
+                </section>
+            </div>
+        </div>
+
+    </div>

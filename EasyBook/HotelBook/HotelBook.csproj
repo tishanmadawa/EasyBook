@@ -193,6 +193,7 @@
     <None Include="Script\_references.js" />
     <Content Include="Views\Profile\events.cshtml" />
     <Content Include="Views\Profile\viewEvents.cshtml" />
+    <Content Include="Views\Profile\settings.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
