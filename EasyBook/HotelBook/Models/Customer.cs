@@ -42,7 +42,17 @@ namespace HotelBook.Models
 
        
     }
-    
+    public class Package
+    {
+        public int id { get; set; }
+        public string name { get; set; }
+        public string price { get; set; }
+        public string description { get; set; }
+        public string type { get; set; }
+        public int cusId { get; set; }
+        public string availableNo { get; set; }
+    }
+
     public class HotelDBContext 
     {
         
@@ -289,6 +299,125 @@ namespace HotelBook.Models
             }
         }
 
+        public List<Package> Viewpackage()
+        {
+        string constr = ConfigurationManager.ConnectionStrings["HotelDBContext"].ConnectionString;
+
+        String sql = "SELECT * FROM Package WHERE CusId=1";
+
+        var mod = new List<Package>();
+        using (SqlConnection conn = new SqlConnection(constr))
+        {
+            SqlCommand cmd = new SqlCommand(sql, conn);
+
+    conn.Open();
+            SqlDataReader rdr = cmd.ExecuteReader();
+            while (rdr.Read())
+            {
+                var package = new Package();
+    package.id = Convert.ToInt32(rdr["Id"]);
+                package.name = rdr["Name"].ToString();
+    package.price = rdr["Price"].ToString();
+    package.description = rdr["Description"].ToString();
+    package.type = rdr["Type"].ToString();
+    package.availableNo = rdr["AvailableNo"].ToString();
+
+    mod.Add(package);
+            }
+            return mod;
+        }
+    }
+    public void InsertPack(Package pack)
+{
+    string constr = ConfigurationManager.ConnectionStrings["HotelDBContext"].ConnectionString;
+    using (SqlConnection con = new SqlConnection(constr))
+    {
+        using (SqlCommand cmd = new SqlCommand("INSERT INTO Package (Name,Price, Description,Type,CusId,AvailableNo) VALUES (@Name,@Price, @Description,@Type,1,@Available)"))
+        {
+            cmd.Parameters.AddWithValue("@Name", pack.name);
+            cmd.Parameters.AddWithValue("@Price", pack.price);
+            cmd.Parameters.AddWithValue("@Description", pack.description);
+            cmd.Parameters.AddWithValue("@Type", pack.type);
+            cmd.Parameters.AddWithValue("@Available", pack.availableNo);
+
+            cmd.Connection = con;
+            con.Open();
+            cmd.ExecuteNonQuery();
+            con.Close();
+        }
+    }
+}
+
+public Package PackView(int id)
+{
+
+    string constr = ConfigurationManager.ConnectionStrings["HotelDBContext"].ConnectionString;
+
+    String sql = "SELECT * FROM Package WHERE Id=@x";
+
+    Package package = new Package();
+    using (SqlConnection conn = new SqlConnection(constr))
+    {
+        SqlCommand cmd = new SqlCommand(sql, conn);
+        cmd.Parameters.AddWithValue("@x", id);
+        conn.Open();
+        SqlDataReader rdr = cmd.ExecuteReader();
+        while (rdr.Read())
+        {
+            package.id = id;
+            Debug.WriteLine("tddd" + id);
+            package.name = rdr["Name"].ToString();
+            package.price = rdr["Price"].ToString();
+            package.description = rdr["Description"].ToString();
+            package.type = rdr["Type"].ToString();
+            package.availableNo = rdr["AvailableNo"].ToString();
+
+        }
+        return package;
+    }
+}
+public void EditPack(Package pack)
+{
+    Debug.WriteLine("old" + pack.id);
+    string constr = ConfigurationManager.ConnectionStrings["HotelDBContext"].ConnectionString;
+    using (SqlConnection con = new SqlConnection(constr))
+    {
+        using (SqlCommand cmd = new SqlCommand("UPDATE Package SET Name=@Name,Price=@Price,Description=@Description,Type=@Type,AvailableNo=@Available WHERE Id=@id"))
+        {
+            cmd.Parameters.AddWithValue("@id", pack.id);
+            cmd.Parameters.AddWithValue("@Name", pack.name);
+            cmd.Parameters.AddWithValue("@Price", pack.price);
+            cmd.Parameters.AddWithValue("@Description", pack.description);
+            cmd.Parameters.AddWithValue("@Type", pack.type);
+            cmd.Parameters.AddWithValue("@Available", pack.availableNo);
+
+            cmd.Connection = con;
+            con.Open();
+            cmd.ExecuteNonQuery();
+            con.Close();
+        }
+    }
+}
+public void DeletePackage(int id)
+{
+    int i = id;
+    string constr = ConfigurationManager.ConnectionStrings["HotelDBContext"].ConnectionString;
+    using (SqlConnection con = new SqlConnection(constr))
+    {
+
+        using (SqlCommand cmd = new SqlCommand("DELETE FROM Package WHERE Id=@id"))
+        {
+
+            cmd.Parameters.AddWithValue("@id", i);
+
+            cmd.Connection = con;
+            con.Open();
+            cmd.ExecuteNonQuery();
+            con.Close();
+        }
+    }
+}
+
     }
     public class Post
     {
@@ -396,6 +525,9 @@ namespace HotelBook.Models
         public events events { get; set; }
         public List<events> allEvents { get; set; }
     }
-   
 
+    
+
+    
+    
 }

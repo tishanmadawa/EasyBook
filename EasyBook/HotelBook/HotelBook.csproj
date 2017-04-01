@@ -185,7 +185,6 @@
     <Content Include="Views\Profile\post.cshtml" />
     <Content Include="Views\Profile\photo.cshtml" />
     <Content Include="Views\Home\Search.cshtml" />
-    <Content Include="Views\Home\SearchView.cshtml" />
     <Content Include="Views\Home\start.cshtml" />
     <Content Include="Views\Profile\album.cshtml" />
     <None Include="Script\jquery-1.10.2.intellisense.js" />
@@ -194,6 +193,10 @@
     <Content Include="Views\Profile\events.cshtml" />
     <Content Include="Views\Profile\viewEvents.cshtml" />
     <Content Include="Views\Profile\settings.cshtml" />
+    <Content Include="Views\Profile\AddPackage.cshtml" />
+    <Content Include="Views\Profile\Package.cshtml" />
+    <Content Include="Views\Profile\EditPackage.cshtml" />
+    <Content Include="Views\Home\SearchView.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

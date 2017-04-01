@@ -1,0 +1,57 @@
+﻿
+@{
+    ViewBag.Title = "Package";
+    Layout = "~/Views/Shared/_Header.cshtml";
+}
+@using HotelBook.Models
+@model List<Package>
+<style>
+    table {
+        font-family: arial, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    td, th {
+        border: 1px solid #dddddd;
+        text-align: left;
+        padding: 8px;
+    }
+
+    tr:nth-child(even) {
+        background-color: #dddddd;
+    }
+</style>
+<br><br><br>
+<h2>ViewPackages</h2>
+
+
+        <table class="table-hover">
+            <tr>
+                <th>Name</th>
+                <th>Price</th>
+                <th>Description</th>
+                <th>type</th>
+                <th>Available Number</th>
+				
+
+            </tr>
+            @foreach (var package in Model)
+            {
+                <tr style="width:80%">
+                    <td>@package.name</td>
+                    <td>@package.price</td>
+                    <td>@package.description</td>
+                    <td>@package.type</td>
+                    <td>@package.availableNo</td>
+					<td>@Html.ActionLink("Edit", "EditPackage", "Home",new { id=@package.id},new { @class = "btn btn-primary" })</td>
+					<td>@Html.ActionLink("Delete", "DeletePackage", "Home", new { id=@package.id},new { @class = "btn btn-primary" })</td>
+        </tr>
+            }
+        </table>
+		<br><br>
+<div class="col-md-2">
+
+@Html.ActionLink("Add New", "AddPackage", "Home", null,new { @class = "btn btn-primary" })
+
+</div>

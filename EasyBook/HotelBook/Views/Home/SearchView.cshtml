@@ -1,0 +1,32 @@
+﻿
+@{
+    ViewBag.Title = "Search";
+	Layout = "~/Views/Shared/_Header.cshtml";
+}
+
+<h2>Index</h2>
+<div class="row">
+<div class="col-md-8">
+
+</div>
+<div class="col-md-4">
+
+<table class="table">
+    <tr>
+        
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+		<td><img src="~/Uploads/@item.imageFile" alt="" style="width:100px;height:100px" /></td>
+		
+        <td>@item.name</td>
+                    
+        <td>@item.address</td>
+    </tr>
+}
+
+</table>
+</div>
+</div>
+
