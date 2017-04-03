@@ -32,6 +32,7 @@ namespace HotelBook.Controllers
             HotelDBContext hotelDb = new HotelDBContext();
             String name = "Null";
             String city = "Null";
+           
             if (!String.IsNullOrEmpty(searchstring))
             {
                 name = searchstring;
@@ -44,8 +45,7 @@ namespace HotelBook.Controllers
 
             return View("~/Views/Home/SearchView.cshtml", range);
         }
-        [HttpGet]
-        
+       
 
     }
 }
