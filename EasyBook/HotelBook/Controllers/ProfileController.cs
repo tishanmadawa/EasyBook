@@ -138,7 +138,7 @@ namespace HotelBook.Controllers
             string ss = Session["email"].ToString();
             string base64 = Request.Form["imgCropped"];
             byte[] bytes = Convert.FromBase64String(base64.Split(',')[1]);
-            using (FileStream stream = new FileStream(Server.MapPath("~/image/" + customer.ProfileName + ".jpg"), FileMode.Create))
+            using (FileStream stream = new FileStream(Server.MapPath("~/image/" + customer.ProfileName + DateTime.Now.ToString() + ".jpg"), FileMode.Create))
             {
                 stream.Write(bytes, 0, bytes.Length);
                 stream.Flush();
