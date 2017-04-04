@@ -73,6 +73,7 @@ namespace HotelBook.Controllers
             Customer customer = customerpro.customer;
             Post post = customerpro.post;
             post.customerId = customer.email;
+            string cusemail = customer.email;
             Debug.WriteLine("emailll" + customer.email);
             Debug.WriteLine(post.post);
             Debug.WriteLine(post.title);
@@ -84,13 +85,14 @@ namespace HotelBook.Controllers
 
             PostDetails postdetails = new PostDetails();
             postdetails.Insert(post);
-            List<Post> array = postdetails.getPosts(customer.email);
+            List<Post> array = postdetails.getPosts(cusemail);
+            Debug.WriteLine("emaill111l" + cusemail);
             array.Reverse();
             customerpro.post = null;
             customerpro.posts = array;
             ModelState.Clear();
             //return View("~/Views/Profile/post.cshtml", customerpro);
-            return RedirectToAction("post", "Profile", customerpro);
+            return View("~/Views/Profile/post.cshtml", customerpro);
 
         }
 
@@ -109,11 +111,13 @@ namespace HotelBook.Controllers
             
             return RedirectToAction("post", "Profile", customer);
         }
-        public ActionResult photo(customerProfile customer,string email)
+        public ActionResult photo(customerProfile customer, string email)
         {
             HotelDBContext hotel = new HotelDBContext();
             Customer cus = hotel.Search(email);
             customer.customer = cus;
+            PostDetails postD = new PostDetails();
+            customer.albums = postD.getAlbums(email);
             return View("~/Views/Profile/album.cshtml", customer);
         }
 
@@ -123,6 +127,73 @@ namespace HotelBook.Controllers
             Customer cus = hotel.Search(email);
             customer.customer = cus;
             return View("~/Views/Profile/photo.cshtml", customer);
+        }
+
+        public ActionResult searchTable(customerProfile customer, string email)
+        {
+            HotelDBContext hotel = new HotelDBContext();
+            Customer cus = hotel.Search(email);
+            customer.customer = cus;
+            return View(customer);
+        }
+
+        [HttpPost]
+        public ActionResult addAlbum(IEnumerable<HttpPostedFileBase> fileupload, customerProfile customerpro)
+        {
+            HotelDBContext hotel = new HotelDBContext();
+            String image = fileupload.ElementAt(0).FileName;
+            hotel.addAlbum(Session["Email"].ToString(), customerpro.image.albumName, customerpro.number, image);
+            Debug.WriteLine("images" + fileupload.Count());
+
+
+            for (int i = 0; i < fileupload.Count(); i++)
+            {
+                HttpPostedFileBase file = fileupload.ElementAt(i);
+                try
+                {
+                    if (file.ContentLength > 0)
+                    {
+                        var fileName = System.IO.Path.GetFileName(file.FileName);
+                        var path = System.IO.Path.Combine(Server.MapPath("~/image/"), fileName);
+                        file.SaveAs(path);
+                        Debug.WriteLine(Session["Email"]);
+
+                        album newAlbum = new album();
+                        newAlbum.albumName = customerpro.image.albumName;
+                        Debug.WriteLine("addAlbum1");
+                        newAlbum.image = fileName;
+                        Debug.WriteLine("addAlbum2");
+                        newAlbum.number = customerpro.number;
+                        Debug.WriteLine("addAlbum3");
+                        newAlbum.owner = Session["Email"].ToString();
+
+                        Debug.WriteLine("addAlbum4");
+
+
+                        hotel.addAlbum(newAlbum);
+
+                    }
+                }
+                catch
+                {
+                    ViewBag.Message = "Upload failed";
+
+                }
+
+            }
+
+            return View("~/Views/Profile/photo.cshtml", customerpro);
+        }
+
+        public ActionResult albumView(string id, string email, int number)
+        {
+            customerProfile customer = new customerProfile();
+            HotelDBContext hotel = new HotelDBContext();
+            Customer cus = hotel.Search(email);
+            PostDetails postD = new PostDetails();
+            customer.customer = cus;
+            customer.albumImage = postD.getImages(id);
+            return View(customer);
         }
         [HttpGet]
         public ActionResult settings(customerProfile customer, string email)
@@ -148,51 +219,7 @@ namespace HotelBook.Controllers
             hotelDb.upsetting(customer, ss);
            
         }
-        [HttpPost]
-        public ActionResult addAlbum(IEnumerable<HttpPostedFileBase> fileupload, customerProfile customerpro)
-        {
-
-            Debug.WriteLine("images" + fileupload.Count());
-
-            for (int i = 0; i < fileupload.Count(); i++)
-            {
-                HttpPostedFileBase file = fileupload.ElementAt(i);
-                try
-                {
-                    if (file.ContentLength > 0)
-                    {
-                        var fileName = System.IO.Path.GetFileName(file.FileName);
-                        var path = System.IO.Path.Combine(Server.MapPath("~/image/"), fileName);
-                        file.SaveAs(path);
-                        Debug.WriteLine(Session["Email"]);
-
-                        album newAlbum = new album();
-                        newAlbum.albumName = customerpro.image.albumName;
-                        Debug.WriteLine("addAlbum1");
-                        newAlbum.image = fileName;
-                        Debug.WriteLine("addAlbum2");
-                        newAlbum.number = customerpro.number;
-                        Debug.WriteLine("addAlbum3");
-                        newAlbum.owner = Session["Email"].ToString();
-
-                        Debug.WriteLine("addAlbum4");
-                        HotelDBContext hotel = new HotelDBContext();
-                        
-                        hotel.addAlbum(newAlbum);
-
-                    }
-                }
-                catch
-                {
-                    ViewBag.Message = "Upload failed";
-                    
-                }
-
-            }
-
-            return View("~/Views/Profile/photo.cshtml", customerpro);
-        }
-
+       
         public ActionResult viewEvents( string email)
         {
             customerProfile customer = new customerProfile();
@@ -247,11 +274,14 @@ namespace HotelBook.Controllers
             
             return View(customer);
         }
-        public ActionResult Package()
+        public ActionResult Package(customerProfile customer, string email)
         {
             HotelDBContext hotelDb = new HotelDBContext();
-            List<Package> range = hotelDb.Viewpackage();
-            return View(range);
+            customer.range = hotelDb.Viewpackage(email);
+            HotelDBContext hotel = new HotelDBContext();
+            Customer cus = hotel.Search(email);
+            customer.customer = cus;
+            return View(customer);
         }
         [HttpGet]
         public ActionResult AddPackage()

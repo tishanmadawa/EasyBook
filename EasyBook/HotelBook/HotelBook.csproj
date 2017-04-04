@@ -43,6 +43,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Interop.SHDocVw">
+      <HintPath>C:\Users\Tishan Madhawa\Desktop\New folder\source\lib\Net\3.5\Interop.SHDocVw.dll</HintPath>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
     <Reference Include="Microsoft.AI.Agent.Intercept, Version=2.0.6.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.ApplicationInsights.Agent.Intercept.2.0.6\lib\net45\Microsoft.AI.Agent.Intercept.dll</HintPath>
       <Private>True</Private>
@@ -76,6 +80,12 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Moq">
+      <HintPath>C:\Users\Tishan Madhawa\Desktop\New folder\source\lib\Net\3.5\Moq.dll</HintPath>
+    </Reference>
+    <Reference Include="nunit.framework">
+      <HintPath>C:\Users\Tishan Madhawa\Desktop\New folder\source\lib\Net\3.5\nunit.framework.dll</HintPath>
+    </Reference>
     <Reference Include="System.Web.DataVisualization" />
     <Reference Include="System.Web.DataVisualization.Design" />
     <Reference Include="System.Web.DynamicData" />
@@ -93,6 +103,9 @@
     <Reference Include="System.Configuration" />
     <Reference Include="System.Web.Services" />
     <Reference Include="System.EnterpriseServices" />
+    <Reference Include="WatiN.Core">
+      <HintPath>C:\Users\Tishan Madhawa\Desktop\New folder\bin\net35\WatiN.Core.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System.Web.Razor">
@@ -197,6 +210,9 @@
     <Content Include="Views\Profile\Package.cshtml" />
     <Content Include="Views\Profile\EditPackage.cshtml" />
     <Content Include="Views\Home\SearchView.cshtml" />
+    <Content Include="Views\Profile\about.cshtml" />
+    <Content Include="Views\Profile\albumView.cshtml" />
+    <Content Include="Views\Profile\searchTable.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

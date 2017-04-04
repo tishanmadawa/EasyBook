@@ -35,10 +35,11 @@
         <p>Number of pictures:@Html.TextBoxFor(m => m.number, new { @class = "form-control", Required = "true" })</p>
        
 
-    <input type="submit" value="addPictures"/>
+    <input  class="btn btn-primary" type="submit" value="addPictures"/>
     }
     @using (Html.BeginForm("addAlbum", "Profile", FormMethod.Post, new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data" }))
     {
+        @Html.HiddenFor(m => m.number)
         <p>Album Name:@Html.TextBoxFor(m => m.image.albumName, new { @class = "form-control", Required = "true" })</p>
         for (var i = 0; i < Model.number.ToString().AsDecimal(); i++)
         {
@@ -53,7 +54,7 @@
         if (regex.test($(this).val().toLowerCase())) {
             if ($.browser.msie && parseFloat(jQuery.browser.version) <= 9.0) {
                 $("#" + number).show();
-                $("#" + number)[0].filters.item("DXImageTransform.Microsoft.AlphaImageLoader").src = $(this).val();
+                $("#" + number)[0].filters.item("DXImageTra0nsform.Microsoft.AlphaImageLoader").src = $(this).val();
             }
             else {
                 if (typeof (FileReader) != "undefined") {
@@ -85,7 +86,7 @@
         </script>
 
 
-        <div id="main" class="col-md-4" style="max-height:270px;">
+        <div id="main" class="col-md-5" style="max-height:270px;">
             <div class="col-md-6" style="max-height:270px;">
                 <div id="@i" class="col-md-6" style="max-height:270px;position:absolute;z-index:950;"><span></span></div>
 
@@ -95,12 +96,13 @@
             </div>
         </div>
 
-        }<div class="col-md-12"><input type="submit" value="addPictures" /></div>
+        }<div class="col-md-8 "></div> 
+    <div class="col-md-3 "><input class="btn btn-primary" type="submit" value="addPictures" /></div>
     }
 
 
 
-
+    <div class="col-md-12 " style="height:50px"></div>
 
         </div>}
 }

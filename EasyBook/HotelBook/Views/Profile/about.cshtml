@@ -1,0 +1,52 @@
+﻿@{
+    Layout = "~/Views/Profile/Index.cshtml";
+}
+@using HotelBook.Models;
+@model customerProfile
+<style>
+    #head{
+        color:blue;
+        width:200px;
+        height:30px;
+    }
+</style>
+<div class="col-md-9">
+    <div class="col-md-12" style="height:20px"></div>
+
+    <div class="col-md-3" style="height:200px;"></div>
+    <div class="col-md-8"><img src="~/image/@Html.DisplayFor(m=>m.customer.image)" style="height:200px;border:5px double black" />
+
+</div>
+    <div class="col-md-12" style="height:20px"></div>
+    <div class="col-md-2" style="height:200px;"></div>
+    <div class="col-md-10" >
+    <table>
+        <tr>
+            <td id="head" >Hotel Name</td>
+            <td>@Html.DisplayFor(m=>m.customer.name)</td>
+        </tr>
+        <tr>
+            <td  id="head">Hotel Email</td>
+            <td>@Html.DisplayFor(m => m.customer.email)</td>
+        </tr>
+        <tr>
+            <td  id="head">state</td>
+            <td>@Html.DisplayFor(m => m.customer.state)</td>
+        </tr>
+        <tr>
+            <td  id="head">City</td>
+            <td>@Html.DisplayFor(m => m.customer.city)</td>
+        </tr>
+        <tr>
+            <td  id="head">Address</td>
+            <td>@Html.DisplayFor(m => m.customer.address)</td>
+        </tr>
+
+
+    </table>
+        </div>
+
+    <div class="col-md-12" style="height:50px"></div>
+
+</div>
+
