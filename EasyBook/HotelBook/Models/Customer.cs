@@ -49,8 +49,16 @@ namespace HotelBook.Models
         public string price { get; set; }
         public string description { get; set; }
         public string type { get; set; }
-        public int cusId { get; set; }
+        public string cusId { get; set; }
         public string availableNo { get; set; }
+    }
+    public class MyAlbum
+    {
+        public int id { get; set; }
+        public string user { get; set; }
+        public string name { get; set; }
+        public int number { get; set; }
+        public string image { get; set; }
     }
 
     public class HotelDBContext 
@@ -77,7 +85,7 @@ namespace HotelBook.Models
             }
         }
 
-        public Customer Search(String email)
+        public Customer Search(string email)
         {
             string constr = ConfigurationManager.ConnectionStrings["HotelDBContext"].ConnectionString;
             using (SqlConnection con = new SqlConnection(constr))
@@ -130,8 +138,27 @@ namespace HotelBook.Models
                 using (SqlCommand cmd = new SqlCommand("UPDATE Customer SET Image=@image WHERE Email=@email"))
                 {
 
-                    cmd.Parameters.AddWithValue("@email",customer.email);
+                    cmd.Parameters.AddWithValue("@email", customer.email);
                     cmd.Parameters.AddWithValue("@image", customer.image);
+                    cmd.Connection = con;
+                    con.Open();
+                    cmd.ExecuteNonQuery();
+                    con.Close();
+                }
+            }
+        }
+
+        public void addAlbum(string user, string album, int Number, string image)
+        {
+            string constr = ConfigurationManager.ConnectionStrings["HotelDBContext"].ConnectionString;
+            using (SqlConnection con = new SqlConnection(constr))
+            {
+                using (SqlCommand cmd = new SqlCommand("INSERT INTO Album (album,Customer,number,image) VALUES (@album,@Name,@Number,@image)"))
+                {
+                    cmd.Parameters.AddWithValue("@Name", user);
+                    cmd.Parameters.AddWithValue("@album", album);
+                    cmd.Parameters.AddWithValue("@Number", Number);
+                    cmd.Parameters.AddWithValue("@image", image);
                     cmd.Connection = con;
                     con.Open();
                     cmd.ExecuteNonQuery();
@@ -299,18 +326,18 @@ namespace HotelBook.Models
             }
         }
 
-        public List<Package> Viewpackage()
+        public List<Package> Viewpackage(string email)
         {
         string constr = ConfigurationManager.ConnectionStrings["HotelDBContext"].ConnectionString;
 
-        String sql = "SELECT * FROM Package WHERE CusId=1";
+        String sql = "SELECT * FROM Package WHERE CusId=@email";
 
         var mod = new List<Package>();
         using (SqlConnection conn = new SqlConnection(constr))
         {
             SqlCommand cmd = new SqlCommand(sql, conn);
-
-    conn.Open();
+                cmd.Parameters.AddWithValue("@email", email);
+                conn.Open();
             SqlDataReader rdr = cmd.ExecuteReader();
             while (rdr.Read())
             {
@@ -513,6 +540,80 @@ public void DeletePackage(int id)
                 }
             }
         }
+        public List<album> getImages(String name)
+        {
+
+            string constr = ConfigurationManager.ConnectionStrings["HotelDBContext"].ConnectionString;
+            using (SqlConnection con = new SqlConnection(constr))
+            {
+                con.Open();
+                Customer customer = new Models.Customer();
+                SqlCommand com = new SqlCommand("SELECT * FROM Images WHERE AlbumName=@name");
+                com.CommandType = CommandType.Text;
+                com.Connection = con;
+
+                com.Parameters.AddWithValue("@name", name);
+
+                using (SqlDataReader reader = com.ExecuteReader())
+                {
+                    List<album> images = new List<album>();
+
+                    Debug.WriteLine(images.Count);
+                    while (reader.Read())
+                    {
+                        album post = new album();
+                        post.image = reader["Image"].ToString();
+
+                        images.Add(post);
+                    }
+                    Debug.WriteLine(images.Count);
+                    return images;
+
+
+                }
+
+
+            }
+
+        }
+
+        public List<MyAlbum> getAlbums(String email)
+        {
+
+            string constr = ConfigurationManager.ConnectionStrings["HotelDBContext"].ConnectionString;
+            using (SqlConnection con = new SqlConnection(constr))
+            {
+                con.Open();
+                Customer customer = new Models.Customer();
+                SqlCommand com = new SqlCommand("SELECT * FROM Album WHERE Customer=@Email");
+                com.CommandType = CommandType.Text;
+                com.Connection = con;
+
+                com.Parameters.AddWithValue("@Email", email);
+
+                using (SqlDataReader reader = com.ExecuteReader())
+                {
+                    List<MyAlbum> albumsMy = new List<MyAlbum>();
+
+                    Debug.WriteLine(albumsMy.Count);
+                    while (reader.Read())
+                    {
+                        MyAlbum post = new MyAlbum();
+                        post.number = (int)reader["number"];
+                        post.id = (int)reader["Id"];
+                        post.name = reader["album"].ToString();
+                        post.image = reader["image"].ToString();
+                        albumsMy.Add(post);
+                    }
+                    Debug.WriteLine(albumsMy.Count);
+                    return albumsMy;
+
+
+                }
+
+            }
+
+        }
     }
     public class customerProfile
     {
@@ -524,6 +625,9 @@ public void DeletePackage(int id)
         public int number { get; set; }
         public events events { get; set; }
         public List<events> allEvents { get; set; }
+        public List<Package> range { get; set; }
+        public List<MyAlbum> albums { get; set; }
+        public List<album> albumImage { get; set; }
     }
 
     
