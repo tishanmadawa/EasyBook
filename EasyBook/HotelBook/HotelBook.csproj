@@ -43,10 +43,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Interop.SHDocVw">
-      <HintPath>C:\Users\Tishan Madhawa\Desktop\New folder\source\lib\Net\3.5\Interop.SHDocVw.dll</HintPath>
-      <EmbedInteropTypes>True</EmbedInteropTypes>
-    </Reference>
     <Reference Include="Microsoft.AI.Agent.Intercept, Version=2.0.6.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.ApplicationInsights.Agent.Intercept.2.0.6\lib\net45\Microsoft.AI.Agent.Intercept.dll</HintPath>
       <Private>True</Private>
@@ -80,12 +76,6 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="Moq">
-      <HintPath>C:\Users\Tishan Madhawa\Desktop\New folder\source\lib\Net\3.5\Moq.dll</HintPath>
-    </Reference>
-    <Reference Include="nunit.framework">
-      <HintPath>C:\Users\Tishan Madhawa\Desktop\New folder\source\lib\Net\3.5\nunit.framework.dll</HintPath>
-    </Reference>
     <Reference Include="System.Web.DataVisualization" />
     <Reference Include="System.Web.DataVisualization.Design" />
     <Reference Include="System.Web.DynamicData" />
@@ -103,9 +93,6 @@
     <Reference Include="System.Configuration" />
     <Reference Include="System.Web.Services" />
     <Reference Include="System.EnterpriseServices" />
-    <Reference Include="WatiN.Core">
-      <HintPath>C:\Users\Tishan Madhawa\Desktop\New folder\bin\net35\WatiN.Core.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System.Web.Razor">
@@ -166,6 +153,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\ProfileController.cs" />
@@ -182,7 +170,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\web.config">
+    <Content Include="Script\Views\web.config">
       <SubType>Designer</SubType>
     </Content>
     <Content Include="packages.config" />
@@ -190,29 +178,27 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="Views\Shared\_Header.cshtml" />
-    <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\Login\Index.cshtml" />
-    <Content Include="Views\Login\Signup.cshtml" />
-    <Content Include="Views\Profile\Index.cshtml" />
-    <Content Include="Views\Profile\post.cshtml" />
-    <Content Include="Views\Profile\photo.cshtml" />
-    <Content Include="Views\Home\Search.cshtml" />
-    <Content Include="Views\Home\start.cshtml" />
-    <Content Include="Views\Profile\album.cshtml" />
+    <Content Include="Script\Views\Shared\_Header.cshtml" />
+    <Content Include="Script\Views\Home\Index.cshtml" />
+    <Content Include="Script\Views\Login\Index.cshtml" />
+    <Content Include="Script\Views\Login\Signup.cshtml" />
+    <Content Include="Script\Views\Profile\Index.cshtml" />
+    <Content Include="Script\Views\Profile\post.cshtml" />
+    <Content Include="Script\Views\Profile\photo.cshtml" />
+    <Content Include="Script\Views\Home\Search.cshtml" />
+    <Content Include="Script\Views\Home\start.cshtml" />
+    <Content Include="Script\Views\Profile\album.cshtml" />
     <None Include="Script\jquery-1.10.2.intellisense.js" />
     <None Include="Script\jquery.validate-vsdoc.js" />
     <None Include="Script\_references.js" />
-    <Content Include="Views\Profile\events.cshtml" />
-    <Content Include="Views\Profile\viewEvents.cshtml" />
-    <Content Include="Views\Profile\settings.cshtml" />
-    <Content Include="Views\Profile\AddPackage.cshtml" />
-    <Content Include="Views\Profile\Package.cshtml" />
-    <Content Include="Views\Profile\EditPackage.cshtml" />
-    <Content Include="Views\Home\SearchView.cshtml" />
-    <Content Include="Views\Profile\about.cshtml" />
-    <Content Include="Views\Profile\albumView.cshtml" />
-    <Content Include="Views\Profile\searchTable.cshtml" />
+    <Content Include="Script\Views\Profile\events.cshtml" />
+    <Content Include="Script\Views\Profile\viewEvents.cshtml" />
+    <Content Include="Script\Views\Profile\settings.cshtml" />
+    <Content Include="Script\Views\Profile\AddPackage.cshtml" />
+    <Content Include="Script\Views\Profile\Package.cshtml" />
+    <Content Include="Script\Views\Profile\EditPackage.cshtml" />
+    <Content Include="Script\Views\Home\SearchView.cshtml" />
+    <Content Include="Script\Views\Admin\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -222,7 +208,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\Validation\" />
+    <Folder Include="Script\Views\Validation\" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Properties\Resources.resx">
