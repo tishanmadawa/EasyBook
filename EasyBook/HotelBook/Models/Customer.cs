@@ -628,6 +628,7 @@ public void DeletePackage(int id)
         public List<Package> range { get; set; }
         public List<MyAlbum> albums { get; set; }
         public List<album> albumImage { get; set; }
+        public DateTime packagesDate { get; set; }
     }
 
     

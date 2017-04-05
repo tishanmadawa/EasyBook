@@ -3,9 +3,30 @@
 }
 @using HotelBook.Models
 @model customerProfile
+
+<script>
+    function validateForm() {
+        var now = new Date();
+
+        var old = new Date($('#dateofEvent').val());
+
+        if (old < now) {
+
+            document.getElementById("dateof").innerHTML = "Enter Valid Date";
+            return false;
+        };
+
+
+    }
+</script>
     <div class="col-md-12" style="height:30px"></div>
 <div class="col-md-2" style="height:30px"></div>
-<div class="col-md-10" >
-    <p>sfs</p>
+<div class="col-md-10" style="height:200px;" >
+    @using (Html.BeginForm("events", "Profile", FormMethod.Post, new { name = "eventForm", @class = "form-horizontal", role = "form", onsubmit = "return validateForm()" }))
+    {
+        @Html.TextBoxFor(m=>m.packagesDate,new { type="date", @class="form-control"})
+
+        <button type="submit" name="submit" value="Search" class="btn btn-primary">Search</button>
+    }
 </div>
 
