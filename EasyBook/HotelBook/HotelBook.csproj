@@ -146,7 +146,9 @@
     <Content Include="Styles\boostrap.css" />
     <Content Include="Global.asax" />
     <Content Include="Styles\bootstrap.min.css" />
+    <Content Include="Styles\demo.css" />
     <Content Include="Styles\Site.css" />
+    <Content Include="Styles\style7.css" />
     <Content Include="Views\Profile\galleria.classic.min.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
@@ -154,6 +156,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\ProfileController.cs" />
@@ -199,6 +202,9 @@
     <Content Include="Views\Profile\viewEvents.cshtml" />
     <Content Include="Views\Shared\_Header.cshtml" />
     <Content Include="Views\web.config" />
+    <Content Include="Views\Admin\Index.cshtml" />
+    <Content Include="Views\Shared\_Header2.cshtml" />
+    <Content Include="Views\Admin\Request.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -208,7 +214,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\Admin\" />
     <Folder Include="Views\Validation\" />
   </ItemGroup>
   <ItemGroup>

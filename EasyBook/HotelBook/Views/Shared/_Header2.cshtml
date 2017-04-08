@@ -1,0 +1,28 @@
+﻿<head>
+    <title>@ViewBag.Title = EasyBook</title>
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+
+    <link href="@Url.Content("~/Styles/boostrap.css")" rel="stylesheet" />
+    <link href="@Url.Content("~/Styles/Site.css")" rel="stylesheet" />
+    <script src="@Url.Content("~/Script/modernizr-2.6.2.js")" language="javascript" type="text/javascript"></script>
+    <script src="https://code.jquery.com/jquery-1.12.4.js" language="javascript" type="text/javascript"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js" language="javascript" type="text/javascript"></script>
+
+
+    </head>
+
+
+
+<body>
+<div class="col-md-12 " style="height:100px;padding-top:5px;margin-top:0; ">
+    <div align="center">
+
+        <p align="center" style="color:yellow"><span class="glyphicon glyphicon-star"></span>   <span class="glyphicon glyphicon-star"></span>   <span class="glyphicon glyphicon-star"></span>   <span class="glyphicon glyphicon-star"></span>   <span class="glyphicon glyphicon-star"></span>   </p>
+        @Html.ActionLink("EasyBook", "start", "Home", "", new { align = "center", style = "font-size:24px;color:white;" })
+
+        <hr style="border:1px solid yellow" />
+
+    </div>
+
+    @RenderBody()
+    </body>
