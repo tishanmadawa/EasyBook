@@ -1,0 +1,36 @@
+﻿<head>
+    <title>@ViewBag.Title = EasyBook</title>
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+
+    <link href="@Url.Content("~/Styles/boostrap.css")" rel="stylesheet" />
+    <link href="@Url.Content("~/Styles/Site.css")" rel="stylesheet" />
+    <script src="@Url.Content("~/Script/modernizr-2.6.2.js")" language="javascript" type="text/javascript"></script>
+    <script src="https://code.jquery.com/jquery-1.12.4.js" language="javascript" type="text/javascript"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js" language="javascript" type="text/javascript"></script>
+
+
+</head>
+
+<body>
+
+<div class="col-md-12 navbar">
+    
+   @Html.ActionLink("Logout", "Index", "Admin");
+  @Html.ActionLink("Settings", "Index", "Admin");
+   
+</div>
+
+
+
+<div class="main">
+    <h1> Menu</h1>
+    <h2>Scroll this page to see the effect</h2>
+    <h2>The navigation bar will stay at the top of the page while scrolling</h2>
+
+    <p>Some text some text some text some text..</p>
+    <p>Some text some text some text some text..</p>
+</div>
+
+</body>
+        @RenderBody()
+    
