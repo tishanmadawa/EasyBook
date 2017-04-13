@@ -51,6 +51,6 @@
 		<br><br>
 <div class="col-md-2">
 
-@Html.ActionLink("Add New", "AddPackage", "Home", null,new { @class = "btn btn-primary" })
+@Html.ActionLink("Add New", "AddPackage", "Profile", new { email = Model.customer.email }, new { @class = "btn btn-primary" })
 
 </div>

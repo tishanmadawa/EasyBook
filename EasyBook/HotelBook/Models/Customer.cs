@@ -13,6 +13,7 @@ namespace HotelBook.Models
 {
     public class Customer
     {   public string name { get; set; }
+        public int id { get; set; }
         public string email { get; set; }
         public string password { get; set; }
         public string state { get; set; }
@@ -24,7 +25,14 @@ namespace HotelBook.Models
         public string rating { get; set; }
         public string ProfileName { get; set; }
     }
-
+    public class Daypack
+    {
+        public int id { get; set; }
+        public int PackId { get; set; }
+        public DateTime date { get; set; }
+        public int number { get; set; }
+    
+    }
     public class events
     {
      
@@ -114,6 +122,7 @@ namespace HotelBook.Models
                         customer.rating= Convert.ToString(dt.Rows[0]["Rating"]);
                         customer.state= Convert.ToString(dt.Rows[0]["State"]);
                         customer.city= Convert.ToString(dt.Rows[0]["City"]);
+                        customer.id = Convert.ToInt32(dt.Rows[0]["Id"]);
 
 
                         return customer;
@@ -241,6 +250,25 @@ namespace HotelBook.Models
                 }
             }
         }
+
+        public void addTodayBooking(Daypack dayPack)
+        {
+            string constr = ConfigurationManager.ConnectionStrings["HotelDBContext"].ConnectionString;
+            using (SqlConnection con = new SqlConnection(constr))
+            {
+                using (SqlCommand cmd = new SqlCommand("INSERT INTO dayPac (PacId,Date,number) VALUES (@packId,@date,@number)", con))
+                {
+                    cmd.Parameters.AddWithValue("@date", dayPack.date);
+                    cmd.Parameters.AddWithValue("@packId", dayPack.PackId);
+                    cmd.Parameters.AddWithValue("@number", dayPack.number);                    
+                    cmd.Connection = con;
+                    con.Open();
+                    cmd.ExecuteNonQuery();
+                    con.Close();
+                }
+            }
+        }
+
         public List<events> getEvents(String email)
         {
 
@@ -328,11 +356,12 @@ namespace HotelBook.Models
 
         public List<Package> Viewpackage(string email)
         {
+
         string constr = ConfigurationManager.ConnectionStrings["HotelDBContext"].ConnectionString;
+            Debug.WriteLine(email);
+            String sql = "SELECT * FROM Package WHERE CusId=@email";
 
-        String sql = "SELECT * FROM Package WHERE CusId=@email";
-
-        var mod = new List<Package>();
+        List<Package> mod = new List<Package>();
         using (SqlConnection conn = new SqlConnection(constr))
         {
             SqlCommand cmd = new SqlCommand(sql, conn);
@@ -344,7 +373,9 @@ namespace HotelBook.Models
                 var package = new Package();
     package.id = Convert.ToInt32(rdr["Id"]);
                 package.name = rdr["Name"].ToString();
-    package.price = rdr["Price"].ToString();
+                    Debug.WriteLine(package.name);
+
+                    package.price = rdr["Price"].ToString();
     package.description = rdr["Description"].ToString();
     package.type = rdr["Type"].ToString();
     package.availableNo = rdr["AvailableNo"].ToString();
@@ -359,13 +390,14 @@ namespace HotelBook.Models
     string constr = ConfigurationManager.ConnectionStrings["HotelDBContext"].ConnectionString;
     using (SqlConnection con = new SqlConnection(constr))
     {
-        using (SqlCommand cmd = new SqlCommand("INSERT INTO Package (Name,Price, Description,Type,CusId,AvailableNo) VALUES (@Name,@Price, @Description,@Type,1,@Available)"))
+        using (SqlCommand cmd = new SqlCommand("INSERT INTO Package (Name,Price, Description,Type,CusId,AvailableNo) VALUES (@Name,@Price, @Description,@Type,@email,@Available)"))
         {
             cmd.Parameters.AddWithValue("@Name", pack.name);
             cmd.Parameters.AddWithValue("@Price", pack.price);
             cmd.Parameters.AddWithValue("@Description", pack.description);
             cmd.Parameters.AddWithValue("@Type", pack.type);
-            cmd.Parameters.AddWithValue("@Available", pack.availableNo);
+                    cmd.Parameters.AddWithValue("@email", pack.cusId);
+                    cmd.Parameters.AddWithValue("@Available", pack.availableNo);
 
             cmd.Connection = con;
             con.Open();
@@ -629,6 +661,8 @@ public void DeletePackage(int id)
         public List<MyAlbum> albums { get; set; }
         public List<album> albumImage { get; set; }
         public DateTime packagesDate { get; set; }
+        public Package package { get; set; }
+        public Daypack dayPack { get; set;}
     }
 
     

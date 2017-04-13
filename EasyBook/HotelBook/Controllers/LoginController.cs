@@ -31,24 +31,30 @@ namespace HotelBook.Controllers
             String email = customer.email;
             
             HotelDBContext hotelDb = new HotelDBContext();
-            customer = hotelDb.Search(email);
-            String pass =customer.password;
             
-            char[] a=pass.ToCharArray();
-            String passw = pass.Replace(" ","");
-            
-            Debug.WriteLine(password);
-            Debug.WriteLine(passw + passw.Length);
             ValidationController validation = new ValidationController();
             if (validation.IsValidEmail(email))
             {
-
-
-
-
-                if (passw == password)
+                customer = hotelDb.Search(email);
+                String pass = customer.password;
+                if (pass == null)
                 {
-                    Customer customer1 = new Customer();
+                    ModelState.AddModelError("email", "Please signup");
+                    return View();
+                }
+                else
+                {
+
+                    char[] a = pass.ToCharArray();
+                    String passw = pass.Replace(" ", "");
+
+                    Debug.WriteLine(password);
+                    Debug.WriteLine(passw + passw.Length);
+
+
+                    if (passw == password)
+                    {
+                        Customer customer1 = new Customer();
 
                         Session["Email"] = email;
                         Debug.WriteLine("enter=" + pass);
@@ -59,22 +65,21 @@ namespace HotelBook.Controllers
                         PostDetails postdetails = new PostDetails();
                         cusprofile.posts = postdetails.getPosts(email);
                         Debug.WriteLine(cusprofile.posts.Count);
-                        Debug.WriteLine("image=="+cusprofile.customer.image);
-                    return View("~/Views/Profile/post.cshtml", cusprofile);
-                   
-                    
-                }
-                else
-                {
-                    customer.email = "";
-                    customer.password = "Invald Password";
-                    return View(customer);
+                        Debug.WriteLine("image==" + cusprofile.customer.image);
+                        return View("~/Views/Profile/post.cshtml", cusprofile);
+
+
+                    }
+                    else
+                    {
+                        ModelState.AddModelError("password", "Invalid password");
+                        return View();
+                    }
                 }
             }else
             {
-                customer.email = "Invalid Email";
-                customer.password = "";
-                return View(customer);
+                ModelState.AddModelError("email", "Please enter Correct Email");
+                return View();
             }
             
 

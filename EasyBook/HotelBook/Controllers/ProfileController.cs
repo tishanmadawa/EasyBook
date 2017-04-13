@@ -131,10 +131,20 @@ namespace HotelBook.Controllers
 
         public ActionResult searchTable(customerProfile customer, string email)
         {
-            HotelDBContext hotel = new HotelDBContext();
-            Customer cus = hotel.Search(email);
-            customer.customer = cus;
-            return View(customer);
+            if (email != null)
+            {
+                HotelDBContext hotel = new HotelDBContext();
+                Customer cus = hotel.Search(email);
+                Daypack pack = new Daypack();
+                customer.dayPack = pack;
+                customer.range = hotel.Viewpackage(email);
+                customer.customer = cus;
+                return View(customer);
+            }
+            else
+            {
+                return View("~/Views/Login/Index.cshtml");
+            }
         }
 
         [HttpPost]
@@ -203,6 +213,7 @@ namespace HotelBook.Controllers
             customer.customer = cus;
             return View( customer);
         }
+
         [HttpPost]
         public void upsettings(Customer customer)
         {
@@ -219,7 +230,27 @@ namespace HotelBook.Controllers
             hotelDb.upsetting(customer, ss);
            
         }
-       
+        
+        [HttpPost]
+        public ActionResult todayBooking(customerProfile customer,int id)
+        {
+            Debug.WriteLine("pack=" + id);
+            Debug.WriteLine("pack=" + customer.dayPack.date);
+            Debug.WriteLine("pack=" + customer.dayPack.number);
+            Debug.WriteLine("pack=" + Session["Email"].ToString());
+            string email = Session["Email"].ToString();
+            customer.dayPack.PackId = id;
+            HotelDBContext hotel = new HotelDBContext();
+            hotel.addTodayBooking(customer.dayPack);
+            Customer cus = hotel.Search(email);
+            Daypack pack = new Daypack();
+            customer.dayPack = pack;
+            customer.range = hotel.Viewpackage(email);
+            customer.customer = cus;
+            customer.dayPack = null;
+            return View("~/Views/Profile/searchTable.cshtml", customer);
+
+        }
         public ActionResult viewEvents( string email)
         {
             customerProfile customer = new customerProfile();
@@ -280,20 +311,40 @@ namespace HotelBook.Controllers
             customer.range = hotelDb.Viewpackage(email);
             HotelDBContext hotel = new HotelDBContext();
             Customer cus = hotel.Search(email);
+            Debug.WriteLine("imageemail=" + email);
             customer.customer = cus;
             return View(customer);
         }
-        [HttpGet]
-        public ActionResult AddPackage()
+        
+        public ActionResult AddPackage(customerProfile customer, string email)
         {
-            return View();
+            if (email != null)
+            {
+                HotelDBContext hotelDb = new HotelDBContext();
+
+                customer.range = hotelDb.Viewpackage(email);
+                HotelDBContext hotel = new HotelDBContext();
+                Customer cus = hotel.Search(email);
+                customer.customer = cus;
+                return View(customer);
+            }
+            else
+            {
+                
+                return View("~/Views/Login/Index.cshtml");
+            }
         }
         [HttpPost]
-        public ActionResult AddPackage(Package pack)
+        public ActionResult AddPackage(customerProfile customer)
         {
             HotelDBContext hotelDb = new HotelDBContext();
-            hotelDb.InsertPack(pack);
-            return View("~/Views/Profile/Package.cshtml");
+            Package package = customer.package;
+            Debug.WriteLine("aaaaa" + package.name);
+            //customer.package.cusId = (string)Session["Email"].ToString();
+            // hotelDb.InsertPack(customer.package);
+
+            //customer.range = hotelDb.Viewpackage(Session["Email"].ToString());
+            return View("~/Views/Profile/Package.cshtml",customer);
         }
         [HttpGet]
         public ActionResult EditPackage(int id)
@@ -320,6 +371,7 @@ namespace HotelBook.Controllers
             hotelDb.DeletePackage(id);
             return View("~/Views/Profile/Package.cshtml");
         }
+       
 
     }
 }

@@ -4,6 +4,11 @@
 @using HotelBook.Models
 @model customerProfile
 
+<script src="@Url.Content("~/Script/moment.min.js")" language="javascript" type="text/javascript"></script>
+<script src="~/Script/bootstrap.min.js" language="javascript" type="text/javascript"></script>
+<script src="~/Script/jquery-1.10.2.min.js" language="javascript" type="text/javascript"></script>
+<script src="@Url.Content("~/Script/fullcalendar.min.js")" language="javascript" type="text/javascript"></script>
+
 <script>
     function validateForm() {
         var now = new Date();
@@ -19,14 +24,115 @@
 
     }
 </script>
-    <div class="col-md-12" style="height:30px"></div>
+<link href="~/Styles/bootstrap.min.css" rel="stylesheet" />
+<link href="~/Styles/Site.css" rel="stylesheet" />
+
+<!-- FullCalendar -->
+<link href="~/Styles/fullcalendar.css" rel='stylesheet' />
+<div class="col-md-12" style="height:30px"></div>
 <div class="col-md-2" style="height:30px"></div>
+<!--
 <div class="col-md-10" style="height:200px;" >
     @using (Html.BeginForm("events", "Profile", FormMethod.Post, new { name = "eventForm", @class = "form-horizontal", role = "form", onsubmit = "return validateForm()" }))
     {
         @Html.TextBoxFor(m=>m.packagesDate,new { type="date", @class="form-control"})
 
         <button type="submit" name="submit" value="Search" class="btn btn-primary">Search</button>
-    }
-</div>
 
+    }
+</div>-->
+<div class="col-md-10">
+
+    <div id="calendar">
+    </div>
+</div>
+<script>
+
+    $('#calendar').fullCalendar({
+       
+        dayClick: function (date, jsEvent, view) {
+           
+            alert('Clicked on: ' + date.format());
+            var todayDate = date.format();
+            var modal = document.getElementById('myModal');
+            modal.style.display = "block";
+            document.getElementById('date').value = todayDate;
+            
+
+            var span = document.getElementsByClassName("close")[0];
+            span.onclick = function () {
+                modal.style.display = "none";
+            }
+
+            // When the user clicks anywhere outside of the modal, close it
+            window.onclick = function (event) {
+                if (event.target == modal) {
+                    modal.style.display = "none";
+                }
+            }
+        },
+        events: [
+     {
+         title: 'My Event',
+         start: '2017-04-01',
+         url: 'http://google.com/'
+     }
+     // other events here
+        ],
+        eventClick: function (event) {
+            if (event.url) {
+                window.open(event.url);
+                return false;
+            }
+        }
+
+
+    });
+
+</script>
+
+<div id="myModal" class="modal">
+    <div class="col-md-2"></div>
+    <div class="col-md-8">
+        <div class="modal-content">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <span class="close">&times;</span>
+                    <h3>Add Today Booking Details</h3>
+                </div>
+                <div class="modal-body">
+                    <table class="table-hover" style="width:100%">
+                        <tr>
+                            <th style="width:30%">Package name</th>
+                            <th style="width:30%">Date</th>
+                            <th style="width:30%">Package booked number</th>
+                            <th style="width:10%"></th>
+                        </tr>
+
+
+
+                        @foreach (var package in Model.range)
+                        {
+                            using (Html.BeginForm("todayBooking", "Profile",new { id=@package.id }, FormMethod.Post, new { name = "eventForm", @class = "form-horizontal", role = "form" }))
+                            {
+                                <tr>
+                                    <td id="name">@package.name</td>
+                                    <td><p>@Html.TextBoxFor(m => m.dayPack.date, new { id = "date",type="date", @class = "form-control" })</p></td>
+                                    <td><p  >@Html.TextBoxFor(m => m.dayPack.number, new { id = "number", type = "number", @class = "form-control" })</p></td>
+                                    <td><button type="submit" name="submit" class="btn btn-primary">Submit</button></td>
+                                </tr>
+                               
+                               
+                            }
+                        }
+                    </table>
+
+                </div>
+                <div class="modal-footer">
+                    
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

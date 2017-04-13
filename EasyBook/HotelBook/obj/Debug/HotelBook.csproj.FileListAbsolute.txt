@@ -190,3 +190,8 @@ E:\project\gthub easyBook\EasyBook\EasyBook\HotelBook\bin\System.Web.Webpages.De
 E:\project\gthub easyBook\EasyBook\EasyBook\HotelBook\bin\System.Web.Webpages.Razor.xml
 E:\project\gthub easyBook\EasyBook\EasyBook\HotelBook\bin\System.Web.Helpers.xml
 E:\project\gthub easyBook\EasyBook\EasyBook\HotelBook\bin\System.Web.Mvc.xml
+E:\project\gthub easyBook\EasyBook\EasyBook\HotelBook\bin\Microsoft.VisualStudio.QualityTools.UnitTestFramework.dll
+E:\project\gthub easyBook\EasyBook\EasyBook\HotelBook\bin\nunit.framework.dll
+E:\project\gthub easyBook\EasyBook\EasyBook\HotelBook\bin\WatiN.Core.dll
+E:\project\gthub easyBook\EasyBook\EasyBook\HotelBook\bin\nunit.framework.xml
+E:\project\gthub easyBook\EasyBook\EasyBook\HotelBook\bin\WatiN.Core.xml

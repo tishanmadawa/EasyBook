@@ -6,72 +6,93 @@
 }
 @using HotelBook.Models
 @model Customer
+<script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
 
 <link href="@Url.Content("~/Styles/Site.css")" rel="stylesheet" />
+<script>
 
+    function validateForm() {
+        var email = $('#email').val();
+        var password = $('#password').val();
+        document.getElementById("emailVal").innerHTML = "";
+        document.getElementById("passwordVal").innerHTML = "";
+        if (email.length == 0) {
+            document.getElementById("emailVal").innerHTML = "Please Enter Email";
+            return false;
+        } else if (password.length == 0) {
+            document.getElementById("passwordVal").innerHTML = "Please Enter Password";
+            return false;
+        } else {
+            return true;
+        }
+
+
+
+    }
+</script>
 
 <div class="row" id="login">
     <div class="col-md-4">
 
         <p>
-            
+
         </p>
     </div>
     <div class="col-md-4" id="login-form">
         <h3 style="margin-left:40%;">LogIn</h3>
         <div>
             <div>
-                @using (Html.BeginForm("Index", "Login", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                @using (Html.BeginForm("Index", "Login", FormMethod.Post, new { @class = "form-horizontal", role = "form", onsubmit = "return validateForm()" }))
                 {
                     @Html.AntiForgeryToken()
 
 
-                        <div class="form-group">
+                    <div class="form-group">
 
-                            <div class="col-md-4">
-                                @Html.Label("Email", new { @class = "col-md-6", @id = "email" })
-                                
-                                </div>
-                            <div class="col-md-6">                                          
-    @Html.TextBoxFor(m => m.email, new { @class = "form-control" })
+                        <div class="col-md-4" style="height:50px;">
+                            @Html.Label("Email", new { @class = "col-md-6" })
 
-</div>
-                            <div class="col-md-4">
-                                <label style="color:red">@Html.DisplayFor(m => m.email)</label>
-                                
-
-                            </div>
                         </div>
+                        <div class="col-md-6">
+                            @Html.TextBoxFor(m => m.email, new { @class = "form-control", @id = "email" })
+
+                        </div>
+                        <div class="col-md-12">
+                            @Html.ValidationMessageFor(m => m.email,"", new { style="color:red;", @id = "emailVal" })
+
+
+                        </div>
+                    </div>
 
 
                         <div class="form-group">
-                            <div class="col-md-4">
+                            <div class="col-md-4" style="height:50px;">
                                 @Html.Label("Password   ", new { @class = "col-md-6 " })
                             </div><div class="col-md-6">
-                                @Html.PasswordFor(m => m.password, new { @class = "form-control" })
+                                @Html.PasswordFor(m => m.password, new { @class = "form-control", @id = "password" })
                             </div>
-                            <div class="col-md-4">
-                                <label>@Html.DisplayFor(m => m.password)</label>
+                            <div class="col-md-12">
+                                @Html.ValidationMessageFor(m => m.password, "", new { style = "color:red;", @id = "passwordVal" } )
 
 
                             </div>
                         </div>
-                   
-                    <div class="col-md-7">
+
+                        <div class="col-md-7">
 
 
                         </div>
                         <div class="col-md-2">
                             <input type="submit" value="Submit" class="btn btn-primary" />
                         </div>
-                    
+
 
                 }
                 <div class="col-md-12" style="height:50px;">
-                    </div>
-
                 </div>
+
             </div>
+        </div>
     </div>
 
 </div>

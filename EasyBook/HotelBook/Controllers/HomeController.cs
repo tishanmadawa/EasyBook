@@ -12,6 +12,7 @@ namespace HotelBook.Controllers
 
         public ActionResult start()
         {
+            
             return View();
         }
         public ActionResult Index()
