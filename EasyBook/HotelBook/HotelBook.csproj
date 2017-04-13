@@ -143,12 +143,11 @@
     <Content Include="Script\respond.js" />
     <Content Include="Script\respond.min.js" />
     <Content Include="Script\ui.draggable.min.js" />
+    <Content Include="Styles\admin.css" />
     <Content Include="Styles\boostrap.css" />
     <Content Include="Global.asax" />
     <Content Include="Styles\bootstrap.min.css" />
-    <Content Include="Styles\demo.css" />
     <Content Include="Styles\Site.css" />
-    <Content Include="Styles\style7.css" />
     <Content Include="Views\Profile\galleria.classic.min.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>

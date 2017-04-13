@@ -9,20 +9,28 @@
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js" language="javascript" type="text/javascript"></script>
 
 
-    </head>
-
-
+</head>
 
 <body>
-<div class="col-md-12 " style="height:100px;padding-top:5px;margin-top:0; ">
-    <div align="center">
 
-        <p align="center" style="color:yellow"><span class="glyphicon glyphicon-star"></span>   <span class="glyphicon glyphicon-star"></span>   <span class="glyphicon glyphicon-star"></span>   <span class="glyphicon glyphicon-star"></span>   <span class="glyphicon glyphicon-star"></span>   </p>
-        @Html.ActionLink("EasyBook", "start", "Home", "", new { align = "center", style = "font-size:24px;color:white;" })
+<div class="col-md-12 navbar">
+    
+   @Html.ActionLink("Logout", "Index", "Admin");
+  @Html.ActionLink("Settings", "Index", "Admin");
+   
+</div>
 
-        <hr style="border:1px solid yellow" />
 
-    </div>
 
-    @RenderBody()
-    </body>
+<div class="main">
+    <h1> Menu</h1>
+    <h2>Scroll this page to see the effect</h2>
+    <h2>The navigation bar will stay at the top of the page while scrolling</h2>
+
+    <p>Some text some text some text some text..</p>
+    <p>Some text some text some text some text..</p>
+</div>
+
+</body>
+        @RenderBody()
+    
