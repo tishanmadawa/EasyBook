@@ -1,5 +1,103 @@
 ﻿
 @{
     ViewBag.Title = "Request";
-    Layout = "~/Views/Shared/_Header2.cshtml";
+    Layout = "~/Views/Shared/_Header.cshtml";
 }
+<style>
+* { 
+  -webkit-box-sizing:border-box;
+  -moz-box-sizing:border-box;
+
+  box-sizing:border-box;
+}
+
+html, body {
+  background:#2D2D2D;
+}
+
+nav {
+  font:700 16px/60px 'Lato', sans-serif;
+  width:90%;
+  margin:0 auto 0 auto;
+  background:#242424;
+  overflow:hidden;
+  -webkit-border-radius:8px;
+  -moz-border-radius:8px;
+ 
+  border-radius:8px;
+}
+
+nav ul {
+  height:60px;
+  overflow:hidden;
+}
+
+nav ul li {
+  width:25%;
+  float:left;
+  text-align:center;
+}
+
+.item-container {
+  top: 0;
+  position:relative;
+  height:120px;
+  cursor:pointer;
+  -webkit-transition: all 0.3s ease;
+	-moz-transition:  	all 0.3s ease;
+	-o-transition:  	  all 0.3s ease;
+	transition: 		    all 0.3s ease;
+}
+
+.item-container:hover{
+  top:-60px;
+}
+
+.item-top,
+.item-bottom {
+  height:60px;
+  position:relative;
+}
+
+.item-top {
+  color:#797979;
+}
+
+.item-bottom {
+  background:#191919;
+  color:yellow;
+}
+
+</style>
+
+<div class="col-md-12" style="height:1000px; background-color: #C8C8C8; overflow:hidden; ">
+    <nav>
+        <ul>
+            <li>
+                <div class="item-container">
+                    <div class="item-top"><span class="glyphicon glyphicon-share"></span>Requests</div>
+                    <div class="item-bottom"><span class="glyphicon glyphicon-share"></span>Requests</div>
+                </div>
+            </li>
+            <li>
+                <div class="item-container">
+                    <div class="item-top"><span class="glyphicon glyphicon-picture"></span>Posts</div>
+                    <div class="item-bottom"><span class="glyphicon glyphicon-picture"></span>Posts</div>
+                </div>
+            </li>
+            <li>
+                <div class="item-container">
+                    <div class="item-top"><span class="glyphicon glyphicon-user"></span> Users</div>
+                    <div class="item-bottom"><span class="glyphicon glyphicon-user"></span> Users</div>
+                </div>
+            </li>
+            <li>
+                <div class="item-container">
+                    <div class="item-top"><span class="glyphicon glyphicon-home"></span>Bording</div>
+                    <div class="item-bottom"><span class="glyphicon glyphicon-home"></span>Bording</div>
+                </div>
+            </li>
+        </ul>
+    </nav>
+
+</div>

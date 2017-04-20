@@ -153,6 +153,8 @@
     <Content Include="Script\jquery-1.10.2.js" />
     <Content Include="Script\jquery-1.10.2.min.js" />
     <Content Include="Script\jquery-1.10.2.min.map" />
+    <Content Include="Script\jquery.Jcrop.js" />
+    <Content Include="Script\jquery.Jcrop.min.js" />
     <Content Include="Script\jquery.js" />
     <Content Include="Script\jquery.validate.js" />
     <Content Include="Script\jquery.validate.min.js" />
@@ -174,6 +176,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="unitTesting.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
@@ -222,6 +225,8 @@
     <Content Include="Views\web.config">
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="Views\Admin\Index.cshtml" />
+    <Content Include="Views\Admin\Request.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -231,7 +236,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\Admin\" />
     <Folder Include="Views\Validation\" />
   </ItemGroup>
   <ItemGroup>
