@@ -49,16 +49,16 @@
 <script>
 
     $('#calendar').fullCalendar({
-       
+
         dayClick: function (date, jsEvent, view) {
+
            
-            alert('Clicked on: ' + date.format());
             var todayDate = date.format();
             var modal = document.getElementById('myModal');
             modal.style.display = "block";
             document.getElementById('date').value = todayDate;
-            
-
+            //@(Model.packagesDate)=todayDate;
+          //  alert(@(Model.packagesDate));
             var span = document.getElementsByClassName("close")[0];
             span.onclick = function () {
                 modal.style.display = "none";
@@ -93,7 +93,7 @@
 
 <div id="myModal" class="modal">
     <div class="col-md-2"></div>
-    <div class="col-md-8">
+    <div class="col-md-12">
         <div class="modal-content">
             <div class="modal-content">
                 <div class="modal-header">
@@ -111,7 +111,7 @@
 
 
 
-                        @foreach (var package in Model.range)
+                        @foreach (var package in Model.searchpackage)
                         {
                             using (Html.BeginForm("todayBooking", "Profile",new { id=@package.id }, FormMethod.Post, new { name = "eventForm", @class = "form-horizontal", role = "form" }))
                             {
@@ -125,6 +125,7 @@
                                
                             }
                         }
+                        
                     </table>
 
                 </div>

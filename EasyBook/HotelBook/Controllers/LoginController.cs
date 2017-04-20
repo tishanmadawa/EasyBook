@@ -54,20 +54,26 @@ namespace HotelBook.Controllers
 
                     if (passw == password)
                     {
-                        Customer customer1 = new Customer();
+                        if (customer.accept==1) {
+                            Customer customer1 = new Customer();
 
-                        Session["Email"] = email;
-                        Debug.WriteLine("enter=" + pass);
-                        ProfileController profile = new ProfileController();
-                        customerProfile cusprofile = new customerProfile();
-                        customer.email = email;
-                        cusprofile.customer = customer;
-                        PostDetails postdetails = new PostDetails();
-                        cusprofile.posts = postdetails.getPosts(email);
-                        Debug.WriteLine(cusprofile.posts.Count);
-                        Debug.WriteLine("image==" + cusprofile.customer.image);
-                        return View("~/Views/Profile/post.cshtml", cusprofile);
-
+                            Session["Email"] = email;
+                            Debug.WriteLine("enter=" + pass);
+                            ProfileController profile = new ProfileController();
+                            customerProfile cusprofile = new customerProfile();
+                            customer.email = email;
+                            cusprofile.searchpackage = new List<Package>();
+                            cusprofile.customer = customer;
+                            PostDetails postdetails = new PostDetails();
+                            cusprofile.posts = postdetails.getPosts(email);
+                            Debug.WriteLine(cusprofile.posts.Count);
+                            Debug.WriteLine("image==" + cusprofile.customer.image);
+                            return View("~/Views/Profile/post.cshtml", cusprofile);
+                        }else
+                        {
+                            ModelState.AddModelError("email", "Wait for accept the signup");
+                            return View();
+                        }
 
                     }
                     else

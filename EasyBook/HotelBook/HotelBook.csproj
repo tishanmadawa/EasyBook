@@ -153,7 +153,10 @@
     <Content Include="Script\jquery-1.10.2.js" />
     <Content Include="Script\jquery-1.10.2.min.js" />
     <Content Include="Script\jquery-1.10.2.min.map" />
+    <Content Include="Script\jquery.Jcrop.js" />
+    <Content Include="Script\jquery.Jcrop.min.js" />
     <Content Include="Script\jquery.js" />
+    <Content Include="Script\jquery.min.js" />
     <Content Include="Script\jquery.validate.js" />
     <Content Include="Script\jquery.validate.min.js" />
     <Content Include="Script\jquery.validate.unobtrusive.js" />

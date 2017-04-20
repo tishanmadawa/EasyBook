@@ -20,10 +20,11 @@ namespace HotelBook.Models
         public string city { get; set; }
         public string address { get; set; }
         public string cPassword { get; set; }
-        public int attempt { get; set; }
+        public int accept { get; set; }
         public string image { get; set; }
         public string rating { get; set; }
         public string ProfileName { get; set; }
+        public string role { get; set; }
     }
     public class Daypack
     {
@@ -59,6 +60,7 @@ namespace HotelBook.Models
         public string type { get; set; }
         public string cusId { get; set; }
         public string availableNo { get; set; }
+        public string number { get; set; }
     }
     public class MyAlbum
     {
@@ -71,7 +73,8 @@ namespace HotelBook.Models
 
     public class HotelDBContext 
     {
-        
+        //customer details
+        //insert customer when signup
         public void Insert(Customer customer)
         {
             string constr = ConfigurationManager.ConnectionStrings["HotelDBContext"].ConnectionString;
@@ -93,6 +96,7 @@ namespace HotelBook.Models
             }
         }
 
+        //search customer using customer email in Login
         public Customer Search(string email)
         {
             string constr = ConfigurationManager.ConnectionStrings["HotelDBContext"].ConnectionString;
@@ -115,7 +119,7 @@ namespace HotelBook.Models
                         customer.password= Convert.ToString(dt.Rows[0]["Password"]);
                         customer.name= Convert.ToString(dt.Rows[0]["Name"]);
                         customer.email = Convert.ToString(dt.Rows[0]["Email"]);
-                        customer.attempt = Convert.ToInt32(dt.Rows[0]["Attempt"]);
+                        customer.accept = Convert.ToInt32(dt.Rows[0]["Accept"]);
                         customer.image = Convert.ToString(dt.Rows[0]["Image"]);
                         customer.address = Convert.ToString(dt.Rows[0]["Address"]);
                         customer.ProfileName= Convert.ToString(dt.Rows[0]["ProfileName"]);
@@ -133,6 +137,50 @@ namespace HotelBook.Models
                    
                 }
                
+            }
+        }
+        //search customer using customer ID 
+        public Customer SearchCustomer(int ID)
+        {
+            string constr = ConfigurationManager.ConnectionStrings["HotelDBContext"].ConnectionString;
+            using (SqlConnection con = new SqlConnection(constr))
+            {
+                con.Open();
+                Customer customer = new Models.Customer();
+                SqlCommand com = new SqlCommand("SELECT * FROM Customer WHERE Id=@Id");
+                com.CommandType = CommandType.Text;
+                com.Connection = con;
+
+                com.Parameters.AddWithValue("@Id", ID);
+
+                using (SqlDataAdapter da = new SqlDataAdapter(com))
+                {
+                    DataTable dt = new DataTable();
+                    da.Fill(dt);
+                    if (dt.Select().Length != 0)
+                    {
+                        customer.password = Convert.ToString(dt.Rows[0]["Password"]);
+                        customer.name = Convert.ToString(dt.Rows[0]["Name"]);
+                        customer.email = Convert.ToString(dt.Rows[0]["Email"]);
+                        customer.accept = Convert.ToInt32(dt.Rows[0]["Accept"]);
+                        customer.image = Convert.ToString(dt.Rows[0]["Image"]);
+                        customer.address = Convert.ToString(dt.Rows[0]["Address"]);
+                        customer.ProfileName = Convert.ToString(dt.Rows[0]["ProfileName"]);
+                        customer.rating = Convert.ToString(dt.Rows[0]["Rating"]);
+                        customer.state = Convert.ToString(dt.Rows[0]["State"]);
+                        customer.city = Convert.ToString(dt.Rows[0]["City"]);
+                        customer.id = Convert.ToInt32(dt.Rows[0]["Id"]);
+
+
+                        return customer;
+                    }
+                    else
+                    {
+                        return customer;
+                    }
+
+                }
+
             }
         }
         public void addImage(Customer customer)
@@ -268,6 +316,49 @@ namespace HotelBook.Models
                 }
             }
         }
+        public void updateTodayBooking(Daypack dayPack)
+        {
+            string constr = ConfigurationManager.ConnectionStrings["HotelDBContext"].ConnectionString;
+            using (SqlConnection con = new SqlConnection(constr))
+            {
+                using (SqlCommand cmd = new SqlCommand("UPDATE dayPac SET number=@number WHERE id=@id", con))
+                {
+                    
+                    cmd.Parameters.AddWithValue("@number", dayPack.number);
+                    cmd.Parameters.AddWithValue("@id", dayPack.id);
+                    cmd.Connection = con;
+                    con.Open();
+                    cmd.ExecuteNonQuery();
+                    con.Close();
+                }
+            }
+        }
+        public Daypack viewTodayBooking(Daypack dayPack)
+        {
+            string constr = ConfigurationManager.ConnectionStrings["HotelDBContext"].ConnectionString;
+
+            String sql = "SELECT * FROM dayPac WHERE(PacId=@packId AND Date=@date)";
+
+            Daypack newPack = new Daypack();
+            using (SqlConnection conn = new SqlConnection(constr))
+            {
+                SqlCommand cmd = new SqlCommand(sql, conn);
+                cmd.Parameters.AddWithValue("@date", dayPack.date);
+                cmd.Parameters.AddWithValue("@packId", dayPack.PackId);
+                conn.Open();
+                SqlDataReader rdr = cmd.ExecuteReader();
+                while (rdr.Read())
+                {
+
+                    newPack.id = (int)rdr["Id"];
+                    newPack.PackId = (int)rdr["PacId"];
+                    newPack.date = (DateTime)rdr["Date"];
+                    newPack.number = (int)rdr["number"];
+
+                }
+                return newPack;
+            }
+        }
 
         public List<events> getEvents(String email)
         {
@@ -385,7 +476,36 @@ namespace HotelBook.Models
             return mod;
         }
     }
-    public void InsertPack(Package pack)
+        public List<Package> seachPanel(DateTime date)
+        {
+
+            string constr = ConfigurationManager.ConnectionStrings["HotelDBContext"].ConnectionString;
+            Debug.WriteLine(date);
+            String sql = "SELECT P.name AS name,P.availableNo AS availableNo ,P.price AS price,D.number AS number FROM Package P,dayPac D WHERE P.ID=D.PacId AND D.Date=@date";
+
+            List<Package> mod = new List<Package>();
+            using (SqlConnection conn = new SqlConnection(constr))
+            {
+                SqlCommand cmd = new SqlCommand(sql, conn);
+                cmd.Parameters.AddWithValue("@date", date);
+                conn.Open();
+                SqlDataReader rdr = cmd.ExecuteReader();
+                while (rdr.Read())
+                {
+                    var package = new Package();
+                    
+
+                    package.price = rdr["price"].ToString();
+                    package.name = rdr["name"].ToString();
+                    package.number = ((int)rdr["availableNo"] -(int)rdr["number"]).ToString();
+                    package.availableNo = rdr["availableNo"].ToString();
+
+                    mod.Add(package);
+                }
+                return mod;
+            }
+        }
+        public void InsertPack(Package pack)
 {
     string constr = ConfigurationManager.ConnectionStrings["HotelDBContext"].ConnectionString;
     using (SqlConnection con = new SqlConnection(constr))
@@ -658,6 +778,7 @@ public void DeletePackage(int id)
         public events events { get; set; }
         public List<events> allEvents { get; set; }
         public List<Package> range { get; set; }
+        public List<Package> searchpackage { get; set; }
         public List<MyAlbum> albums { get; set; }
         public List<album> albumImage { get; set; }
         public DateTime packagesDate { get; set; }

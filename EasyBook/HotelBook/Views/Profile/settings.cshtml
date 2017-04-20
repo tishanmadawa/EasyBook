@@ -4,14 +4,12 @@
 
 @using HotelBook.Models
 @model customerProfile
-<!DOCTYPE html>
 
 
-    <meta name="viewport" content="width=device-width" />
-    <title>viewSetting</title>
-   <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
-<script type="text/javascript" src="http://cdn.rawgit.com/tapmodo/Jcrop/master/js/jquery.Jcrop.min.js"></script>
-<script type="text/javascript" src="http://cdn.rawgit.com/tapmodo/Jcrop/master/js/jquery.Jcrop.js"></script>
+    
+<script type="text/javascript" src="@Url.Content("~/Script/jquery.min.js")"></script>
+<script type="text/javascript" src="@Url.Content("~/Script/jquery.Jcrop.min.js")"></script>
+
 
 <script type="text/javascript">
         var size;
@@ -32,7 +30,8 @@
             $('#Image2').attr("src", e.target.result);
             $('#Image1').height(500);
             size = $('#Image2').height();
-            t = $.Jcrop($('#Image1'),{
+            t = $.Jcrop('#Image1', {
+                touchSupport: true,
                 onSelect: SetCoordinates,
                 onChange: SetCoordinates
             });
@@ -66,7 +65,7 @@
         };
         img.src = $('#Image1').attr("src");
     });
-});
+
         function SetCoordinates(c) {
 
     $('#imgX1').val((c.x)*(size/500));
@@ -74,7 +73,8 @@
     $('#imgWidth').val((c.w) * (size / 500));
     $('#imgHeight').val((c.h) * (size / 500));
     $('#btnCrop').show();
-};
+        };
+        });
 </script>
 
     <div class="row">

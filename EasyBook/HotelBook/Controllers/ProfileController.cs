@@ -20,6 +20,7 @@ namespace HotelBook.Controllers
         public ActionResult addPic(customerProfile customer)
         {
             Debug.WriteLine(customer.number);
+            customer.searchpackage = new List<Models.Package>();
             HotelDBContext hotel = new HotelDBContext();
             customer.customer = hotel.Search(Session["Email"].ToString());
             return View("~/Views/Profile/photo.cshtml",customer);
@@ -58,7 +59,8 @@ namespace HotelBook.Controllers
             customerProfile cusprofile = new customerProfile();
             cusprofile.customer = hotel.Search(email);
             Debug.WriteLine("email" + customer.email);
-            
+            cusprofile.searchpackage = new List<Models.Package>();
+
             PostDetails postdetails = new PostDetails();
             List<Post> postlist = postdetails.getPosts(customer.email);
             postlist.Reverse();
@@ -76,6 +78,8 @@ namespace HotelBook.Controllers
             string cusemail = customer.email;
             Debug.WriteLine("emailll" + customer.email);
             Debug.WriteLine(post.post);
+            customerpro.searchpackage = new List<Models.Package>();
+
             Debug.WriteLine(post.title);
             DateTime today = DateTime.Now;
             Debug.WriteLine("today" + today);
@@ -103,7 +107,8 @@ namespace HotelBook.Controllers
             customerProfile customerpro = new customerProfile();
             HotelDBContext hotel = new HotelDBContext();
             Customer customer = hotel.Search(customerprofile);
-           
+            customerpro.searchpackage = new List<Models.Package>();
+
             PostDetails postdetails = new PostDetails();
             postdetails.deletepost(blogPostId);
             Debug.WriteLine("ayyo" + customerprofile);
@@ -118,6 +123,8 @@ namespace HotelBook.Controllers
             customer.customer = cus;
             PostDetails postD = new PostDetails();
             customer.albums = postD.getAlbums(email);
+            customer.searchpackage = new List<Models.Package>();
+
             return View("~/Views/Profile/album.cshtml", customer);
         }
 
@@ -126,6 +133,8 @@ namespace HotelBook.Controllers
             HotelDBContext hotel = new HotelDBContext();
             Customer cus = hotel.Search(email);
             customer.customer = cus;
+            customer.searchpackage = new List<Models.Package>();
+
             return View("~/Views/Profile/photo.cshtml", customer);
         }
 
@@ -137,8 +146,9 @@ namespace HotelBook.Controllers
                 Customer cus = hotel.Search(email);
                 Daypack pack = new Daypack();
                 customer.dayPack = pack;
-                customer.range = hotel.Viewpackage(email);
+                customer.searchpackage = hotel.Viewpackage(email);
                 customer.customer = cus;
+
                 return View(customer);
             }
             else
@@ -203,6 +213,8 @@ namespace HotelBook.Controllers
             PostDetails postD = new PostDetails();
             customer.customer = cus;
             customer.albumImage = postD.getImages(id);
+            customer.searchpackage = new List<Models.Package>();
+
             return View(customer);
         }
         [HttpGet]
@@ -211,6 +223,8 @@ namespace HotelBook.Controllers
             HotelDBContext hotel = new HotelDBContext();
             Customer cus = hotel.Search(email);
             customer.customer = cus;
+            customer.searchpackage = new List<Models.Package>();
+
             return View( customer);
         }
 
@@ -241,16 +255,24 @@ namespace HotelBook.Controllers
             string email = Session["Email"].ToString();
             customer.dayPack.PackId = id;
             HotelDBContext hotel = new HotelDBContext();
-            hotel.addTodayBooking(customer.dayPack);
+            Daypack old = hotel.viewTodayBooking(customer.dayPack);
+            if (old.id==0) {
+                hotel.addTodayBooking(customer.dayPack);
+            }else
+            {
+                old.number = old.number + customer.dayPack.number;
+                hotel.updateTodayBooking(old);
+            }
+            
             Customer cus = hotel.Search(email);
-            Daypack pack = new Daypack();
-            customer.dayPack = pack;
-            customer.range = hotel.Viewpackage(email);
+            customer.searchpackage = hotel.Viewpackage(email);
             customer.customer = cus;
             customer.dayPack = null;
+
             return View("~/Views/Profile/searchTable.cshtml", customer);
 
         }
+
         public ActionResult viewEvents( string email)
         {
             customerProfile customer = new customerProfile();
@@ -259,6 +281,8 @@ namespace HotelBook.Controllers
             customer.customer = cus;
             customer.allEvents = hotel.getEvents(email);
             Debug.WriteLine("image=" + customer.customer.image);
+            customer.range = new List<Models.Package>();
+
             return View(customer);
         }
          public ActionResult deleteEvents(int blogPostId, string customerprofile)
@@ -270,6 +294,7 @@ namespace HotelBook.Controllers
             customer.customer = cus;
             customer.allEvents = hotel.getEvents(customerprofile);
             Debug.WriteLine("image=" + customer.customer.image);
+            customer.searchpackage = new List<Models.Package>();
 
             return View("~/Views/Profile/viewEvents.cshtml", customer);
         }
@@ -280,6 +305,8 @@ namespace HotelBook.Controllers
             Customer cus = hotel.Search(email);
             customer.customer = cus;
             Debug.WriteLine("image=" + customer.customer.image);
+            customer.searchpackage = new List<Models.Package>();
+
             return View(customer);
         }
 
@@ -302,17 +329,21 @@ namespace HotelBook.Controllers
             customer.customer = cus;
             Debug.WriteLine("image=" + customer.customer.image);
             hotel.addEvent(newEvent);
-            
+            customer.searchpackage = new List<Models.Package>();
+
             return View(customer);
         }
         public ActionResult Package(customerProfile customer, string email)
         {
             HotelDBContext hotelDb = new HotelDBContext();
             customer.range = hotelDb.Viewpackage(email);
+            customer.searchpackage = new List<Models.Package>();
+
             HotelDBContext hotel = new HotelDBContext();
             Customer cus = hotel.Search(email);
             Debug.WriteLine("imageemail=" + email);
             customer.customer = cus;
+
             return View(customer);
         }
         
@@ -326,6 +357,8 @@ namespace HotelBook.Controllers
                 HotelDBContext hotel = new HotelDBContext();
                 Customer cus = hotel.Search(email);
                 customer.customer = cus;
+                customer.searchpackage = new List<Models.Package>();
+
                 return View(customer);
             }
             else
@@ -344,6 +377,8 @@ namespace HotelBook.Controllers
             // hotelDb.InsertPack(customer.package);
 
             //customer.range = hotelDb.Viewpackage(Session["Email"].ToString());
+            customer.searchpackage = new List<Models.Package>();
+
             return View("~/Views/Profile/Package.cshtml",customer);
         }
         [HttpGet]
@@ -371,7 +406,17 @@ namespace HotelBook.Controllers
             hotelDb.DeletePackage(id);
             return View("~/Views/Profile/Package.cshtml");
         }
-       
+        public ActionResult getPack(customerProfile customer,string email)
+        {
+            HotelDBContext hotelDb = new HotelDBContext();
+            customer.searchpackage=hotelDb.seachPanel(customer.packagesDate);
+            customer.customer = hotelDb.Search(email);
+            PostDetails post = new PostDetails();
+            customer.posts = post.getPosts(email);
+
+            return View("~/Views/Profile/post.cshtml",customer);
+        }
+
 
     }
 }

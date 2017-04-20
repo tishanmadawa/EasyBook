@@ -87,6 +87,33 @@ var map;
 
     <div class="col-md-3" style="height:400px;overflow:hidden;border-right:2px solid black;background-color:grey;color:white;">
         <h3>Search Panel</h3>
+@using (Html.BeginForm("getPack", "Profile",new { email=Model.customer.email}, FormMethod.Post, new { name = "eventForm", @class = "form-horizontal", role = "form", onsubmit = "return validateForm()" }))
+{
+    <p>@Html.TextBoxFor(m=>m.packagesDate,new { @class = "form-control",type="Date" })</p>
+   
+    <button type="submit" value="submit" name="submit" class="btn btn-primary">Search</button>
+}
+        <div class="col-md-12">
+            <table class="table-hover" style="width:100%;">
+                <tr>
+                    <th style="width:100%;">Package Name</th>
+                    <th style="width:100%;">Available Number</th>
+
+                </tr>
+                @foreach (var package in Model.searchpackage)
+                {
+
+                <tr>
+                   <td>@package.name</td>
+                    <td>@package.number</td>
+                </tr>
+
+                    }
+
+                
+
+            </table>
+        </div>
     </div>
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
     <link href="@Url.Content("~/Styles/boostrap.min.css")" rel="stylesheet" />

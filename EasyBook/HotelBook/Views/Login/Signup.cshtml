@@ -5,89 +5,230 @@
 }
 @using HotelBook.Models
 @model Customer
+
+<script>
+    function validateForm() {
+       
+            document.getElementById("emailVal").innerHTML = "";
+            document.getElementById("idVal").innerHTML = "";
+            document.getElementById("nameVal").innerHTML = "";
+            document.getElementById("stateVal").innerHTML = "";
+            document.getElementById("cityVal").innerHTML = "";
+            document.getElementById("addressVal").innerHTML = "";
+            document.getElementById("passwordVal").innerHTML = "";
+            document.getElementById("cPasswordVal").innerHTML = "";
+        var letterNumber = /^[0-9a-zA-Z]+$/;
+
+        var value = true;
+
+        var ResNumber = $('#reg').val();
+        var name = $('#name').val();
+        var email = $('#email').val();
+        var state = $('#state').val();
+        var city = $('#city').val();
+        var address = $('#address').val();
+        var password = $('#password').val();
+        var cPassword = $('#cPassword').val();
+        if (ResNumber == "" || email == "" || name=="" || state=="" || city=="") {
+            if (email == "") {
+                document.getElementById("emailVal").innerHTML = "Enter Email";
+                
+            }
+            if (ResNumber == "") {
+                document.getElementById("idVal").innerHTML = "Enter Register Number";
+               
+            }
+            if (name == "") {
+                document.getElementById("nameVal").innerHTML = "Enter Hotel Name";
+
+            }
+            if (state == "") {
+                document.getElementById("stateVal").innerHTML = "Enter Hotel State";
+
+            }
+            if (city == "") {
+                document.getElementById("cityVal").innerHTML = "Enter Hotel City";
+
+            }
+            if (address == "") {
+                document.getElementById("addressVal").innerHTML = "Enter Hotel Address";
+
+            }
+            if (password == "") {
+                document.getElementById("passwordVal").innerHTML = "Enter Password";
+
+            }
+            if (cPassword == "") {
+                document.getElementById("cPasswordVal").innerHTML = "Enter Confirm Password";
+
+            }
+            value= false;
+        }
+        alert(ResNumber.match(letterNumber));
+        if (ResNumber.match(letterNumber)==null) {
+
+            document.getElementById("idVal").innerHTML = "Enter Valid ID";
+            value= false;
+        }
+        if (email.match(letterNumber) == null) {
+
+            document.getElementById("emailVal").innerHTML = "Enter Valid Email";
+            value = false;
+        }
+        if (name.match(letterNumber) == null) {
+
+            document.getElementById("nameVal").innerHTML = "Enter Valid Name";
+            value = false;
+        }
+        if (state.match(letterNumber) == null) {
+
+            document.getElementById("stateVal").innerHTML = "Enter Valid State";
+            value = false;
+        }
+        if (city.match(letterNumber) == null) {
+
+            document.getElementById("cityVal").innerHTML = "Enter Valid City";
+            value = false;
+
+        }
+        if (address.match(letterNumber) == null) {
+
+            document.getElementById("addressVal").innerHTML = "Enter Valid Address";
+            value = false;
+        }
+        if (password != cPassword) {
+
+            document.getElementById("cPasswordVal").innerHTML = "Confirm Password";
+            value = false;
+
+
+        }
+        
+        return value;
+
+
+    }
+</script>
 <div class="row" >
-    <div class="col-md-2">
+    <div class="col-md-3">
 
         <p>
 
         </p>
     </div>
-    <div class="col-md-8">
+    <div class="col-md-9">
         
         
             <div>
-                <section id="loginForm">
-                    @using (Html.BeginForm("signUp", "Login", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+               
+                    @using (Html.BeginForm("signUp", "Login", FormMethod.Post, new { @class = "form-horizontal", role = "form", onsubmit = "return validateForm()" }))
                     {
                         @Html.AntiForgeryToken()
 
                         <div>
-                            <div class="col-md-8">
+                            <div class="col-md-12">
 
                                 <h3 style="margin-left:40%;">SignUp Form</h3>
                                 <h4>Please enter the Correct information</h4>
                             </div>
                             <div class="form-group">
-                               
+
+                                <div class="col-md-4">
+                                    @Html.Label("Register No", new { @class = "col-md-6" })
+
+                                </div>
                                 <div class="col-md-5">
+                                    @Html.TextBoxFor(m => m.id, new {@id="reg", @class = "form-control" })
+
+                                </div>
+                                <div class="col-md-3">
+                                    <p id="idVal" style="color:red" >@Html.ValidationMessageFor(m => m.id, "", new { style = "color:red;" })</p> 
+
+                                </div>
+                            </div>
+                            <div class="form-group">
+                               
+                                <div class="col-md-4">
                                     @Html.Label("Email", new { @class = "col-md-6" })
 
                                 </div>
-                                <div class="col-md-6">
-                                    @Html.TextBoxFor(m=>m.email, new { @class = "form-control" })
+                                <div class="col-md-5">
+                                    @Html.TextBoxFor(m=>m.email, new {@id="email", @class = "form-control" })
 
                                 </div>
+                                <div class="col-md-3">
+                                    <p id="emailVal" style="color:red">@Html.ValidationMessageFor(m => m.email, "", new { style = "color:red;", @id = "emailVal" })</p>
+
+</div>
                             </div>
 
 
                             <div class="form-group">
-                                <div class="col-md-5">
+                                <div class="col-md-4">
                                     @Html.Label("Hotel Name   ", new { @class = "col-md-6 " })
-                                </div><div class="col-md-6">
-                                    @Html.TextBoxFor(m=>m.name, new { @class = "form-control" })
+                                </div><div class="col-md-5">
+                                    @Html.TextBoxFor(m=>m.name, new {@id="name", @class = "form-control" })
                                 </div>
+                                <div class="col-md-3">
+                                    <p id="nameVal" style="color:red">@Html.ValidationMessageFor(m => m.name, "", new { style = "color:red;", @id = "nameVal" })</p>
 
+</div>
                             </div>
                             <div class="form-group">
-                                <div class="col-md-5">
+                                <div class="col-md-4">
                                     @Html.Label("State  ", new { @class = "col-md-6 " })
-                                </div><div class="col-md-6">
-                                    @Html.TextBoxFor(m=>m.state, new { @class = "form-control" })
+                                </div><div class="col-md-5">
+                                    @Html.TextBoxFor(m=>m.state, new {@id="state", @class = "form-control" })
                                 </div>
+                                <div class="col-md-3">
+                                    <p id="stateVal" style="color:red">@Html.ValidationMessageFor(m => m.state, "", new { style = "color:red;", @id = "stateVal" })</p>
 
+</div>
                             </div>
                             <div class="form-group">
-                                <div class="col-md-5">
+                                <div class="col-md-4">
                                     @Html.Label("City  ", new { @class = "col-md-6 " })
-                                </div><div class="col-md-6">
-                                    @Html.TextBoxFor(m=>m.city, new { @class = "form-control" })
+                                </div><div class="col-md-5">
+                                    @Html.TextBoxFor(m=>m.city, new {@id="city", @class = "form-control" })
                                 </div>
+                                <div class="col-md-3">
+                                    <p id="cityVal" style="color:red"> @Html.ValidationMessageFor(m => m.city, "", new { style = "color:red;", @id = "cityVal" })</p>
 
+</div>
                             </div>
                             <div class="form-group">
-                                <div class="col-md-5">
+                                <div class="col-md-4">
                                     @Html.Label("Hotel Address   ", new { @class = "col-md-6 " })
-                                </div><div class="col-md-6">
-                                    @Html.TextBoxFor(m=>m.address, new { @class = "form-control" })
+                                </div><div class="col-md-5">
+                                    @Html.TextBoxFor(m=>m.address, new {@id="address", @class = "form-control" })
                                 </div>
+                                <div class="col-md-3">
+                                    <p id="addressVal" style="color:red">@Html.ValidationMessageFor(m => m.address, "", new { style = "color:red;", @id = "addressVal" })</p>
 
+</div>
                             </div>
                            
                             <div class="form-group">
-                                <div class="col-md-5 ">
+                                <div class="col-md-4 ">
                                     @Html.Label("Password   ", new { @class = "col-md-6 " })
-                                </div><div class="col-md-6 ">
-                                    @Html.PasswordFor(m=>m.password, new { @class = "form-control" })
+                                </div><div class="col-md-5 ">
+                                    @Html.PasswordFor(m=>m.password, new {@id="password", @class = "form-control" })
                                 </div>
-
+                                <div class="col-md-3">
+                                    <p id="passwordVal" style="color:red">@Html.ValidationMessageFor(m => m.password, "", new { style = "color:red;", @id = "passwordVal" })
+</p>
+</div>
                             </div>
                             <div class="form-group">
-                                <div class="col-md-5">
+                                <div class="col-md-4">
                                     @Html.Label("Confirm Password   ", new { @class = "col-md-6 " })
-                                </div><div class="col-md-6">
-                                    @Html.PasswordFor(m=>m.cPassword, new { @class = "form-control" })
+                                </div><div class="col-md-5">
+                                    @Html.PasswordFor(m=>m.cPassword, new { @id= "cPassword", @class = "form-control" })
                                 </div>
-
+                                <div class="col-md-3">
+                                    <p id="cPasswordVal" style="color:red"> @Html.ValidationMessageFor(m => m.cPassword, "", new { style = "color:red;", @id = "cPasswordVal" })
+                                    </p>
+</div>
                             </div>
                             <div class="form-group">
                                 <div class="col-md-5">
@@ -100,7 +241,7 @@
                             </div>
                         </div>
                     }
-</section>
+
 
 </div>
         </div>
