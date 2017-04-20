@@ -121,6 +121,7 @@ namespace HotelBook.Models
                         customer.email = Convert.ToString(dt.Rows[0]["Email"]);
                         customer.accept = Convert.ToInt32(dt.Rows[0]["Accept"]);
                         customer.image = Convert.ToString(dt.Rows[0]["Image"]);
+                        customer.role= Convert.ToString(dt.Rows[0]["Role"]);
                         customer.address = Convert.ToString(dt.Rows[0]["Address"]);
                         customer.ProfileName= Convert.ToString(dt.Rows[0]["ProfileName"]);
                         customer.rating= Convert.ToString(dt.Rows[0]["Rating"]);
@@ -164,6 +165,8 @@ namespace HotelBook.Models
                         customer.email = Convert.ToString(dt.Rows[0]["Email"]);
                         customer.accept = Convert.ToInt32(dt.Rows[0]["Accept"]);
                         customer.image = Convert.ToString(dt.Rows[0]["Image"]);
+                        customer.role = Convert.ToString(dt.Rows[0]["Role"]);
+
                         customer.address = Convert.ToString(dt.Rows[0]["Address"]);
                         customer.ProfileName = Convert.ToString(dt.Rows[0]["ProfileName"]);
                         customer.rating = Convert.ToString(dt.Rows[0]["Rating"]);

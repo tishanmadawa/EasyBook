@@ -44,31 +44,44 @@ namespace HotelBook.Controllers
                 }
                 else
                 {
-
+                    string role = customer.role;
                     char[] a = pass.ToCharArray();
                     String passw = pass.Replace(" ", "");
-
+                    char[] b = role.ToCharArray();
+                    String rolee = role.Replace(" ", "");
                     Debug.WriteLine(password);
                     Debug.WriteLine(passw + passw.Length);
 
 
                     if (passw == password)
                     {
-                        if (customer.accept==1) {
-                            Customer customer1 = new Customer();
+                        if (customer.state=="true") {
+                            Debug.WriteLine(customer.role);
+                            if (rolee == "admin")
+                            {
+                                Debug.WriteLine("role="+customer.role);
+                                customerProfile cusprofile = new customerProfile();
+                                cusprofile.customer = customer;
+                                Session["Email"] = email;
+                                return View("~/Views/Admin/Index.cshtml", cusprofile);
+                            }
+                            else
+                            {
+                                Customer customer1 = new Customer();
 
-                            Session["Email"] = email;
-                            Debug.WriteLine("enter=" + pass);
-                            ProfileController profile = new ProfileController();
-                            customerProfile cusprofile = new customerProfile();
-                            customer.email = email;
-                            cusprofile.searchpackage = new List<Package>();
-                            cusprofile.customer = customer;
-                            PostDetails postdetails = new PostDetails();
-                            cusprofile.posts = postdetails.getPosts(email);
-                            Debug.WriteLine(cusprofile.posts.Count);
-                            Debug.WriteLine("image==" + cusprofile.customer.image);
-                            return View("~/Views/Profile/post.cshtml", cusprofile);
+                                Session["Email"] = email;
+                                Debug.WriteLine("enter=" + pass);
+                                ProfileController profile = new ProfileController();
+                                customerProfile cusprofile = new customerProfile();
+                                customer.email = email;
+                                cusprofile.searchpackage = new List<Package>();
+                                cusprofile.customer = customer;
+                                PostDetails postdetails = new PostDetails();
+                                cusprofile.posts = postdetails.getPosts(email);
+                                Debug.WriteLine(cusprofile.posts.Count);
+                                Debug.WriteLine("image==" + cusprofile.customer.image);
+                                return View("~/Views/Profile/post.cshtml", cusprofile);
+                            }
                         }else
                         {
                             ModelState.AddModelError("email", "Wait for accept the signup");
@@ -106,7 +119,7 @@ namespace HotelBook.Controllers
         public ActionResult LogOut()
         {
             Session["Email"] = null;
-            return View("~/Views/Home/index.cshtml");
+            return View("~/Views/Home/start.cshtml");
         }
     }
 }

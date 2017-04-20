@@ -65,26 +65,7 @@ var map;
 
 
 
-    @*@if (@Session["Email"] != null)
-        {
-
-            <script type="text/javascript">
-
-                    $(function () {
-
-                        $("#d1").draggable();
-
-                    });</script>
-                    using (Html.BeginForm("cover", "Profile", FormMethod.Post, new { @class = "form-horizontal", enctype = "multipart/form-data" }))
-                    {
-                        @Html.AntiForgeryToken()
-                        @Html.TextBox("File", "", new { id = "blah", type = "file", @class = "glyphicon glyphicon-open", style = "float:right" })
-                        @Html.HiddenFor(m => m.email, Session["Email"]);
-                <input type="submit" value="Submit" class="btn btn-primary" />
-
-            }
-
-        }*@
+   
 
     <div class="col-md-3" style="height:400px;overflow:hidden;border-right:2px solid black;background-color:grey;color:white;">
         <h3>Search Panel</h3>
