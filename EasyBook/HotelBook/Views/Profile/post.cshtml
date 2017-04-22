@@ -4,26 +4,49 @@
 
 @using HotelBook.Models;
 @model customerProfile
+<link href="~/Styles/Site.css" rel="stylesheet" />
+
 
 <div class="col-md-12" style="height:30px;"></div>
 <div  class="col-md-12">
 
-    @if (Session["Email"] != null) {
-   if (Session["Email"].ToString() == Model.customer.email)
+    @if (Session["Email"] != null)
     {
-        using (Html.BeginForm("addPost", "Profile", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+        if (Session["Email"].ToString() == Model.customer.email)
         {
-    @Html.AntiForgeryToken()
+            if (Model.post == null)
+            {
+                using (Html.BeginForm("addPost", "Profile", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                {
+                    @Html.AntiForgeryToken()
 
-    <div class="col-md-2" style="height:50px;"> <p>Say something</p></div>
-    <div class="col-md-8" style="height:50px;"> <p>@Html.TextBoxFor(m => m.post.title, new { @style = "max-width:500px;min-width:300px;", @class = "form-control", Required = "true" })</p></div>
+                    <div class="col-md-2" style="height:50px;"> <p>Say something</p></div>
+                    <div class="col-md-8" style="height:50px;"> <p>@Html.TextBoxFor(m => m.post.title, new { @style = "max-width:500px;min-width:300px;", @class = "form-control", Required = "true" })</p></div>
 
-    <div class="col-md-12" style="height:140px;"> <p>@Html.TextAreaFor(m => m.post.post, new { @class = "form-control", resize = "none", rows = "6", style = "max-width:1100px;min-width:1100;", Required = "true" })</p></div>
+                    <div class="col-md-12" style="height:140px;"> <p>@Html.TextAreaFor(m => m.post.post, new { @class = "form-control", resize = "none", rows = "6", style = "max-width:1100px;min-width:1100;", Required = "true" })</p></div>
 
-    <div class="col-md-11" style="height:70px;"> @Html.HiddenFor(m => m.customer.email) @Html.HiddenFor(m => m.customer.image) @Html.HiddenFor(m => m.customer.name)</div>
-    <div class="col-md-1" style="height:70px;"><input type="submit" value="Post" class="btn btn-primary" /></div>
+                    <div class="col-md-11" style="height:70px;"> @Html.HiddenFor(m => m.customer.email) @Html.HiddenFor(m => m.customer.image) @Html.HiddenFor(m => m.customer.name)</div>
+                    <div class="col-md-1" style="height:70px;"><input type="submit" value="Post" class="btn btn-primary" /></div>
 
+                }
             }
+            else
+            {
+                using (Html.BeginForm("editPostSingle", "Profile", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                {
+                    @Html.AntiForgeryToken()
+
+                    <div class="col-md-2" style="height:50px;"> <p>Say something</p></div>
+                    <div class="col-md-8" style="height:50px;"> <p>@Html.TextBoxFor(m => m.post.title, new { @style = "max-width:500px;min-width:300px;", @class = "form-control", Required = "true" })</p></div>
+
+                    <div class="col-md-12" style="height:140px;"> <p>@Html.TextAreaFor(m => m.post.post, new { @class = "form-control", resize = "none", rows = "6", style = "max-width:1100px;min-width:1100;", Required = "true" })</p></div>
+
+                    <div class="col-md-11" style="height:70px;"> @Html.HiddenFor(m => m.post.id) @Html.HiddenFor(m => m.customer.email)@Html.HiddenFor(m => m.customer.image) @Html.HiddenFor(m => m.customer.name)</div>
+                    <div class="col-md-1" style="height:70px;"><input type="submit" value="Edit" class="btn btn-primary" /></div>
+
+                }
+            }
+
         }
     }
 </div>
@@ -45,28 +68,38 @@
     {
                            <div class="dropdown" style="float:right;margin-right:10%;">
                                <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
-                                  
+
                                    <span class="caret"></span>
                                </button>
                                <ul class="dropdown-menu">
-                                   <li>@Html.ActionLink("delete", "deletePost", "Profile", new
+                                   <li>
+                                       @Html.ActionLink("delete", "deletePost", "Profile", new
                                   {                                                     // routeValues
                                       blogPostId = @post.id,
                                       customerprofile = @post.customerId
-
                                   },
-null)</li>
-                                   
-                               </ul>
-                           </div>}
+                                    null)
+                               </li>
+                                   <li>
+                                       @Html.ActionLink("edit", "editPost", "Profile", new
+                                  {                                                     // routeValues
+                                      blogPostId = @post.id,
+                                      customerprofile = @post.customerId
+                                  },
+                                    null)
+                                   </li>
+
+                           </ul>
+                           </div>
+    }
 }
                            <p>@post.date</p>
                            </div>
-                       
-                       <div class="panel panel-body">
-                           <div class="well">
+                       <div style="text-align-last:center">
                            <h4>@post.title</h4>
-                               </div>
+                       </div>
+                       <div class="panel panel-body">
+                          
                            
                                <p>@post.post</p>
                         
@@ -77,8 +110,7 @@ null)</li>
               
 </tr>
 
-
-        }
+       }
         </table>
        
 

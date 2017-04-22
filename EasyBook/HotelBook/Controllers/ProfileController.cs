@@ -53,20 +53,29 @@ namespace HotelBook.Controllers
 
         public ActionResult post(Customer customer,string email)
         {
-            HotelDBContext hotel = new HotelDBContext();
-            
-            ProfileController profile = new ProfileController();
-            customerProfile cusprofile = new customerProfile();
-            cusprofile.customer = hotel.Search(email);
-            Debug.WriteLine("email" + customer.email);
-            cusprofile.searchpackage = new List<Models.Package>();
+            if (email==null)
+            {
+                return View("~/Views/Login/index.cshtml");
 
-            PostDetails postdetails = new PostDetails();
-            List<Post> postlist = postdetails.getPosts(customer.email);
-            postlist.Reverse();
-            cusprofile.posts = postlist;
-            Debug.WriteLine(cusprofile.posts.Count);
-            return View(cusprofile);
+            }
+            else
+            {
+                HotelDBContext hotel = new HotelDBContext();
+
+                ProfileController profile = new ProfileController();
+                customerProfile cusprofile = new customerProfile();
+                cusprofile.customer = hotel.Search(email);
+                Debug.WriteLine("email" + customer.email);
+                cusprofile.searchpackage = new List<Models.Package>();
+
+                PostDetails postdetails = new PostDetails();
+                List<Post> postlist = postdetails.getPosts(customer.email);
+                postlist.Reverse();
+                cusprofile.posts = postlist;
+                Debug.WriteLine(cusprofile.posts.Count);
+                return View(cusprofile);
+            }
+            
         }
 
         [HttpPost]
@@ -114,6 +123,34 @@ namespace HotelBook.Controllers
             Debug.WriteLine("ayyo" + customerprofile);
            
             
+            return RedirectToAction("post", "Profile", customer);
+        }
+        public ActionResult editPost(int blogPostId, String customerprofile)
+        {
+
+            customerProfile customerpro = new customerProfile();
+            HotelDBContext hotel = new HotelDBContext();
+            Customer customer = hotel.Search(customerprofile);
+            customerpro.searchpackage = new List<Models.Package>();
+            PostDetails postdetails = new PostDetails();
+            customerpro.posts = postdetails.getPosts(customerprofile);
+            customerpro.customer = customer;
+            customerpro.post = postdetails.getPost(blogPostId);
+            return View("~/Views/Profile/post.cshtml", customerpro);
+        }
+
+        public ActionResult editPostSingle(customerProfile customerpro)
+        {
+
+            HotelDBContext hotel = new HotelDBContext();
+            Customer customer = hotel.Search(Session["Email"].ToString());
+            customerpro.searchpackage = new List<Models.Package>();
+            Debug.WriteLine("new" + customerpro.post.title);
+            Debug.WriteLine("id" + customerpro.post.id);
+            PostDetails postdetails = new PostDetails();
+            postdetails.editpost(customerpro.post);
+
+
             return RedirectToAction("post", "Profile", customer);
         }
         public ActionResult photo(customerProfile customer, string email)
@@ -281,7 +318,7 @@ namespace HotelBook.Controllers
             customer.customer = cus;
             customer.allEvents = hotel.getEvents(email);
             Debug.WriteLine("image=" + customer.customer.image);
-            customer.range = new List<Models.Package>();
+            customer.searchpackage = new List<Models.Package>();
 
             return View(customer);
         }
@@ -299,6 +336,31 @@ namespace HotelBook.Controllers
             return View("~/Views/Profile/viewEvents.cshtml", customer);
         }
 
+        public ActionResult editEvent(int blogPostId, string customerprofile)
+        {
+            customerProfile customer = new customerProfile();
+            HotelDBContext hotel = new HotelDBContext();
+            Customer cus = hotel.Search(customerprofile);
+            customer.customer = cus;
+            customer.allEvents = hotel.getEvents(customerprofile);
+            customer.events = hotel.geteEvent(blogPostId);
+            customer.searchpackage = new List<Models.Package>();
+            return View(customer);
+        }
+        [HttpPost]
+        public ActionResult editEvent(customerProfile customer)
+        {
+            
+            HotelDBContext hotel = new HotelDBContext();
+            
+            Customer cus = hotel.Search(customer.customer.email);
+            customer.customer = cus;
+            customer.searchpackage = new List<Models.Package>();
+            PostDetails post = new PostDetails();
+            hotel.editEvent(customer.events);
+            customer.allEvents = hotel.getEvents(customer.customer.email);
+            return View(customer);
+        }
         public ActionResult events(customerProfile customer, string email)
         {
             HotelDBContext hotel = new HotelDBContext();
@@ -309,7 +371,6 @@ namespace HotelBook.Controllers
 
             return View(customer);
         }
-
         [HttpPost]
         public ActionResult events(customerProfile customer)
         {
@@ -367,6 +428,7 @@ namespace HotelBook.Controllers
                 return View("~/Views/Login/Index.cshtml");
             }
         }
+
         [HttpPost]
         public ActionResult AddPackage(customerProfile customer)
         {

@@ -301,7 +301,29 @@ namespace HotelBook.Models
                 }
             }
         }
-
+        public void editEvent(events eve)
+        {
+            string constr = ConfigurationManager.ConnectionStrings["HotelDBContext"].ConnectionString;
+            using (SqlConnection con = new SqlConnection(constr))
+            {
+                using (SqlCommand cmd = new SqlCommand("UPDATE Events SET Date=@date,NoDays=@noDays,StartTime=@startTime,EndTime=@endTime,Meant=@meant,Accomadation=@accomadation,Location=@location,Description=@description WHERE Id=@id"))
+                {
+                    cmd.Parameters.AddWithValue("@id", eve.id);
+                    cmd.Parameters.AddWithValue("@accomadation", eve.accomadation);
+                    cmd.Parameters.AddWithValue("@date", eve.date);
+                    cmd.Parameters.AddWithValue("@description", eve.description);
+                    cmd.Parameters.AddWithValue("@endTime", eve.endTime);
+                    cmd.Parameters.AddWithValue("@location", eve.location);
+                    cmd.Parameters.AddWithValue("@meant", eve.meant);
+                    cmd.Parameters.AddWithValue("@noDates", eve.noDates);
+                    cmd.Parameters.AddWithValue("@startTime", eve.startTime);
+                    cmd.Connection = con;
+                    con.Open();
+                    cmd.ExecuteNonQuery();
+                    con.Close();
+                }
+            }
+        }
         public void addTodayBooking(Daypack dayPack)
         {
             string constr = ConfigurationManager.ConnectionStrings["HotelDBContext"].ConnectionString;
@@ -422,6 +444,36 @@ namespace HotelBook.Models
                     cmd.ExecuteNonQuery();
                     con.Close();
                 }
+            }
+        }
+        public events geteEvent(int id)
+        {
+
+            string constr = ConfigurationManager.ConnectionStrings["HotelDBContext"].ConnectionString;
+
+            String sql = "SELECT * FROM Events WHERE Id=@x";
+
+            events eve = new events();
+            using (SqlConnection conn = new SqlConnection(constr))
+            {
+                SqlCommand cmd = new SqlCommand(sql, conn);
+                cmd.Parameters.AddWithValue("@x", id);
+                conn.Open();
+                SqlDataReader rdr = cmd.ExecuteReader();
+                while (rdr.Read())
+                {
+                    eve.id = id;
+                    eve.accomadation = rdr["Accomadation"].ToString();
+                    eve.date = (DateTime)rdr["Date"];
+                    eve.description = rdr["Description"].ToString();
+                    eve.endTime = rdr["EndTime"].ToString();
+                    eve.location = rdr["Location"].ToString();
+                    eve.meant = rdr["Meant"].ToString();
+                    eve.noDates = Convert.ToInt32(rdr["NoDays"]);
+                    eve.startTime = rdr["StartTime"].ToString();
+                   
+                }
+                return eve;
             }
         }
         public void upsetting(Customer customer, string ee)
@@ -640,6 +692,32 @@ public void DeletePackage(int id)
                 }
             }
         }
+        public Post getPost(int id)
+        {
+
+            string constr = ConfigurationManager.ConnectionStrings["HotelDBContext"].ConnectionString;
+
+        String sql = "SELECT * FROM Post WHERE Id=@x";
+
+        Post post = new Post();
+    using (SqlConnection conn = new SqlConnection(constr))
+    {
+        SqlCommand cmd = new SqlCommand(sql, conn);
+    cmd.Parameters.AddWithValue("@x", id);
+        conn.Open();
+        SqlDataReader rdr = cmd.ExecuteReader();
+        while (rdr.Read())
+        {
+            post.id = id;
+            Debug.WriteLine("tddd" + id);
+            post.customerId = rdr["CustomerId"].ToString();
+                    post.title = rdr["Title"].ToString();
+                    post.post = rdr["Post"].ToString();
+                    post.date = (DateTime)rdr["Date"];
+
+}
+        return post;
+    }}
         public List<Post> getPosts(String email)
         {
             
@@ -688,6 +766,24 @@ public void DeletePackage(int id)
                 {
                     cmd.Parameters.AddWithValue("@id", id);
                     
+                    cmd.Connection = con;
+                    con.Open();
+                    cmd.ExecuteNonQuery();
+                    con.Close();
+                }
+            }
+        }
+
+        public void editpost(Post post)
+        {
+            string constr = ConfigurationManager.ConnectionStrings["HotelDBContext"].ConnectionString;
+            using (SqlConnection con = new SqlConnection(constr))
+            {
+                using (SqlCommand cmd = new SqlCommand("UPDATE Post SET Title=@title,Post=@post WHERE Id=@id"))
+                {
+                    cmd.Parameters.AddWithValue("@id", post.id);
+                    cmd.Parameters.AddWithValue("@title", post.title);
+                    cmd.Parameters.AddWithValue("@post", post.post);
                     cmd.Connection = con;
                     con.Open();
                     cmd.ExecuteNonQuery();

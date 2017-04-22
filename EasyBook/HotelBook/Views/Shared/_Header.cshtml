@@ -25,7 +25,6 @@
                 <ul class="nav navbar-nav navbar-right" style="margin-right:10px;" >
                     @if (@Session["Email"] == null)
                     {
-                    <li>@Html.ActionLink("Admin", "Index", "Admin")</li>
                     <li>@Html.ActionLink("LogIn", "Index", "Login")</li>
                     <li>@Html.ActionLink("SignUp", "Signup", "Login")</li>
                     }else{

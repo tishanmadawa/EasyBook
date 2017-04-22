@@ -42,6 +42,15 @@
                                   },
 null)
                                         </li>
+                                            <li>
+                                                @Html.ActionLink("edit", "editEvent", "Profile", new
+                                           {                                                     // routeValues
+                                               blogPostId = @events.id,
+                                               customerprofile = @events.user
+
+                                           },
+null)
+                                            </li>
 
                                     </ul>
                                 </div>}
