@@ -5,12 +5,15 @@
 @model customerProfile
 <div class="col-md-12">
     <div class="col-md-9" style="height:50px;"></div>
-    @if (Session["Email"].ToString() == Model.customer.email)
+@if (Session["Email"] != null)
+{
+    if (Session["Email"].ToString() == Model.customer.email)
     {
         <div class="col-md-4" style="height:50px;"></div>
         <div class="col-md-3" style="height:50px;">
             <a href="@Url.Action("events", "Profile", new { email = Model.customer.email })"><button class="btn btn-primary">Add New Events</button></a>
         </div>
+        }
     }
     <div class="col-md-1"></div>
         <div class="col-md-11">

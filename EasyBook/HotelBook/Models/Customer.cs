@@ -8,6 +8,7 @@ using System.Data.SqlClient;
 using System.IO;
 using System.Diagnostics;
 using System.ComponentModel.DataAnnotations;
+using System.Web.Helpers;
 
 namespace HotelBook.Models
 {
@@ -69,6 +70,10 @@ namespace HotelBook.Models
         public string name { get; set; }
         public int number { get; set; }
         public string image { get; set; }
+    }
+    public class Search
+    {
+        public List<Customer> ranges { get; set; }
     }
 
     public class HotelDBContext 
@@ -256,7 +261,105 @@ namespace HotelBook.Models
                 return model;
             }
         }
+        public List<Customer> Viewcustomer()
+        {
+            string constr = ConfigurationManager.ConnectionStrings["HotelDBContext"].ConnectionString;
 
+            String sql = "SELECT * FROM Customer WHERE Accept=@true and Role IS NULL";
+
+            var model = new List<Customer>();
+            using (SqlConnection conn = new SqlConnection(constr))
+            {
+                SqlCommand cmd = new SqlCommand(sql, conn);
+                cmd.Parameters.AddWithValue("@true", "False");
+                conn.Open();
+                SqlDataReader rdr = cmd.ExecuteReader();
+                while (rdr.Read())
+                {
+                    var customer = new Customer();
+                    customer.name = rdr["Name"].ToString();
+                    customer.address = rdr["Address"].ToString();
+                    customer.email = rdr["Email"].ToString();
+                    customer.state = rdr["State"].ToString();
+                    customer.city = rdr["City"].ToString();
+
+
+
+
+
+                    model.Add(customer);
+                }
+                return model;
+            }
+        }
+        public void set(string email)
+        {
+
+            string h = email;
+            string constr = ConfigurationManager.ConnectionStrings["HotelDBContext"].ConnectionString;
+            using (SqlConnection con = new SqlConnection(constr))
+            {
+
+                using (SqlCommand cmd = new SqlCommand("UPDATE Customer SET Accept='True' WHERE Email=@email"))
+                {
+
+                    cmd.Parameters.AddWithValue("@email", h);
+
+                    cmd.Connection = con;
+                    con.Open();
+                    cmd.ExecuteNonQuery();
+                    con.Close();
+                }
+            }
+
+        }
+        public void sendMail(string email)
+        {
+            string h = email;
+            // ProcessStartInfo sInfo = new ProcessStartInfo("http://mysite.com/");
+            //Uri ur = new Uri("http://localhost:60818/CreatePro/login");
+            Uri ur = new Uri("http://mysite.com/");
+
+            try
+            {
+                // Initialize WebMail helper
+                System.Web.Helpers.WebMail.SmtpServer = "smtp-pulse.com";
+                WebMail.SmtpPort = 2525;
+                WebMail.UserName = "cs4shalika@gmail.com";
+                WebMail.Password = "XQn8Jdecrja";
+                WebMail.From = "cs4shalika@gmail.com";
+
+                // Send email
+                WebMail.Send(to: h,
+                    subject: "Confirmation of Request",
+                    body: "We add your hotel to HotelBook.Use this to make ypur profile" + ur
+                );
+
+            }
+            catch (Exception ex)
+            {
+                //errorMessage = ex.Message;
+            }
+        }
+        public void setr(string email)
+        {
+            string h = email;
+            string constr = ConfigurationManager.ConnectionStrings["HotelDBContext"].ConnectionString;
+            using (SqlConnection con = new SqlConnection(constr))
+            {
+
+                using (SqlCommand cmd = new SqlCommand("DELETE FROM Customer WHERE Email=@email"))
+                {
+
+                    cmd.Parameters.AddWithValue("@email", h);
+
+                    cmd.Connection = con;
+                    con.Open();
+                    cmd.ExecuteNonQuery();
+                    con.Close();
+                }
+            }
+        }
         public void addAlbum(album newAlbum)
         {
            

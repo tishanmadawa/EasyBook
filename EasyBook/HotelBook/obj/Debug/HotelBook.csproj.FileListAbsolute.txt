@@ -193,7 +193,6 @@ E:\project\gthub easyBook\EasyBook\EasyBook\HotelBook\bin\nunit.framework.dll
 E:\project\gthub easyBook\EasyBook\EasyBook\HotelBook\bin\WatiN.Core.dll
 E:\project\gthub easyBook\EasyBook\EasyBook\HotelBook\bin\nunit.framework.xml
 E:\project\gthub easyBook\EasyBook\EasyBook\HotelBook\bin\WatiN.Core.xml
-E:\project\gthub easyBook\EasyBook\EasyBook\HotelBook\obj\Debug\HotelBook.csprojResolveAssemblyReference.cache
 C:\Users\mas shalika\Documents\GitHub\EasyBook\EasyBook\HotelBook\bin\Microsoft.VisualStudio.QualityTools.UnitTestFramework.dll
 C:\Users\mas shalika\Documents\GitHub\EasyBook\EasyBook\HotelBook\bin\nunit.framework.dll
 C:\Users\mas shalika\Documents\GitHub\EasyBook\EasyBook\HotelBook\bin\WatiN.Core.dll

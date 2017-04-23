@@ -16,7 +16,7 @@ namespace HotelBook.Controllers
         }
 
        
-        public ActionResult Request()
+        public ActionResult Requests()
         {
             HotelDBContext hotelDb = new HotelDBContext();
             List<Customer> range = hotelDb.Viewcustomer();

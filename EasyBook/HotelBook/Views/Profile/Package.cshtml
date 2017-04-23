@@ -43,14 +43,24 @@
                     <td>@package.description</td>
                     <td>@package.type</td>
                     <td>@package.availableNo</td>
-					<td>@Html.ActionLink("Edit", "EditPackage", "Home",new { id=@package.id},new { @class = "btn btn-primary" })</td>
-					<td>@Html.ActionLink("Delete", "DeletePackage", "Home", new { id=@package.id},new { @class = "btn btn-primary" })</td>
-        </tr>
+@if (Session["Email"] != null)
+{
+    if (Session["Email"].ToString() == Model.customer.email)
+    {
+					<td>@Html.ActionLink("Edit", "EditPackage", "Home", new { id = @package.id }, new { @class = "btn btn-primary" })</td>
+					<td>@Html.ActionLink("Delete", "DeletePackage", "Home", new { id = @package.id }, new { @class = "btn btn-primary" })</td>
+    }
+}
+                </tr>
             }
         </table>
 		<br><br>
 <div class="col-md-2">
-
+@if (Session["Email"] != null)
+{
+    if (Session["Email"].ToString() == Model.customer.email)
+    {
 @Html.ActionLink("Add New", "AddPackage", "Profile", new { email = Model.customer.email }, new { @class = "btn btn-primary" })
-
+    }
+}
 </div>

@@ -42,6 +42,7 @@ namespace HotelBook.Controllers
             {
                 city = searchstring1;
             }
+            
             List<Customer> range = hotelDb.searchCustomer(name, city);
 
             return View("~/Views/Home/SearchView.cshtml", range);
