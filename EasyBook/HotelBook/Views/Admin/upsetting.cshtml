@@ -1,10 +1,10 @@
 ﻿
 @{
-    ViewBag.Title = "Request";
+    ViewBag.Title = "upsetting";
     Layout = "~/Views/Shared/_Header2.cshtml";
 }
 @using HotelBook.Models
-@model List<Customer>
+@model Customer
 <style>
     * {
         -webkit-box-sizing: border-box;
@@ -67,22 +67,6 @@
         background: #191919;
         color: yellow;
     }
-
-    table {
-        font-family: arial, sans-serif;
-        border-collapse: collapse;
-        width: 100%;
-    }
-
-    td, th {
-        border: 1px solid #dddddd;
-        text-align: left;
-        padding: 8px;
-    }
-
-    tr:nth-child(even) {
-        background-color: #dddddd;
-    }
 </style>
 
 <div class="col-md-12" style="background-color:#242424;">
@@ -91,7 +75,7 @@
             <li>
                 <div class="item-container">
                     <div class="item-top"><span class="glyphicon glyphicon-share"></span>&nbsp;&nbsp;Requests</div>
-                    <div class="item-bottom"><span class="glyphicon glyphicon-share"></span>&nbsp;&nbsp;@Html.ActionLink("Requests","Request","Admin", new { Style = "color:yellow" })</div>
+                    <div class="item-bottom"><span class="glyphicon glyphicon-share"></span>&nbsp;&nbsp;@Html.ActionLink("Requests", "Request", "Admin", new { Style = "color:yellow" })</div>
                 </div>
             </li>
             <li>
@@ -116,30 +100,82 @@
     </nav>
 </div>
 <div class="col-md-12" style="height:1000px; background-color: #C8C8C8; overflow:hidden; ">
-    <div class="col-md-12" style="height:30px"></div>
-    <table class="table-hover">
-        <tr>
-            <th>Name</th>
-            <th>Email</th>
-            <th>State</th>
-            <th>City</th>
-            <th>Address</th>
+    <div class="col-md-12" style="height:60px"></div>
+    @using (Html.BeginForm("upsetting", "Admin", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+    {   <div class="col-md-3"></div>
+    <div class="col-md-9">
+        <div class="form-group">
+
+            <div class="col-md-4">
+                @Html.Label("Name", new { @class = "col-md-6" })
+
+            </div>
+            <div class="col-md-5">
+                @Html.TextBoxFor(m => m.name, new { @class = "form-control" })
+
+            </div>
+
+        </div>
+        <div class="form-group">
+
+            <div class="col-md-4">
+                @Html.Label("Email", new { @class = "col-md-6" })
+
+            </div>
+            <div class="col-md-5">
+                @Html.TextBoxFor(m => m.email, new { @class = "form-control" })
+
+            </div>
+
+        </div>
+        <div class="form-group">
+
+            <div class="col-md-4">
+                @Html.Label("Address", new { @class = "col-md-6" })
+
+            </div>
+            <div class="col-md-5">
+                @Html.TextBoxFor(m => m.address, new { @class = "form-control" })
+
+            </div>
+
+        </div>
+        <div class="form-group">
+
+            <div class="col-md-4">
+                @Html.Label("Password", new { @class = "col-md-6" })
+
+            </div>
+            <div class="col-md-5">
+                @Html.TextBoxFor(m => m.password, new { @class = "form-control" })
+
+            </div>
+
+        </div>
+        <div class="form-group">
+
+            <div class="col-md-4">
+                @Html.Label("City", new { @class = "col-md-6" })
+
+            </div>
+            <div class="col-md-5">
+                @Html.TextBoxFor(m => m.city, new { @class = "form-control" })
+
+            </div>
+
+        </div>
+        <div class="form-group">
+            <div class="col-md-5">
 
 
-        </tr>
-        @foreach (var customer in Model)
-            {
-            <tr style="width:80%">
-                <td>@customer.name</td>
-                <td>@customer.email</td>
-                <td>@customer.state</td>
-                <td>@customer.city</td>
-                <td>@customer.address</td>
-                <td><button class="btn btn-default">@Html.ActionLink("Accept", "setAccept", "Admin", new { email = @customer.email }, null)</button></td>
-                <td><button class="btn btn-default">@Html.ActionLink("Reject", "setReject", "Home", new { email = @customer.email }, null)</button></td>
+            </div>
+            <div class="col-md-2">
+                <input type="submit" value="Update" class="btn btn-primary" />
 
+            </div>
+        </div>
+    </div>
 
-            </tr>
-        }
-    </table>
+    }
+
 </div>
