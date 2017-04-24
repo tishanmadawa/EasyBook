@@ -228,9 +228,12 @@
       <SubType>Designer</SubType>
     </Content>
     <Content Include="Views\Admin\Index.cshtml" />
-    <Content Include="Views\Admin\Request.cshtml" />
+    <Content Include="Views\Admin\request.cshtml" />
     <Content Include="Views\Profile\editPost.cshtml" />
     <Content Include="Views\Profile\editEvent.cshtml" />
+    <Content Include="Views\Shared\_Header2.cshtml" />
+    <Content Include="Views\Admin\user.cshtml" />
+    <Content Include="Views\Admin\upsetting.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

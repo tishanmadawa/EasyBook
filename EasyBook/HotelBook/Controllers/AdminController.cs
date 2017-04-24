@@ -15,8 +15,9 @@ namespace HotelBook.Controllers
             return View();
         }
 
-       
-        public ActionResult Requests()
+        
+        public ActionResult request()
+
         {
             HotelDBContext hotelDb = new HotelDBContext();
             List<Customer> range = hotelDb.Viewcustomer();
@@ -38,6 +39,35 @@ namespace HotelBook.Controllers
 
             string h = email;
             hotelDb.setr(h);
+
+        }
+
+
+        public ActionResult user()
+
+        {
+            HotelDBContext hotelDb = new HotelDBContext();
+            List<Customer> range2 = hotelDb.Viewuser();
+            return View(range2);
+        }
+        public ActionResult logout()
+        {
+            return View("~/Views/Home/index.cshtml");
+        }
+        [HttpGet]
+        public ActionResult upsetting()
+        {
+            HotelDBContext hotelDb = new HotelDBContext();
+            Customer range = hotelDb.Viewsettings();
+            return View(range);
+
+        }
+        [HttpPost]
+        public ActionResult upsetting(Customer customer)
+        {
+            HotelDBContext hotelDb = new HotelDBContext();
+            hotelDb.upseting(customer);
+            return View();
         }
 
     }

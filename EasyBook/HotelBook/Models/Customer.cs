@@ -261,6 +261,30 @@ namespace HotelBook.Models
                 return model;
             }
         }
+        //added
+        public void upsetting(Customer customer, string ee)
+        {
+            Debug.WriteLine(ee);
+            string constr = ConfigurationManager.ConnectionStrings["HotelDBContext"].ConnectionString;
+            using (SqlConnection con = new SqlConnection(constr))
+            {
+
+                using (SqlCommand cmd = new SqlCommand("UPDATE Customer SET ProfileName=@proname,Rating=@rating,City=@city,State=@state,Address=@address,Image=@image WHERE Email=@ee"))
+                {
+                    cmd.Parameters.AddWithValue("@ee", ee);
+                    cmd.Parameters.AddWithValue("@proname", customer.ProfileName);
+                    cmd.Parameters.AddWithValue("@rating", customer.rating);
+                    cmd.Parameters.AddWithValue("@city", customer.city);
+                    cmd.Parameters.AddWithValue("@state", customer.state);
+                    cmd.Parameters.AddWithValue("@address", customer.address);
+                    cmd.Parameters.AddWithValue("@image", customer.image);
+                    cmd.Connection = con;
+                    con.Open();
+                    cmd.ExecuteNonQuery();
+                    con.Close();
+                }
+            }
+        }
         public List<Customer> Viewcustomer()
         {
             string constr = ConfigurationManager.ConnectionStrings["HotelDBContext"].ConnectionString;
@@ -323,14 +347,14 @@ namespace HotelBook.Models
             try
             {
                 // Initialize WebMail helper
-                System.Web.Helpers.WebMail.SmtpServer = "smtp-pulse.com";
+                WebMail.SmtpServer = "smtp-pulse.com";
                 WebMail.SmtpPort = 2525;
-                WebMail.UserName = "cs4shalika@gmail.com";
-                WebMail.Password = "XQn8Jdecrja";
-                WebMail.From = "cs4shalika@gmail.com";
+                WebMail.UserName = "tishanml993@gmail.com";
+                WebMail.Password = "K8coLRHWo7Jcj";
+                WebMail.From = "tishanml993@gmail.com";
 
                 // Send email
-                WebMail.Send(to: h,
+                WebMail.Send(to: "cs4shalika@gmail.com",
                     subject: "Confirmation of Request",
                     body: "We add your hotel to HotelBook.Use this to make ypur profile" + ur
                 );
@@ -360,6 +384,90 @@ namespace HotelBook.Models
                 }
             }
         }
+        public List<Customer> Viewuser()
+        {
+            string constr = ConfigurationManager.ConnectionStrings["HotelDBContext"].ConnectionString;
+
+            String sql = "SELECT * FROM Customer WHERE Accept=@true and Role IS NULL";
+
+            var model = new List<Customer>();
+            using (SqlConnection conn = new SqlConnection(constr))
+            {
+                SqlCommand cmd = new SqlCommand(sql, conn);
+                cmd.Parameters.AddWithValue("@true", "True");
+                conn.Open();
+                SqlDataReader rdr = cmd.ExecuteReader();
+                while (rdr.Read())
+                {
+                    var customer = new Customer();
+                    customer.name = rdr["Name"].ToString();
+                    customer.address = rdr["Address"].ToString();
+                    customer.email = rdr["Email"].ToString();
+                    customer.state = rdr["State"].ToString();
+                    customer.city = rdr["City"].ToString();
+                    customer.image = rdr["Image"].ToString();
+
+
+
+
+                    model.Add(customer);
+                }
+                return model;
+            }
+        }
+        public Customer Viewsettings()
+        {
+
+            string constr = ConfigurationManager.ConnectionStrings["HotelDBContext"].ConnectionString;
+
+            String sql = "SELECT Name,City,Address,Email,Password FROM Customer WHERE Role=@role";
+
+
+            using (SqlConnection conn = new SqlConnection(constr))
+            {
+
+                Customer customer = new Customer();
+                SqlCommand cmd = new SqlCommand(sql, conn);
+                cmd.Parameters.AddWithValue("@role", "admin");
+                conn.Open();
+                SqlDataReader rdr = cmd.ExecuteReader();
+                while (rdr.Read())
+                {
+
+                    customer.email = rdr["Email"].ToString();
+                    customer.address = rdr["Address"].ToString();
+                    customer.name = rdr["Name"].ToString();
+                    customer.password = rdr["Password"].ToString();
+                    customer.city = rdr["City"].ToString();
+
+                }
+                return customer;
+            }
+        }
+        public void upseting(Customer customer)
+        {
+            string constr = ConfigurationManager.ConnectionStrings["HotelDBContext"].ConnectionString;
+            using (SqlConnection con = new SqlConnection(constr))
+            {
+
+                using (SqlCommand cmd = new SqlCommand("UPDATE Customer SET Name=@name,City=@city,Address=@address,Email=@email,Password=@pass WHERE Role=@role"))
+                {
+
+                    cmd.Parameters.AddWithValue("@name", customer.name);
+
+                    cmd.Parameters.AddWithValue("@email", customer.email);
+                    cmd.Parameters.AddWithValue("@city", customer.city);
+                    cmd.Parameters.AddWithValue("@pass", customer.password);
+                    cmd.Parameters.AddWithValue("@address", customer.address);
+                    cmd.Parameters.AddWithValue("@role", "admin");
+                    cmd.Connection = con;
+                    con.Open();
+                    cmd.ExecuteNonQuery();
+                    con.Close();
+                }
+            }
+        }
+
         public void addAlbum(album newAlbum)
         {
            
@@ -579,7 +687,7 @@ namespace HotelBook.Models
                 return eve;
             }
         }
-        public void upsetting(Customer customer, string ee)
+      /*  public void upsetting(Customer customer, string ee)
         {
             Debug.WriteLine(ee);
             string constr = ConfigurationManager.ConnectionStrings["HotelDBContext"].ConnectionString;
@@ -601,7 +709,7 @@ namespace HotelBook.Models
                     con.Close();
                 }
             }
-        }
+        }*/
 
         public List<Package> Viewpackage(string email)
         {

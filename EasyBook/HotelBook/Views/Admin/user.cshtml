@@ -1,0 +1,145 @@
+﻿
+
+@{
+    ViewBag.Title = "User";
+    Layout = "~/Views/Shared/_Header2.cshtml";
+}
+@using HotelBook.Models
+@model List<Customer>
+<style>
+    * {
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        box-sizing: border-box;
+    }
+
+    html, body {
+        background: #2D2D2D;
+    }
+
+    nav {
+        font: 700 16px/60px 'Lato', sans-serif;
+        width: 100%;
+        margin: 0 auto 0 auto;
+        background: #242424;
+        overflow: hidden;
+        -webkit-border-radius: 8px;
+        -moz-border-radius: 8px;
+        border-radius: 8px;
+    }
+
+        nav ul {
+            height: 60px;
+            overflow: hidden;
+        }
+
+            nav ul li {
+                width: 25%;
+                float: left;
+                text-align: center;
+            }
+
+    .item-container {
+        top: 0;
+        position: relative;
+        height: 120px;
+        cursor: pointer;
+        -webkit-transition: all 0.3s ease;
+        -moz-transition: all 0.3s ease;
+        -o-transition: all 0.3s ease;
+        transition: all 0.3s ease;
+    }
+
+        .item-container:hover {
+            top: -60px;
+        }
+
+    .item-top,
+    .item-bottom {
+        height: 60px;
+        position: relative;
+    }
+
+    .item-top {
+        color: #797979;
+    }
+
+    .item-bottom {
+        background: #191919;
+        color: yellow;
+    }
+
+    table {
+        font-family: arial, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    td, th {
+        border: 1px solid #dddddd;
+        text-align: left;
+        padding: 8px;
+    }
+
+    tr:nth-child(even) {
+        background-color: #dddddd;
+    }
+</style>
+
+<div class="col-md-12" style="background-color:#242424;">
+    <nav>
+        <ul>
+            <li>
+                <div class="item-container">
+                    <div class="item-top"><span class="glyphicon glyphicon-share"></span>&nbsp;&nbsp;Requests</div>
+                    <div class="item-bottom"><span class="glyphicon glyphicon-share"></span>&nbsp;&nbsp;@Html.ActionLink("Requests", "Request", "Admin", new { Style = "color:yellow" })</div>
+                </div>
+            </li>
+            <li>
+                <div class="item-container">
+                    <div class="item-top"><span class="glyphicon glyphicon-picture"></span>&nbsp;&nbsp;Posts</div>
+                    <div class="item-bottom"><span class="glyphicon glyphicon-picture"></span>&nbsp;&nbsp;Posts</div>
+                </div>
+            </li>
+            <li>
+                <div class="item-container">
+                    <div class="item-top"><span class="glyphicon glyphicon-user"></span> &nbsp;&nbsp;Users</div>
+                    <div class="item-bottom"><span class="glyphicon glyphicon-user"></span>&nbsp;&nbsp; @Html.ActionLink("Users", "User", "Admin", new { Style = "color:yellow" })</div>
+                </div>
+            </li>
+            <li>
+                <div class="item-container">
+                    <div class="item-top"><span class="glyphicon glyphicon-home"></span>&nbsp;&nbsp;Bording</div>
+                    <div class="item-bottom"><span class="glyphicon glyphicon-home"></span>&nbsp;&nbsp;Bording</div>
+                </div>
+            </li>
+        </ul>
+    </nav>
+</div>
+<div class="col-md-12" style="height:1000px; background-color: #C8C8C8; overflow:hidden; ">
+    <div class="col-md-12" style="height:30px"></div>
+
+    @foreach (var customer in Model)
+            {
+        <div class="col-md-12" style="height:300px;border: 10px solid black;
+    padding: 25px;
+    margin: 25px; ">
+            <div class="col-md-5"><img src="~/image/@Html.DisplayFor(modelItem => customer.image)" style="width:200px; height:200px" /> </div>
+            <div class="col-md-7">
+                @customer.name<br>
+                @customer.email<br>
+
+                @customer.state<br>
+                @customer.city<br>
+                @customer.address
+
+            </div>
+
+        </div>
+            <div class="col-md-12" style="height:30px"></div>
+    }
+
+
+
+
+</div>

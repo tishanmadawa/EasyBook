@@ -1,75 +1,74 @@
 ﻿
 @{
     ViewBag.Title = "Request";
-    Layout = "~/Views/Shared/_Header.cshtml";
+    Layout = "~/Views/Shared/_Header2.cshtml";
 }
 @using HotelBook.Models
 @model List<Customer>
 <style>
-* { 
-  -webkit-box-sizing:border-box;
-  -moz-box-sizing:border-box;
+    * {
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        box-sizing: border-box;
+    }
 
-  box-sizing:border-box;
-}
+    html, body {
+        background: #2D2D2D;
+    }
 
-html, body {
-  background:#2D2D2D;
-}
+    nav {
+        font: 700 16px/60px 'Lato', sans-serif;
+        width: 100%;
+        margin: 0 auto 0 auto;
+        background: #242424;
+        overflow: hidden;
+        -webkit-border-radius: 8px;
+        -moz-border-radius: 8px;
+        border-radius: 8px;
+    }
 
-nav {
-  font:700 16px/60px 'Lato', sans-serif;
-  width:100%;
-  margin:0 auto 0 auto;
-  background:#242424;
-  overflow:hidden;
-  -webkit-border-radius:8px;
-  -moz-border-radius:8px;
- 
-  border-radius:8px;
-}
+        nav ul {
+            height: 60px;
+            overflow: hidden;
+        }
 
-nav ul {
-  height:60px;
-  overflow:hidden;
-}
+            nav ul li {
+                width: 25%;
+                float: left;
+                text-align: center;
+            }
 
-nav ul li {
-  width:25%;
-  float:left;
-  text-align:center;
-}
+    .item-container {
+        top: 0;
+        position: relative;
+        height: 120px;
+        cursor: pointer;
+        -webkit-transition: all 0.3s ease;
+        -moz-transition: all 0.3s ease;
+        -o-transition: all 0.3s ease;
+        transition: all 0.3s ease;
+    }
 
-.item-container {
-  top: 0;
-  position:relative;
-  height:120px;
-  cursor:pointer;
-  -webkit-transition: all 0.3s ease;
-	-moz-transition:  	all 0.3s ease;
-	-o-transition:  	  all 0.3s ease;
-	transition: 		    all 0.3s ease;
-}
+        .item-container:hover {
+            top: -60px;
+        }
 
-.item-container:hover{
-  top:-60px;
-}
+    .item-top,
+    .item-bottom {
+        height: 60px;
+        position: relative;
+    }
 
-.item-top,
-.item-bottom {
-  height:60px;
-  position:relative;
-}
+    .item-top {
+        color: #797979;
+    }
 
-.item-top {
-  color:#797979;
-}
+    .item-bottom {
+        background: #191919;
+        color: yellow;
+    }
 
-.item-bottom {
-  background:#191919;
-  color:yellow;
-}
-table {
+    table {
         font-family: arial, sans-serif;
         border-collapse: collapse;
         width: 100%;
@@ -104,7 +103,7 @@ table {
             <li>
                 <div class="item-container">
                     <div class="item-top"><span class="glyphicon glyphicon-user"></span> &nbsp;&nbsp;Users</div>
-                    <div class="item-bottom"><span class="glyphicon glyphicon-user"></span>&nbsp;&nbsp; Users</div>
+                    <div class="item-bottom"><span class="glyphicon glyphicon-user"></span>&nbsp;&nbsp; @Html.ActionLink("Users", "User", "Admin", new { Style = "color:yellow" })</div>
                 </div>
             </li>
             <li>
@@ -116,31 +115,31 @@ table {
         </ul>
     </nav>
 </div>
-    <div class="col-md-12" style="height:1000px; background-color: #C8C8C8; overflow:hidden; ">
-   <div class="col-md-12" style="height:30px"></div>
-        <table class="table-hover">
-            <tr>
-                <th>Name</th>
-                <th>Email</th>
-                <th>State</th>
-                <th>City</th>
-                <th>Address</th>
+<div class="col-md-12" style="height:1000px; background-color: #C8C8C8; overflow:hidden; ">
+    <div class="col-md-12" style="height:30px"></div>
+    <table class="table-hover">
+        <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>State</th>
+            <th>City</th>
+            <th>Address</th>
+
+
+        </tr>
+        @foreach (var customer in Model)
+            {
+            <tr style="width:80%">
+                <td>@customer.name</td>
+                <td>@customer.email</td>
+                <td>@customer.state</td>
+                <td>@customer.city</td>
+                <td>@customer.address</td>
+                <td><button class="btn btn-default">@Html.ActionLink("Accept", "setAccept", "Admin", new { email = @customer.email }, null)</button></td>
+                <td><button class="btn btn-default">@Html.ActionLink("Reject", "setReject", "Home", new { email = @customer.email }, null)</button></td>
 
 
             </tr>
-            @foreach (var customer in Model)
-            {
-                <tr style="width:80%">
-                    <td>@customer.name</td>
-                    <td>@customer.email</td>
-                    <td>@customer.state</td>
-                    <td>@customer.city</td>
-                    <td>@customer.address</td>
-                    <td><button class="btn btn-default">@Html.ActionLink("Accept", "setAccept", "Admin", new { email = @customer.email }, null)</button></td>
-                    <td><button class="btn btn-default">@Html.ActionLink("Reject", "setReject", "Home", new { email = @customer.email }, null)</button></td>
-
-
-                </tr>
-            }
-        </table>
+        }
+    </table>
 </div>
