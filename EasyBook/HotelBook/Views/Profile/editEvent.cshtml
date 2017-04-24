@@ -21,7 +21,7 @@
 </script>
 <div class="col-md-12">
     <div class="col-md-12" style="height:50px;"></div>
-    @using (Html.BeginForm("editEvent", "Profile", FormMethod.Post, new { name = "eventForm", @class = "form-horizontal", role = "form", onsubmit = "return validateForm()" }))
+    @using (Html.BeginForm("editEvent", "Profile",new { id = Model.events.id }, FormMethod.Post, new { name = "eventForm", @class = "form-horizontal", role = "form", onsubmit = "return validateForm()" }))
     {
         <div class="col-md-12" style="height:50px;background-color:lightgray;"><h3 style="margin-left:40%"> Add Event</h3></div>
         <div class="col-md-12" style="height:20px;"></div>
@@ -113,7 +113,7 @@
             <p style="color:red;" id="dateof"></p>
         </div>
         <div class="col-md-8" style="height:50px;">
-
+            
         </div>
         <div class="col-md-3">
             <input class="btn btn-primary" type="submit" name="Submit" value="Edit" />

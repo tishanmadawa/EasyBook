@@ -409,7 +409,7 @@ namespace HotelBook.Models
             string constr = ConfigurationManager.ConnectionStrings["HotelDBContext"].ConnectionString;
             using (SqlConnection con = new SqlConnection(constr))
             {
-                using (SqlCommand cmd = new SqlCommand("UPDATE Events SET Date=@date,NoDays=@noDays,StartTime=@startTime,EndTime=@endTime,Meant=@meant,Accomadation=@accomadation,Location=@location,Description=@description WHERE Id=@id"))
+                using (SqlCommand cmd = new SqlCommand("UPDATE Events SET Date=@date,NoDays=@noDates,StartTime=@startTime,EndTime=@endTime,Meant=@meant,Accomadation=@accomadation,Location=@location,Description=@description WHERE Id=@id"))
                 {
                     cmd.Parameters.AddWithValue("@id", eve.id);
                     cmd.Parameters.AddWithValue("@accomadation", eve.accomadation);
@@ -628,8 +628,9 @@ namespace HotelBook.Models
     package.description = rdr["Description"].ToString();
     package.type = rdr["Type"].ToString();
     package.availableNo = rdr["AvailableNo"].ToString();
+                    package.number= rdr["AvailableNo"].ToString();
 
-    mod.Add(package);
+                    mod.Add(package);
             }
             return mod;
         }

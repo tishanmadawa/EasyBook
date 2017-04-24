@@ -14,10 +14,10 @@
             <h3>Add New Packages</h3>
 
             <div>
-                @using (Html.BeginForm("AddPackage", "Profile", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                @using (Html.BeginForm("addPackage", "Profile", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
                 {
 
-
+                    @Html.AntiForgeryToken()
                     <div>
                         <div class="col-md-8">
 

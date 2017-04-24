@@ -348,15 +348,17 @@ namespace HotelBook.Controllers
             return View(customer);
         }
         [HttpPost]
-        public ActionResult editEvent(customerProfile customer)
+        public ActionResult editEvent(customerProfile customer,int id)
         {
             
             HotelDBContext hotel = new HotelDBContext();
             
-            Customer cus = hotel.Search(customer.customer.email);
+            Customer cus = hotel.Search(Session["Email"].ToString());
             customer.customer = cus;
             customer.searchpackage = new List<Models.Package>();
             PostDetails post = new PostDetails();
+            customer.events.id = id;
+            Debug.WriteLine("image=" + customer.events.id);
             hotel.editEvent(customer.events);
             customer.allEvents = hotel.getEvents(customer.customer.email);
             return View(customer);
@@ -418,6 +420,7 @@ namespace HotelBook.Controllers
                 HotelDBContext hotel = new HotelDBContext();
                 Customer cus = hotel.Search(email);
                 customer.customer = cus;
+                customer.package = new Package();
                 customer.searchpackage = new List<Models.Package>();
 
                 return View(customer);
@@ -430,7 +433,7 @@ namespace HotelBook.Controllers
         }
 
         [HttpPost]
-        public ActionResult AddPackage(customerProfile customer)
+        public ActionResult addPackage(customerProfile customer)
         {
             HotelDBContext hotelDb = new HotelDBContext();
             Package package = customer.package;
@@ -472,6 +475,10 @@ namespace HotelBook.Controllers
         {
             HotelDBContext hotelDb = new HotelDBContext();
             customer.searchpackage=hotelDb.seachPanel(customer.packagesDate);
+            if (customer.searchpackage.Count==0)
+            {
+                customer.searchpackage = hotelDb.Viewpackage(email);
+                    }
             customer.customer = hotelDb.Search(email);
             PostDetails post = new PostDetails();
             customer.posts = post.getPosts(email);

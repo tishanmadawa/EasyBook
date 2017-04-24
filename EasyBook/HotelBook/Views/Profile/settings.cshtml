@@ -2,7 +2,7 @@
     Layout = "~/Views/Profile/Index.cshtml";
 }
 
-@using HotelBook.Models
+@using HotelBook.Models;
 @model customerProfile
 
 
@@ -21,17 +21,16 @@
         var reader = new FileReader();
         reader.onload = function (e) {
             var d = $('#Image1');
-            $('#Image1').show();
-
             $('#Image2').hide();
 
+            $('#Image1').show();
 
+            
             $('#Image1').attr("src", e.target.result);
             $('#Image2').attr("src", e.target.result);
             $('#Image1').height(500);
             size = $('#Image2').height();
-            t = $.Jcrop('#Image1', {
-                touchSupport: true,
+            t = $.Jcrop($('#Image2'), {
                 onSelect: SetCoordinates,
                 onChange: SetCoordinates
             });
@@ -73,6 +72,7 @@
     $('#imgWidth').val((c.w) * (size / 500));
     $('#imgHeight').val((c.h) * (size / 500));
     $('#btnCrop').show();
+    $('#Image1').show();
         };
         });
 </script>
@@ -163,7 +163,7 @@
                                         <tr>
 
                                             <td>
-                                                <img id="Image1" src="" alt="" style="display: none;float:left" />
+                                                <img id="Image1" src="" alt="" style="display:block;float :left" />
                                             </td>
 
                                             <td>
