@@ -55,7 +55,7 @@ namespace HotelBook.Controllers
 
                     if (passw == password)
                     {
-                        if (customer.state=="true") {
+                        if (customer.accept==1) {
                             Debug.WriteLine(customer.role);
                             if (rolee == "admin")
                             {

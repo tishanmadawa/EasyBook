@@ -6,29 +6,97 @@
         @using HotelBook.Models;
         @model List<Customer>
 
-        <div class="row">
-            <div class="col-md-2">
+        <div class="row" style="padding-top:10px;">
+            <div class="col-md-3" style="background-color:orange;border-radius:10px 10px;">
+                <div class="col-md-12" style="height:100px;">
+                    <div class="form-group">
+                        <h2>Search</h2>
+                    </div>
+                </div>
 
-            </div>
-            <div class="col-md-4">
-
-               
-
-                @foreach (var item in Model)
+                @using (Html.BeginForm("Search", "Home", FormMethod.Post, new { @class = "form-inline", role = "form", style = "color:black;" }))
                 {
-                    <div>
-                        <a href="@Url.Action("post","Profile", new { email = item.email})">
-                            <img src="~/image/@item.image" alt="" style="width:100px;height:100px" />
 
-                            @item.name
+                    <div class="col-md-4" style="height:70px;">
+                        <div class="form-group">
+                            <p>Name</p>
+                        </div>
+                    </div>
+                    <div class="col-md-8" style="height:70px">
+                        <div class="form-group">
+                            @Html.TextBox("searchstring", "", new { @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="col-md-4" style="height:70px;">
+                        <div class="form-group">
+                            <p>City</p>
+                        </div>
+                    </div>
+                    <div class="col-md-8" style="height:70px">
+                        <div class="form-group">
 
-                            @item.address
-                        </a>
+                            @Html.TextBox("searchstring1", "", new { @class = "form-control" })
+
+                        </div>
+                    </div>
+                    <div class="col-md-4" style="height:70px;">
+                        <div class="form-group">
+                            <p>Check In</p>
+                        </div>
+                    </div>
+                    <div class="col-md-8" style="height:70px">
+                        <div class="form-group">
+                            @Html.TextBox("searchstring2", "", new { type = "Date", @class = "form-control", style = "width:110%;" })
+                        </div>
+                    </div>
+
+                    <div class="col-md-4" style="height:70px;">
+                        <div class="form-group">
+                            <p>Check Out</p>
+                        </div>
+                    </div>
+                    <div class="col-md-8" style="height:70px">
+                        <div class="form-group">
+                            @Html.TextBox("searchstring2", "", new { type = "Date", @class = "form-control", style = "width:110%; " })
+                        </div>
+                    </div>
+                    <div class="col-md-8" style="height:70px;">
+
+                    </div>
+                    <div class="col-md-2" style="height:70px">
+
+                        <button type="submit" class="btn btn-default">Search</button>
                     </div>
 
                 }
 
 
             </div>
-        </div>
+                <div class="col-md-1"></div>
+                <div class="col-md-8" style="background-color:white;border-radius:10px 10px;">
+
+
+
+                    @foreach (var item in Model)
+                    {
+                        <a href="@Url.Action("post","Profile", new { email = item.email})">
+                            <div class="col-md-12"style="padding-bottom:5px;padding-top:5px;border:5px solid black;border-radius:10px 10px;">
+                                <div class="col-md-4" style="padding-bottom:5px;padding-top:5px;">
+                                    <img src="~/image/@item.image" alt="" style="width:100%;" />
+                                    </div>
+                                   <h1>@item.name</h1>
+
+                                    <h4>@item.address</h4>
+                                <p>@item.rating</p>
+                                
+
+                                </div>
+                        </a>
+                        
+
+                    }
+
+
+                </div>
+            </div>
 

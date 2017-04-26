@@ -17,7 +17,9 @@
             document.getElementById("addressVal").innerHTML = "";
             document.getElementById("passwordVal").innerHTML = "";
             document.getElementById("cPasswordVal").innerHTML = "";
-        var letterNumber = /^[0-9a-zA-Z]+$/;
+            document.getElementById("ratingVal").innerHTML = "";
+            document.getElementById("mapVal").innerHTML = "";
+        var letterNumber = /^[ ,0-9a-zA-Z]+$/;
 
         var value = true;
 
@@ -29,10 +31,17 @@
         var address = $('#address').val();
         var password = $('#password').val();
         var cPassword = $('#cPassword').val();
-        if (ResNumber == "" || email == "" || name=="" || state=="" || city=="") {
+        var rating = $('#rating').val();
+        var map = $('#map').val();
+        if (ResNumber == "" || email == "" || name=="" || state=="" || city=="" || rating ==0 || reg == "" || map=="" ) {
             if (email == "") {
                 document.getElementById("emailVal").innerHTML = "Enter Email";
                 
+            }
+            
+            if (map == "") {
+                document.getElementById("mapVal").innerHTML = "Enter Google Map Link";
+
             }
             if (ResNumber == "") {
                 document.getElementById("idVal").innerHTML = "Enter Register Number";
@@ -62,19 +71,19 @@
                 document.getElementById("cPasswordVal").innerHTML = "Enter Confirm Password";
 
             }
+            if (rating == 0) {
+                document.getElementById("ratingVal").innerHTML = "Enter Rating of Hotel";
+
+            }
             value= false;
         }
-        alert(ResNumber.match(letterNumber));
+        
         if (ResNumber.match(letterNumber)==null) {
 
             document.getElementById("idVal").innerHTML = "Enter Valid ID";
             value= false;
         }
-        if (email.match(letterNumber) == null) {
-
-            document.getElementById("emailVal").innerHTML = "Enter Valid Email";
-            value = false;
-        }
+        
         if (name.match(letterNumber) == null) {
 
             document.getElementById("nameVal").innerHTML = "Enter Valid Name";
@@ -103,7 +112,9 @@
 
 
         }
-        
+        if(value==true){
+            alert("Signup is confirm");
+        }
         return value;
 
 
@@ -138,11 +149,11 @@
 
                                 </div>
                                 <div class="col-md-5">
-                                    @Html.TextBoxFor(m => m.id, new {@id="reg", @class = "form-control" })
+                                    @Html.TextBoxFor(m => m.regId, new {@id="reg", @class = "form-control" })
 
                                 </div>
                                 <div class="col-md-3">
-                                    <p id="idVal" style="color:red" >@Html.ValidationMessageFor(m => m.id, "", new { style = "color:red;" })</p> 
+                                    <p id="idVal" style="color:red" >@Html.ValidationMessageFor(m => m.regId, "", new { style = "color:red;" })</p> 
 
                                 </div>
                             </div>
@@ -207,7 +218,30 @@
 
 </div>
                             </div>
-                           
+                            <div class="form-group">
+                                <div class="col-md-4">
+                                    @Html.Label("Hotel star rating", new { @class = "col-md-6 " })
+                                </div><div class="col-md-5">
+                                    @Html.TextBoxFor(m => m.rating, new { type = "number", @id = "rating", @class = "form-control" })
+                                </div>
+                                <div class="col-md-3">
+                                    <p id="ratingVal" style="color:red">
+                                        @Html.ValidationMessageFor(m => m.rating, "", new { style = "color:red;", @id = "ratingVal" })
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-4">
+                                    @Html.Label("Map location link", new { @class = "col-md-6 " })
+                                </div><div class="col-md-5">
+                                    @Html.TextBoxFor(m => m.map, new {  @id = "map", @class = "form-control" })
+                                </div>
+                                <div class="col-md-3">
+                                    <p id="mapVal" style="color:red">
+                                        @Html.ValidationMessageFor(m => m.map, "", new { style = "color:red;", @id = "mapVal" })
+                                    </p>
+                                </div>
+                            </div>
                             <div class="form-group">
                                 <div class="col-md-4 ">
                                     @Html.Label("Password   ", new { @class = "col-md-6 " })
@@ -230,6 +264,7 @@
                                     </p>
 </div>
                             </div>
+                            
                             <div class="form-group">
                                 <div class="col-md-5">
 

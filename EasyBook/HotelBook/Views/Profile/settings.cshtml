@@ -11,71 +11,6 @@
 <script type="text/javascript" src="@Url.Content("~/Script/jquery.Jcrop.min.js")"></script>
 
 
-<script type="text/javascript">
-        var size;
-        $(window).load(function () {
-    $('#FileUpload1').change(function () {
-        var t;
-
-        $('#Image1').hide();
-        var reader = new FileReader();
-        reader.onload = function (e) {
-            var d = $('#Image1');
-            $('#Image2').hide();
-
-            $('#Image1').show();
-
-            
-            $('#Image1').attr("src", e.target.result);
-            $('#Image2').attr("src", e.target.result);
-            $('#Image1').height(500);
-            size = $('#Image2').height();
-            t = $.Jcrop($('#Image2'), {
-                onSelect: SetCoordinates,
-                onChange: SetCoordinates
-            });
-         t.setOptions({ aspectRatio: 2 / 1 });
-        t.setOptions({
-                minSize: [750, 250],
-                maxSize: [750, 350]
-            });
-          t.setSelect([140, 180, 160, 180]);
-
-        }
-        reader.readAsDataURL($(this)[0].files[0]);
-    });
-
-    $('#btnCrop').click(function () {
-        var x1 = $('#imgX1').val();
-        var y1 = $('#imgY1').val();
-        var width = $('#imgWidth').val();
-        var height = $('#imgHeight').val();
-        var canvas = $("#canvas")[0];
-        $("#canvas").hide();
-        var context = canvas.getContext('2d');
-        var img = new Image();
-        img.onload = function () {
-
-            canvas.height = height;
-            canvas.width = width;
-            context.drawImage(img, x1, y1, width, height, 0, 0, width, height);
-            $('#imgCropped').val(canvas.toDataURL());
-            //$('[id*=btnUpload]').show();/
-        };
-        img.src = $('#Image1').attr("src");
-    });
-
-        function SetCoordinates(c) {
-
-    $('#imgX1').val((c.x)*(size/500));
-    $('#imgY1').val((c.y) * (size / 500));
-    $('#imgWidth').val((c.w) * (size / 500));
-    $('#imgHeight').val((c.h) * (size / 500));
-    $('#btnCrop').show();
-    $('#Image1').show();
-        };
-        });
-</script>
 
     <div class="row">
         <div class="col-md-2">
@@ -211,3 +146,69 @@
         </div>
 
     </div>
+
+<script type="text/javascript">
+        var size;
+        $(window).load(function () {
+    $('#FileUpload1').change(function () {
+        var t;
+
+        
+        var reader = new FileReader();
+        reader.onload = function (e) {
+            var d = $('#Image1');
+            $('#Image2').hide();
+
+            $('#Image1').show();
+
+
+            $('#Image1').attr("src", e.target.result);
+            $('#Image2').attr("src", e.target.result);
+            $('#Image1').height(500);
+            size = $('#Image2').height();
+            t = $.Jcrop($('#Image1'), {
+                onSelect: SetCoordinates,
+                onChange: SetCoordinates
+            });
+         t.setOptions({ aspectRatio: 2 / 1 });
+        t.setOptions({
+                minSize: [750, 250],
+                maxSize: [750, 350]
+            });
+          t.setSelect([140, 180, 160, 180]);
+
+        }
+        reader.readAsDataURL($(this)[0].files[0]);
+    });
+
+    $('#btnCrop').click(function () {
+        var x1 = $('#imgX1').val();
+        var y1 = $('#imgY1').val();
+        var width = $('#imgWidth').val();
+        var height = $('#imgHeight').val();
+        var canvas = $("#canvas")[0];
+        $("#canvas").hide();
+        var context = canvas.getContext('2d');
+        var img = new Image();
+        img.onload = function () {
+
+            canvas.height = height;
+            canvas.width = width;
+            context.drawImage(img, x1, y1, width, height, 0, 0, width, height);
+            $('#imgCropped').val(canvas.toDataURL());
+            //$('[id*=btnUpload]').show();/
+        };
+        img.src = $('#Image1').attr("src");
+    });
+
+        function SetCoordinates(c) {
+
+    $('#imgX1').val((c.x)*(size/500));
+    $('#imgY1').val((c.y) * (size / 500));
+    $('#imgWidth').val((c.w) * (size / 500));
+    $('#imgHeight').val((c.h) * (size / 500));
+    $('#btnCrop').show();
+    $('#Image1').show();
+        };
+        });
+</script>

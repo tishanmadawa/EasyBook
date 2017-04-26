@@ -23,7 +23,7 @@ namespace HotelBook.Controllers
             List<Customer> range = hotelDb.Viewcustomer();
             return View(range);
         }
-        public void setAccept(string email)
+        public ActionResult setAccept(string email)
         {
             HotelDBContext hotelDb = new HotelDBContext();
             Debug.WriteLine(email);
@@ -31,6 +31,7 @@ namespace HotelBook.Controllers
             string h = email;
             hotelDb.set(h);
             hotelDb.sendMail(h);
+            return View("~/Views/Admin/request.cshtml");
         }
         public void setReject(string email)
         {

@@ -23,9 +23,11 @@ namespace HotelBook.Models
         public string cPassword { get; set; }
         public int accept { get; set; }
         public string image { get; set; }
-        public string rating { get; set; }
+        public int rating { get; set; }
         public string ProfileName { get; set; }
         public string role { get; set; }
+        public string map { get; set; }
+        public string regId { get; set; }
     }
     public class Daypack
     {
@@ -85,7 +87,7 @@ namespace HotelBook.Models
             string constr = ConfigurationManager.ConnectionStrings["HotelDBContext"].ConnectionString;
             using (SqlConnection con = new SqlConnection(constr))
             {
-                using (SqlCommand cmd = new SqlCommand("INSERT INTO Customer (Name,Email, Password,State,City,Address) VALUES (@Name,@Email, @Password,@State,@City,@Address)"))
+                using (SqlCommand cmd = new SqlCommand("INSERT INTO Customer (Name,Email, Password,State,City,Address,Rating,Map,RegId) VALUES (@Name,@Email, @Password,@State,@City,@Address,@Rating,@Map,@RegId)"))
                 {
                     cmd.Parameters.AddWithValue("@Name", customer.name);
                     cmd.Parameters.AddWithValue("@Email", customer.email);
@@ -93,6 +95,9 @@ namespace HotelBook.Models
                     cmd.Parameters.AddWithValue("@State", customer.state);
                     cmd.Parameters.AddWithValue("@City", customer.city);
                     cmd.Parameters.AddWithValue("@Address", customer.address);
+                    cmd.Parameters.AddWithValue("@Rating", customer.rating);
+                    cmd.Parameters.AddWithValue("@Map", customer.map);
+                    cmd.Parameters.AddWithValue("@RegId", customer.regId);
                     cmd.Connection = con;
                     con.Open();
                     cmd.ExecuteNonQuery();
@@ -129,7 +134,7 @@ namespace HotelBook.Models
                         customer.role= Convert.ToString(dt.Rows[0]["Role"]);
                         customer.address = Convert.ToString(dt.Rows[0]["Address"]);
                         customer.ProfileName= Convert.ToString(dt.Rows[0]["ProfileName"]);
-                        customer.rating= Convert.ToString(dt.Rows[0]["Rating"]);
+                        customer.rating= Convert.ToInt32(dt.Rows[0]["Rating"]);
                         customer.state= Convert.ToString(dt.Rows[0]["State"]);
                         customer.city= Convert.ToString(dt.Rows[0]["City"]);
                         customer.id = Convert.ToInt32(dt.Rows[0]["Id"]);
@@ -174,7 +179,7 @@ namespace HotelBook.Models
 
                         customer.address = Convert.ToString(dt.Rows[0]["Address"]);
                         customer.ProfileName = Convert.ToString(dt.Rows[0]["ProfileName"]);
-                        customer.rating = Convert.ToString(dt.Rows[0]["Rating"]);
+                        customer.rating = Convert.ToInt32(dt.Rows[0]["Rating"]);
                         customer.state = Convert.ToString(dt.Rows[0]["State"]);
                         customer.city = Convert.ToString(dt.Rows[0]["City"]);
                         customer.id = Convert.ToInt32(dt.Rows[0]["Id"]);
@@ -256,6 +261,7 @@ namespace HotelBook.Models
                     customer.state = rdr["State"].ToString();
                     customer.city = rdr["City"].ToString();
                     customer.image = rdr["Image"].ToString();
+                    customer.rating = Convert.ToInt32(rdr["Rating"]);
                     model.Add(customer);
                 }
                 return model;
@@ -354,7 +360,7 @@ namespace HotelBook.Models
                 WebMail.From = "tishanml993@gmail.com";
 
                 // Send email
-                WebMail.Send(to: "cs4shalika@gmail.com",
+                WebMail.Send(to: h,
                     subject: "Confirmation of Request",
                     body: "We add your hotel to HotelBook.Use this to make ypur profile" + ur
                 );
