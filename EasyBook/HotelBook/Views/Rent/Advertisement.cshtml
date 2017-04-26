@@ -1,0 +1,95 @@
+﻿
+
+@{
+    ViewBag.Title = "Advertisement";
+    Layout = "~/Views/Shared/_Header1.cshtml";
+}
+@using HotelBook.Models
+@model Boarding
+<div class="row">
+    <div class="col-md-2">
+
+        <p>
+
+        </p>
+    </div>
+    <div class="col-md-8">
+        <h3>Put Your Advertisement</h3>
+        
+            <div>
+                <section id="loginForm">
+                    @using (Html.BeginForm("Advertisement", "Rent", FormMethod.Post, new { @class = "form-horizontal", role = "form", enctype="multipart/form-data"}))
+                    {
+                        @Html.AntiForgeryToken()
+
+                        <div>
+                            <div class="col-md-8">
+
+                                <h3 style="margin-left:40%;">Advertisement Form</h3>
+                                <h4>Please enter the Correct information</h4>
+                            </div>
+                            <div class="form-group">
+                               
+                                <div class="col-md-5">
+                                    <label>Email:</label>
+
+                                </div>
+                                <div class="col-md-6">
+                                    @Html.TextBox("searchstring", "", new { @class = "form-control" })
+
+                                </div>
+                            </div>
+
+
+                            <div class="form-group">
+                                <div class="col-md-5">
+                                    <label>Owner:</label>
+                                </div><div class="col-md-6">
+                                    @Html.TextBox("searchstring1", "", new { @class = "form-control" })
+                                </div>
+
+                            </div>
+                           
+                            <div class="form-group">
+                                <div class="col-md-5 ">
+                                    <label>Description:</label>
+                                </div><div class="col-md-6 ">
+                                    @Html.TextArea("searchstring2", "", new { @class = "form-control" })
+                                </div>
+
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-5 ">
+                                    <label>Upload Image:</label>
+                                </div><div class="col-md-6 ">
+                                   <input type="file" name="file" value="Browse">
+                                </div>
+
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-5">
+
+
+                                </div>
+                                <div class="col-md-2">
+                                    <input type="submit" value="Submit" class="btn btn-primary" />
+                                </div>
+                            </div>
+                        </div>
+                    }
+					@if(ViewBag.UploadSuccess=="true"){
+					 <span>Successfull</span>
+					}
+</section>
+
+</div>
+        </div>
+    
+    <div class="col-md-4">
+        <section id="socialLoginForm">
+            
+        </section>
+    </div>
+
+</div>
+
