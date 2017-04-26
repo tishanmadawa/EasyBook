@@ -73,6 +73,20 @@ namespace HotelBook.Models
         public int number { get; set; }
         public string image { get; set; }
     }
+
+    public class Boarding
+    {
+        public string name { get; set; }
+        public string email { get; set; }
+        public string password { get; set; }
+        public string state { get; set; }
+        public string city { get; set; }
+        public string address { get; set; }
+        public string bPassword { get; set; }
+        public string description { get; set; }
+        public string image { get; set; }
+
+    }
     public class Search
     {
         public List<Customer> ranges { get; set; }
@@ -268,7 +282,7 @@ namespace HotelBook.Models
             }
         }
         //added
-        public void upsetting(Customer customer, string ee)
+        public void upSetting(Customer customer, string ee)
         {
             Debug.WriteLine(ee);
             string constr = ConfigurationManager.ConnectionStrings["HotelDBContext"].ConnectionString;
@@ -523,7 +537,7 @@ namespace HotelBook.Models
             string constr = ConfigurationManager.ConnectionStrings["HotelDBContext"].ConnectionString;
             using (SqlConnection con = new SqlConnection(constr))
             {
-                using (SqlCommand cmd = new SqlCommand("UPDATE Events SET Date=@date,NoDays=@noDates,StartTime=@startTime,EndTime=@endTime,Meant=@meant,Accomadation=@accomadation,Location=@location,Description=@description WHERE Id=@id"))
+                using (SqlCommand cmd = new SqlCommand("UPDATE Events SET Date=@date,NoDays=@noDays,StartTime=@startTime,EndTime=@endTime,Meant=@meant,Accomadation=@accomadation,Location=@location,Description=@description WHERE Id=@id"))
                 {
                     cmd.Parameters.AddWithValue("@id", eve.id);
                     cmd.Parameters.AddWithValue("@accomadation", eve.accomadation);
@@ -693,7 +707,8 @@ namespace HotelBook.Models
                 return eve;
             }
         }
-      /*  public void upsetting(Customer customer, string ee)
+
+        public void sett(Customer customer, string ee)
         {
             Debug.WriteLine(ee);
             string constr = ConfigurationManager.ConnectionStrings["HotelDBContext"].ConnectionString;
@@ -715,7 +730,7 @@ namespace HotelBook.Models
                     con.Close();
                 }
             }
-        }*/
+        }
 
         public List<Package> Viewpackage(string email)
         {
@@ -742,9 +757,8 @@ namespace HotelBook.Models
     package.description = rdr["Description"].ToString();
     package.type = rdr["Type"].ToString();
     package.availableNo = rdr["AvailableNo"].ToString();
-                    package.number= rdr["AvailableNo"].ToString();
 
-                    mod.Add(package);
+    mod.Add(package);
             }
             return mod;
         }
@@ -869,7 +883,75 @@ public void DeletePackage(int id)
         }
     }
 }
+        public void Insertboarding(Boarding boarding)
+        {
+            string constr = ConfigurationManager.ConnectionStrings["HotelDBContext"].ConnectionString;
+            using (SqlConnection con = new SqlConnection(constr))
+            {
+                using (SqlCommand cmd = new SqlCommand("INSERT INTO Boarding (Name,Email, Password,State,City,Address,Description,Image) VALUES (@Name,@Email, @Password,@State,@City,@Address,null,null)"))
+                {
+                    cmd.Parameters.AddWithValue("@Name", boarding.name);
+                    cmd.Parameters.AddWithValue("@Email", boarding.email);
+                    cmd.Parameters.AddWithValue("@Password", boarding.password);
+                    cmd.Parameters.AddWithValue("@State", boarding.state);
+                    cmd.Parameters.AddWithValue("@City", boarding.city);
+                    cmd.Parameters.AddWithValue("@Address", boarding.address);
+                    cmd.Connection = con;
+                    con.Open();
+                    cmd.ExecuteNonQuery();
+                    con.Close();
+                }
+            }
+        }
+        public List<Boarding> viewBoarding(string state, string city)
+        {
+            String s = state;
+            String c = city;
+            string constr = ConfigurationManager.ConnectionStrings["HotelDBContext"].ConnectionString;
 
+            String sql = "SELECT * FROM Boarding WHERE State=@state or City=@city";
+
+            var board = new List<Boarding>();
+            using (SqlConnection conn = new SqlConnection(constr))
+            {
+                SqlCommand cmd = new SqlCommand(sql, conn);
+                cmd.Parameters.AddWithValue("@state", s);
+                cmd.Parameters.AddWithValue("@city", c);
+                conn.Open();
+                SqlDataReader rdr = cmd.ExecuteReader();
+                while (rdr.Read())
+                {
+                    var boarding = new Boarding();
+                    boarding.name = rdr["Name"].ToString();
+                    boarding.address = rdr["Address"].ToString();
+                    boarding.email = rdr["Email"].ToString();
+                    boarding.state = rdr["State"].ToString();
+                    boarding.city = rdr["City"].ToString();
+                    boarding.description = rdr["Description"].ToString();
+                    boarding.image = rdr["Image"].ToString();
+                    board.Add(boarding);
+                }
+                return board;
+            }
+        }
+        public void advertisement(string email,string name,string description,string image)
+        {
+            string constr = ConfigurationManager.ConnectionStrings["HotelDBContext"].ConnectionString;
+            using (SqlConnection con = new SqlConnection(constr))
+            {
+                using (SqlCommand cmd = new SqlCommand("UPDATE Boarding  SET Description=@Description,Image=@Image WHERE Name=@Name AND Email=@Email"))
+                {
+                    cmd.Parameters.AddWithValue("@Name", name);
+                    cmd.Parameters.AddWithValue("@Email", email);
+                    cmd.Parameters.AddWithValue("@Description", description);
+                    cmd.Parameters.AddWithValue("@Image", image);
+                    cmd.Connection = con;
+                    con.Open();
+                    cmd.ExecuteNonQuery();
+                    con.Close();
+                }
+            }
+        }
     }
     public class Post
     {
@@ -1102,9 +1184,9 @@ public void DeletePackage(int id)
         public Package package { get; set; }
         public Daypack dayPack { get; set;}
     }
+    
+    
 
-    
 
-    
-    
+
 }

@@ -1,0 +1,33 @@
+﻿
+@{
+    ViewBag.Title = "Boarding";
+    Layout = "~/Views/Shared/_Header1.cshtml";
+}
+@using HotelBook.Models
+@model List<Boarding>
+
+</style>
+<br>
+<h2>Advertisements</h2>
+    <div class="col-md-2"></div> 
+	  <div class="col-md-8" > 
+            @foreach (var boarding in Model)
+            {
+			<div style="background-color:#D2B48C;padding-bottom:5px;padding-left:10px;padding-top:5px;border-radius:10px 10px;">
+				<img src="~/image/upload/@boarding.image" alt="" style="width:100px;height:100px" />
+				<p>
+				<h4>@boarding.name</h4>
+				Boarding Facilities are available in @boarding.address<br> 
+				@boarding.description<br>
+				@boarding.email
+				</p>
+				
+			</div>
+			<br>	
+            }<div></div>
+		</div>	
+		<div class="col-md-2"></div> 
+		<br><br>
+<div class="col-md-2">
+
+</div>
