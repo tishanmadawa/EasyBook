@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using HotelBook.Models;
 using System.Diagnostics;
 using System.IO;
+using GoogleMaps.LocationServices;
 
 namespace HotelBook.Controllers
 {
@@ -72,11 +73,56 @@ namespace HotelBook.Controllers
                 List<Post> postlist = postdetails.getPosts(customer.email);
                 postlist.Reverse();
                 cusprofile.posts = postlist;
-                Debug.WriteLine(cusprofile.posts.Count);
-                return View(cusprofile);
+                Debug.WriteLine("Role="+cusprofile.customer.role);
+
+                String rolee = cusprofile.customer.role.Replace(" ", "");
+                if (rolee == "admin")
+                {
+                    return View("~/Views/Admin/Index.cshtml");
+                }else
+                {
+                    return View(cusprofile);
+                }
+                
             }
             
         }
+        public ActionResult payment(customerProfile customerpro, string email)
+        {
+            HotelDBContext hotel = new HotelDBContext();
+            customerpro.customer = hotel.Search(email);
+            customerpro.searchpackage = new List<Models.Package>();
+            customerpro.range = hotel.Viewpackage(email);
+            PostDetails postdetails = new PostDetails();
+            
+            if (Session["user"]==null)
+            {
+                customerpro = null;
+                Session["hotel"] = email;
+                return View("~/Views/Login/bookingLogin.cshtml",customerpro);
+            }
+            else
+            {
+                return View(customerpro);
+            }
+            
+        }
+        [HttpPost]
+        public ActionResult payments(customerProfile customerpro ,string mail)
+        {
+            HotelDBContext hotel = new HotelDBContext();
+            customerpro.customer = hotel.Search(mail);
+            customerpro.searchpackage = new List<Models.Package>();
+            customerpro.range = hotel.Viewpackage(mail);
+            PostDetails postdetails = new PostDetails();
+            customerpro.payment.userId = 1;
+            hotel.insertPayment(customerpro.payment);
+            customerpro.payment =new Payment();
+            customerpro.posts = postdetails.getPosts(mail);
+            
+            return View("~/Views/Profile/post.cshtml", customerpro);
+        }
+
 
         [HttpPost]
         public ActionResult addPost(customerProfile customerpro)
@@ -223,7 +269,7 @@ namespace HotelBook.Controllers
                         newAlbum.number = customerpro.number;
                         Debug.WriteLine("addAlbum3");
                         newAlbum.owner = Session["Email"].ToString();
-
+                        customerpro.searchpackage = new List<Package>();
                         Debug.WriteLine("addAlbum4");
 
 
@@ -241,7 +287,7 @@ namespace HotelBook.Controllers
 
             return View("~/Views/Profile/photo.cshtml", customerpro);
         }
-
+        [HttpGet]
         public ActionResult albumView(string id, string email, int number)
         {
             customerProfile customer = new customerProfile();
@@ -266,20 +312,41 @@ namespace HotelBook.Controllers
         }
 
         [HttpPost]
-        public void upsettings(Customer customer)
+        public ActionResult upsettings(customerProfile customer1, HttpPostedFileBase fileupload, string email)
         {
-            string ss = Session["email"].ToString();
-            string base64 = Request.Form["imgCropped"];
-            byte[] bytes = Convert.FromBase64String(base64.Split(',')[1]);
-            using (FileStream stream = new FileStream(Server.MapPath("~/image/" + customer.ProfileName + DateTime.Now.ToString() + ".jpg"), FileMode.Create))
-            {
-                stream.Write(bytes, 0, bytes.Length);
-                stream.Flush();
-            }
-            customer.image = customer.ProfileName + ".jpg";
+            Customer customer = customer1.customer;
+            var address = customer.name;
+            Debug.WriteLine(fileupload.FileName);
+            customer.image = fileupload.FileName;
+            var fileName = System.IO.Path.GetFileName(fileupload.FileName);
+            var path = System.IO.Path.Combine(Server.MapPath("~/image/"), fileName);
+            fileupload.SaveAs(path);
+            var locationService = new GoogleLocationService();
+            var point = locationService.GetLatLongFromAddress(address);
+
+            var latitude = point.Latitude;
+            var longitude = point.Longitude;
             HotelDBContext hotelDb = new HotelDBContext();
-            hotelDb.upsetting(customer, ss);
-           
+
+            hotelDb.upSetting(customer, customer.email);
+            HotelDBContext hotel = new HotelDBContext();
+
+            ProfileController profile = new ProfileController();
+            customerProfile cusprofile = new customerProfile();
+            cusprofile.customer = hotel.Search(email);
+            Debug.WriteLine("email" + customer.email);
+            cusprofile.searchpackage = new List<Models.Package>();
+
+            PostDetails postdetails = new PostDetails();
+            List<Post> postlist = postdetails.getPosts(email);
+            postlist.Reverse();
+            cusprofile.posts = postlist;
+            Debug.WriteLine("Role=" + cusprofile.customer.role);
+
+            String rolee = cusprofile.customer.role.Replace(" ", "");
+
+            return View("~/Views/profile/settings.cshtml", cusprofile);
+
         }
         
         [HttpPost]

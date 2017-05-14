@@ -8,7 +8,7 @@
 
 
 <div class="col-md-12" style="height:30px;"></div>
-<div  class="col-md-12">
+<div  class="col-md-12" style="background-color:white">
 
     @if (Session["Email"] != null)
     {
@@ -19,7 +19,7 @@
                 using (Html.BeginForm("addPost", "Profile", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
                 {
                     @Html.AntiForgeryToken()
-
+                    <div class="col-md-12" style="height:50px;"> </div>
                     <div class="col-md-2" style="height:50px;"> <p>Say something</p></div>
                     <div class="col-md-8" style="height:50px;"> <p>@Html.TextBoxFor(m => m.post.title, new { @style = "max-width:500px;min-width:300px;", @class = "form-control", Required = "true" })</p></div>
 
@@ -51,7 +51,7 @@
     }
 </div>
 
-<div class="col-md-12 ">
+<div class="col-md-12 " style="background-color:white">
     
     
     <table>
@@ -59,15 +59,15 @@
         {
            <tr >
                
-                   <div class="panel panel-primary">
-                       <div class="panel panel-heading">
+                   <div class="panel">
+                       <div class="panel-heading">
                            <h4>@Html.DisplayFor(m => m.customer.name)</h4>
 @if (Session["Email"] != null)
 {
     if (Session["Email"].ToString() == Model.customer.email)
     {
                            <div class="dropdown" style="float:right;margin-right:10%;">
-                               <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
+                               <button class="btn dropdown-toggle" type="button" data-toggle="dropdown">
 
                                    <span class="caret"></span>
                                </button>
@@ -94,11 +94,12 @@
     }
 }
                            <p>@post.date</p>
+                           
                            </div>
                        <div style="text-align-last:center">
-                           <h4>@post.title</h4>
+                           <h4 >@post.title</h4>
                        </div>
-                       <div class="panel panel-body">
+                       <div class="panel-body">
                           
                            
                                <p>@post.post</p>

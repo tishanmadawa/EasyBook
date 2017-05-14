@@ -16,7 +16,7 @@
 }
 
 
-<div class="col-md-12 ">
+<div class="col-md-12 " style="background-color:transparent">
 
 
     <table>
@@ -25,9 +25,12 @@
             <tr>
 
                 <a href="@Url.Action("albumView", "Profile", new { id = @album.name, email = Model.customer.email,number=@album.number })">
-                       <div class="col-md-2" style="height:150px;border:5px solid highlight;border-radius:5px 5px;">
-                           <img src="~/image/@album.image" style="width:100px;height:100px;"/>
-                           <h4>@album.name</h4>
+                       <div class="col-md-12" style="height:250px;border:5px solid highlight;border-radius:5px 5px;">
+                           <div class="col-md-3"></div>
+                           <div class="col-md-8">
+                               <img src="~/image/@album.image" style="height:200px;" />
+                               <h4>@album.name</h4>
+                           </div>
 
                        </div>
                 <div class="col-md-1" style="height:20px;"></div>

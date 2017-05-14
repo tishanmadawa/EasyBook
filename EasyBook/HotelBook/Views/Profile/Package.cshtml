@@ -4,6 +4,8 @@
 }
 @using HotelBook.Models
 @model customerProfile
+
+
 <style>
     table {
         font-family: arial, sans-serif;
@@ -21,46 +23,49 @@
         background-color: #dddddd;
     }
 </style>
-<br><br><br>
-<h2>ViewPackages</h2>
+<div class="col-md-12" style="background-color:white;border-radius:10px 10px;">
+    <br><br><br>
+    <h2>ViewPackages</h2>
 
 
-        <table class="table-hover">
-            <tr>
-                <th>Name</th>
-                <th>Price</th>
-                <th>Description</th>
-                <th>type</th>
-                <th>Available Number</th>
-				
+    <table class="table-hover">
+        <tr>
+            <th>Name</th>
+            <th>Price</th>
+            <th>Description</th>
+            <th>type</th>
+            <th>Available Number</th>
 
-            </tr>
-            @foreach (var package in Model.range)
+
+        </tr>
+        @foreach (var package in Model.range)
             {
-                <tr style="width:80%">
-                    <td>@package.name</td>
-                    <td>@package.price</td>
-                    <td>@package.description</td>
-                    <td>@package.type</td>
-                    <td>@package.availableNo</td>
-@if (Session["Email"] != null)
-{
-    if (Session["Email"].ToString() == Model.customer.email)
-    {
-					<td>@Html.ActionLink("Edit", "EditPackage", "Home", new { id = @package.id }, new { @class = "btn btn-primary" })</td>
-					<td>@Html.ActionLink("Delete", "DeletePackage", "Home", new { id = @package.id }, new { @class = "btn btn-primary" })</td>
-    }
-}
-                </tr>
+            <tr style="width:80%">
+                <td>@package.name</td>
+                <td>@package.price</td>
+                <td>@package.description</td>
+                <td>@package.type</td>
+                <td>@package.availableNo</td>
+                @if (Session["Email"] != null)
+                {
+                    if (Session["Email"].ToString() == Model.customer.email)
+                    {
+                        <td>@Html.ActionLink("Edit", "EditPackage", "Home", new { id = @package.id }, new { @class = "btn btn-primary" })</td>
+                        <td>@Html.ActionLink("Delete", "DeletePackage", "Home", new { id = @package.id }, new { @class = "btn btn-primary" })</td>
+                    }
+                }
+            </tr>
+        }
+    </table>
+    <br><br>
+    <div class="col-md-2">
+        @if (Session["Email"] != null)
+        {
+            if (Session["Email"].ToString() == Model.customer.email)
+            {
+                @Html.ActionLink("Add New", "AddPackage", "Profile", new { email = Model.customer.email }, new { @class = "btn btn-primary" })
             }
-        </table>
-		<br><br>
-<div class="col-md-2">
-@if (Session["Email"] != null)
-{
-    if (Session["Email"].ToString() == Model.customer.email)
-    {
-@Html.ActionLink("Add New", "AddPackage", "Profile", new { email = Model.customer.email }, new { @class = "btn btn-primary" })
-    }
-}
+        }
+    </div>
+    <div class="col-md-12" style="height:50px"></div>
 </div>

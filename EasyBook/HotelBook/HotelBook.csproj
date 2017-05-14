@@ -17,10 +17,10 @@
     <AssemblyName>HotelBook</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <UseIISExpress>true</UseIISExpress>
-    <IISExpressSSLPort />
-    <IISExpressAnonymousAuthentication />
-    <IISExpressWindowsAuthentication />
-    <IISExpressUseClassicPipelineMode />
+    <IISExpressSSLPort>60818</IISExpressSSLPort>
+    <IISExpressAnonymousAuthentication>enabled</IISExpressAnonymousAuthentication>
+    <IISExpressWindowsAuthentication>disabled</IISExpressWindowsAuthentication>
+    <IISExpressUseClassicPipelineMode>false</IISExpressUseClassicPipelineMode>
     <UseGlobalApplicationHostFile />
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
@@ -43,6 +43,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="GoogleMaps.LocationServices, Version=0.1.5926.26040, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\GoogleMaps.LocationServices.0.9.8.6\lib\net40\GoogleMaps.LocationServices.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Interop.SHDocVw, Version=1.1.0.0, Culture=neutral, PublicKeyToken=db7cfd3acb5ad44e, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <EmbedInteropTypes>True</EmbedInteropTypes>
@@ -136,6 +140,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="galleria-1.5.5.min.js" />
+    <Content Include="GoogleMaps.LocationServices.readme.txt" />
     <Content Include="image\67567053-hotel-wallpapers.jpg" />
     <Content Include="image\14292349_10207198668913441_8832297755565367251_n.jpg" />
     <Content Include="Script\ai.0.22.9-build00167.js" />
@@ -179,6 +184,12 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\RentController.cs" />
+    <Compile Include="Models\Admin.cs" />
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
     <Compile Include="unitTesting.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
@@ -201,6 +212,10 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <SubType>Designer</SubType>
     </Content>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
     <None Include="Script\jquery-1.10.2.intellisense.js" />
     <None Include="Script\jquery.validate-vsdoc.js" />
     <None Include="Script\_references.js" />
@@ -234,6 +249,16 @@
     <Content Include="Views\Shared\_Header2.cshtml" />
     <Content Include="Views\Admin\user.cshtml" />
     <Content Include="Views\Admin\upsetting.cshtml" />
+    <Content Include="Views\Rent\Advertisement.cshtml" />
+    <Content Include="Views\Rent\Boarding.cshtml" />
+    <Content Include="Views\Rent\Index.cshtml" />
+    <Content Include="Views\Rent\Signup.cshtml" />
+    <Content Include="Views\Shared\_Header1.cshtml" />
+    <Content Include="Views\Profile\AddPro.cshtml" />
+    <Content Include="Views\Login\login.cshtml" />
+    <Content Include="Views\Profile\payment.cshtml" />
+    <Content Include="Views\Login\BookingLogin.cshtml" />
+    <Content Include="Views\Admin\post.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -243,7 +268,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\Rent\" />
     <Folder Include="Views\Validation\" />
   </ItemGroup>
   <ItemGroup>
@@ -268,6 +292,8 @@
           <DevelopmentServerPort>60818</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
           <IISUrl>http://localhost:60818/</IISUrl>
+          <OverrideIISAppRootUrl>True</OverrideIISAppRootUrl>
+          <IISAppRootUrl>http://localhost:60818/</IISAppRootUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

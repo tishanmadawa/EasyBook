@@ -29,6 +29,28 @@ namespace HotelBook.Models
         public string map { get; set; }
         public string regId { get; set; }
     }
+
+    public class user
+    {
+        public string name { get; set; }
+        public int id { get; set; }
+        public string email { get; set; }
+        public string password { get; set; }
+        public string address { get; set; }
+        public string cPassword { get; set; }
+  
+    }
+
+    public class Payment
+    {
+        
+        public string package { get; set; }
+        public DateTime date { get; set; }
+        public int packageNo { get; set; }
+        public int creditCard { get; set; }
+        public int userId { get; set; }
+        public int price { get; set; }
+    }
     public class Daypack
     {
         public int id { get; set; }
@@ -51,8 +73,9 @@ namespace HotelBook.Models
         public string accomadation { get; set; }
         public string location { get; set; }
         public string description { get; set; }
+        public string accept { get; set; }
 
-       
+
     }
     public class Package
     {
@@ -72,8 +95,16 @@ namespace HotelBook.Models
         public string name { get; set; }
         public int number { get; set; }
         public string image { get; set; }
+        public string accept { get; set; }
     }
-
+    public class image
+    {
+        public int id { get; set; }
+        public string imag { get; set; }
+        public string albumName { get; set; }
+        public string customer { get; set; }
+        public DateTime date { get; set; }
+    }
     public class Boarding
     {
         public string name { get; set; }
@@ -120,6 +151,110 @@ namespace HotelBook.Models
             }
         }
 
+        public void InsertUser(user user)
+        {
+            string constr = ConfigurationManager.ConnectionStrings["HotelDBContext"].ConnectionString;
+            using (SqlConnection con = new SqlConnection(constr))
+            {
+                using (SqlCommand cmd = new SqlCommand("INSERT INTO Customer (Name,Email, Password,Address) VALUES (@Name,@Email, @Password,@Address)"))
+                {
+                    cmd.Parameters.AddWithValue("@Name", user.name);
+                    cmd.Parameters.AddWithValue("@Email", user.email);
+                    cmd.Parameters.AddWithValue("@Password", user.password);
+                    cmd.Parameters.AddWithValue("@Address", user.address);
+                   
+                    cmd.Connection = con;
+                    con.Open();
+                    cmd.ExecuteNonQuery();
+                    con.Close();
+                }
+            }
+        }
+
+        public Customer SearchLogin(string email)
+        {
+            string constr = ConfigurationManager.ConnectionStrings["HotelDBContext"].ConnectionString;
+            using (SqlConnection con = new SqlConnection(constr))
+            {
+                con.Open();
+                Customer customer = new Models.Customer();
+                SqlCommand com = new SqlCommand("SELECT * FROM Customer WHERE Email=@Email");
+                com.CommandType = CommandType.Text;
+                com.Connection = con;
+
+                com.Parameters.AddWithValue("@Email", email);
+
+                using (SqlDataAdapter da = new SqlDataAdapter(com))
+                {
+                    DataTable dt = new DataTable();
+                    da.Fill(dt);
+                    if (dt.Select().Length != 0)
+                    {
+                        customer.password = Convert.ToString(dt.Rows[0]["Password"]);
+                        customer.name = Convert.ToString(dt.Rows[0]["Name"]);
+                        customer.email = Convert.ToString(dt.Rows[0]["Email"]);
+                        customer.accept = Convert.ToInt32(dt.Rows[0]["Accept"]);
+                        customer.image = Convert.ToString(dt.Rows[0]["Image"]);
+                        customer.role = Convert.ToString(dt.Rows[0]["Role"]);
+                        customer.address = Convert.ToString(dt.Rows[0]["Address"]);
+                        customer.ProfileName = Convert.ToString(dt.Rows[0]["ProfileName"]);
+                        customer.rating = Convert.ToInt32(dt.Rows[0]["Rating"]);
+                        customer.state = Convert.ToString(dt.Rows[0]["State"]);
+                        customer.city = Convert.ToString(dt.Rows[0]["City"]);
+                        customer.map = Convert.ToString(dt.Rows[0]["Map"]);
+                        customer.id = Convert.ToInt32(dt.Rows[0]["Id"]);
+                        customer.regId = Convert.ToString(dt.Rows[0]["RegId"]);
+
+
+                        return customer;
+                    }
+                    else
+                    {
+                        return customer;
+                    }
+
+                }
+
+            }
+        }
+
+        public user SearchLoginUser(string email)
+        {
+            string constr = ConfigurationManager.ConnectionStrings["HotelDBContext"].ConnectionString;
+            using (SqlConnection con = new SqlConnection(constr))
+            {
+                con.Open();
+                user User = new user();
+                SqlCommand com = new SqlCommand("SELECT * FROM Users WHERE Email=@Email");
+                com.CommandType = CommandType.Text;
+                com.Connection = con;
+                com.Parameters.AddWithValue("@Email", email);
+
+
+                using (SqlDataAdapter da = new SqlDataAdapter(com))
+                {
+                    DataTable dt = new DataTable();
+                    da.Fill(dt);
+                    if (dt.Select().Length != 0)
+                    {
+                        User.password = Convert.ToString(dt.Rows[0]["Password"]);
+                        User.name = Convert.ToString(dt.Rows[0]["Name"]);
+                        User.email = email;
+                        User.address = Convert.ToString(dt.Rows[0]["Address"]);
+                        User.id = Convert.ToInt32(dt.Rows[0]["Id"]);
+
+
+                        return User;
+                    }
+                    else
+                    {
+                        return User;
+                    }
+
+                }
+
+            }
+        }
         //search customer using customer email in Login
         public Customer Search(string email)
         {
@@ -140,7 +275,7 @@ namespace HotelBook.Models
                     da.Fill(dt);
                     if (dt.Select().Length!= 0)
                     {
-                        customer.password= Convert.ToString(dt.Rows[0]["Password"]);
+                       
                         customer.name= Convert.ToString(dt.Rows[0]["Name"]);
                         customer.email = Convert.ToString(dt.Rows[0]["Email"]);
                         customer.accept = Convert.ToInt32(dt.Rows[0]["Accept"]);
@@ -151,7 +286,9 @@ namespace HotelBook.Models
                         customer.rating= Convert.ToInt32(dt.Rows[0]["Rating"]);
                         customer.state= Convert.ToString(dt.Rows[0]["State"]);
                         customer.city= Convert.ToString(dt.Rows[0]["City"]);
+                        customer.map = Convert.ToString(dt.Rows[0]["Map"]);
                         customer.id = Convert.ToInt32(dt.Rows[0]["Id"]);
+                        customer.regId = Convert.ToString(dt.Rows[0]["RegId"]);
 
 
                         return customer;
@@ -232,14 +369,36 @@ namespace HotelBook.Models
             }
         }
 
+        public void insertPayment(Payment payment)
+        {
+            string constr = ConfigurationManager.ConnectionStrings["HotelDBContext"].ConnectionString;
+            using (SqlConnection con = new SqlConnection(constr))
+            {
+                using (SqlCommand cmd = new SqlCommand("INSERT INTO payments (userId,package,date,packageNo,creditcard,price) VALUES (@userId,@package,@date,@packageNo,@creditcard,@price)"))
+                {
+                   
+                    cmd.Parameters.AddWithValue("@package", payment.package);
+                    cmd.Parameters.AddWithValue("@userId", payment.userId);
+                    cmd.Parameters.AddWithValue("@date", payment.date);
+                    cmd.Parameters.AddWithValue("@packageNo", payment.packageNo);
+                    cmd.Parameters.AddWithValue("@creditcard", payment.creditCard);
+                    cmd.Parameters.AddWithValue("@price", payment.price);
+                    cmd.Connection = con;
+                    con.Open();
+                    cmd.ExecuteNonQuery();
+                    con.Close();
+                }
+            }
+        }
         public void addAlbum(string user, string album, int Number, string image)
         {
             string constr = ConfigurationManager.ConnectionStrings["HotelDBContext"].ConnectionString;
             using (SqlConnection con = new SqlConnection(constr))
             {
-                using (SqlCommand cmd = new SqlCommand("INSERT INTO Album (album,Customer,number,image) VALUES (@album,@Name,@Number,@image)"))
+                using (SqlCommand cmd = new SqlCommand("INSERT INTO Album (album,Customer,number,image,Date,Accept) VALUES (@album,@Name,@Number,@image,@date,'Waiting')"))
                 {
                     cmd.Parameters.AddWithValue("@Name", user);
+                    cmd.Parameters.AddWithValue("@date", DateTime.Now);
                     cmd.Parameters.AddWithValue("@album", album);
                     cmd.Parameters.AddWithValue("@Number", Number);
                     cmd.Parameters.AddWithValue("@image", image);
@@ -289,14 +448,16 @@ namespace HotelBook.Models
             using (SqlConnection con = new SqlConnection(constr))
             {
 
-                using (SqlCommand cmd = new SqlCommand("UPDATE Customer SET ProfileName=@proname,Rating=@rating,City=@city,State=@state,Address=@address,Image=@image WHERE Email=@ee"))
+                using (SqlCommand cmd = new SqlCommand("UPDATE Customer SET Name=@Name,Map=@Map,RegId=@RegId,Rating=@Rating,City=@City,State=@State,Address=@Address,Image=@image WHERE Email=@ee"))
                 {
-                    cmd.Parameters.AddWithValue("@ee", ee);
-                    cmd.Parameters.AddWithValue("@proname", customer.ProfileName);
-                    cmd.Parameters.AddWithValue("@rating", customer.rating);
-                    cmd.Parameters.AddWithValue("@city", customer.city);
-                    cmd.Parameters.AddWithValue("@state", customer.state);
-                    cmd.Parameters.AddWithValue("@address", customer.address);
+                    cmd.Parameters.AddWithValue("@ee", customer.email);
+                    cmd.Parameters.AddWithValue("@Name", customer.name);
+                    cmd.Parameters.AddWithValue("@State", customer.state);
+                    cmd.Parameters.AddWithValue("@City", customer.city);
+                    cmd.Parameters.AddWithValue("@Address", customer.address);
+                    cmd.Parameters.AddWithValue("@Rating", customer.rating);
+                    cmd.Parameters.AddWithValue("@Map", customer.map);
+                    cmd.Parameters.AddWithValue("@RegId", customer.regId);
                     cmd.Parameters.AddWithValue("@image", customer.image);
                     cmd.Connection = con;
                     con.Open();
@@ -362,7 +523,7 @@ namespace HotelBook.Models
             string h = email;
             // ProcessStartInfo sInfo = new ProcessStartInfo("http://mysite.com/");
             //Uri ur = new Uri("http://localhost:60818/CreatePro/login");
-            Uri ur = new Uri("http://mysite.com/");
+            Uri ur = new Uri("http://localhost:60818/Login/login");
 
             try
             {
@@ -376,7 +537,7 @@ namespace HotelBook.Models
                 // Send email
                 WebMail.Send(to: h,
                     subject: "Confirmation of Request",
-                    body: "We add your hotel to HotelBook.Use this to make ypur profile" + ur
+                    body: "We add your hotel to HotelBook.Use this to make ypur profile " + ur
                 );
 
             }
@@ -495,9 +656,10 @@ namespace HotelBook.Models
             string constr = ConfigurationManager.ConnectionStrings["HotelDBContext"].ConnectionString;
             using (SqlConnection con = new SqlConnection(constr))
             {
-                using (SqlCommand cmd = new SqlCommand("INSERT INTO Images(Image,AlbumName,Customer) VALUES (@Images,@Album,@Owner)",con))
+                using (SqlCommand cmd = new SqlCommand("INSERT INTO Images(Image,AlbumName,Customer,Date) VALUES (@Images,@Album,@Owner,@date)",con))
                 {
                     cmd.Parameters.AddWithValue("@Images", newAlbum.image);
+                    cmd.Parameters.AddWithValue("@date", DateTime.Now);
                     cmd.Parameters.AddWithValue("@Album", newAlbum.albumName);
                     cmd.Parameters.AddWithValue("@Owner", newAlbum.owner);
                     cmd.Connection = con;
@@ -513,9 +675,10 @@ namespace HotelBook.Models
             string constr = ConfigurationManager.ConnectionStrings["HotelDBContext"].ConnectionString;
             using (SqlConnection con = new SqlConnection(constr))
             {
-                using (SqlCommand cmd = new SqlCommand("INSERT INTO Events (Date,NoDays,StartTime,EndTime,Meant,Accomadation,Location,Description,Customer) VALUES (@date,@noDays,@startTime,@endTime,@meant,@accomadation,@location,@description,@customer)", con))
+                using (SqlCommand cmd = new SqlCommand("INSERT INTO Events (Datet,NoDays,StartTime,EndTime,Meant,Accomadation,Location,Description,Customer,Date,Accept) VALUES (@date,@noDays,@startTime,@endTime,@meant,@accomadation,@location,@description,@customer,@datee,'Waiting')", con))
                 {
                     cmd.Parameters.AddWithValue("@date", newEvent.date);
+                    cmd.Parameters.AddWithValue("@datee", DateTime.Now);
                     cmd.Parameters.AddWithValue("@noDays", newEvent.noDates);
                     cmd.Parameters.AddWithValue("@startTime", newEvent.startTime);
                     cmd.Parameters.AddWithValue("@endTime", newEvent.endTime);
@@ -960,6 +1123,7 @@ public void DeletePackage(int id)
         public string title { get; set; }
         public string post { get; set; }
         public DateTime date { get; set; }
+        public string accept { get; set; }
 
     }
     public class album
@@ -969,7 +1133,10 @@ public void DeletePackage(int id)
         public string albumName { get; set; }
         public string image { get; set; }
         public string owner { get; set; }
-        
+        public string accept { get; set; }
+        public DateTime date { get; set; }
+
+
 
     }
     public class PostDetails
@@ -979,7 +1146,7 @@ public void DeletePackage(int id)
             string constr = ConfigurationManager.ConnectionStrings["HotelDBContext"].ConnectionString;
             using (SqlConnection con = new SqlConnection(constr))
             {
-                using (SqlCommand cmd = new SqlCommand("INSERT INTO Post (CustomerId,Title,Post,Date) VALUES (@id,@title, @post,@date)"))
+                using (SqlCommand cmd = new SqlCommand("INSERT INTO Post (CustomerId,Title,Post,Date,Accept) VALUES (@id,@title, @post,@date,'Waiting')"))
                 {
                     cmd.Parameters.AddWithValue("@id", post.customerId);
                     cmd.Parameters.AddWithValue("@title", post.title);
@@ -1183,6 +1350,8 @@ public void DeletePackage(int id)
         public DateTime packagesDate { get; set; }
         public Package package { get; set; }
         public Daypack dayPack { get; set;}
+        public Payment payment { get; set; }
+        public user User { get; set; }
     }
     
     

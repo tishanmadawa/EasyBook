@@ -12,11 +12,11 @@
         <div class="slideshow-container">
 @foreach (var album in Model.albumImage)
 {
-            <div class="mySlides fade">
+            <div class="mySlides fade" style="background-color:black;height:500px;width:920px;">
                 <div class="numbertext">1 / @Model.albumImage.Count</div>
 
-                <img src="~/image/@album.image" style="width:100%">
-                <div class="text">Caption Text</div>
+                <img src="~/image/@album.image" style="max-height:500px;max-width:920px;width:100%;">
+                
             </div>
 
 }

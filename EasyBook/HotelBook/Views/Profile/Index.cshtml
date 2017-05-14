@@ -9,7 +9,9 @@
 <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false">
   
 </script>
-
+<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+<link href="@Url.Content("~/Styles/boostrap.min.css")" rel="stylesheet" />
+<link href="@Url.Content("~/Styles/Site.css")" rel="stylesheet" />
 <script async defer
         src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB7khgNytj9WTAk1r8lleyjES1S2ruAMHU&callback=initMap">
 </script>
@@ -18,7 +20,7 @@
     //6.9020268,79.8619555
 var map;
     function initialize() {
-        var latlng = new google.maps.LatLng(6.9020268, 79.8619555);
+        var latlng = new google.maps.LatLng(@Model.customer.map);
         var myOptions = {
             zoom: 14,
             center: latlng,
@@ -28,7 +30,7 @@ var map;
         var marker = new google.maps.Marker
         (
             {
-                position: new google.maps.LatLng(6.9020268, 79.8619555),
+                position: new google.maps.LatLng(@Model.customer.map),
                 map: map,
                 title: 'Click me'
             }
@@ -45,124 +47,126 @@ var map;
 
 </script>
 
-<div class="body-cont" style="background-color:white;" >
 
-
-    <div class="col-md-3" id="map" style="height:350px;overflow:hidden;border-right:2px solid black;background-color:gray;">
-    </div>
-
-
-    <div class="col-md-9" style="height:350px;overflow:hidden;border:2px solid black; ">
-
-        <div id="d1" style="">
-            <img style="width:110%;margin-left:-15px;" src="~/image/@Html.DisplayFor(m=>m.customer.image)" />
+<div class="body-cont">
+    
+        <div class="col-md-8 " id="d1" style="height:350px;">
+          
+            <div style="width:100%;height:100%;background: linear-gradient(to right, transparent, transparent,black);position:absolute"></div>
+            <div style="width:100%;height:100%;background: linear-gradient(to left, transparent, transparent,black);position:absolute;margin-left:-10%;"></div>
+            <div style="width:110%;height:100%;background: linear-gradient(to bottom, transparent, transparent,black);position:absolute;margin-left:-10%;"></div>
+            <img style="width:100%;margin-left:-15px;background: linear-gradient(to right, #f6f1d3, #648880, #293f50);" src="~/image/@Html.DisplayFor(m=>m.customer.image)" />
+           
 
 
         </div>
+    <div class="col-md-4" style="height:350px;">
+        <div style="color:white;padding-bottom:5px;border-radius:5px;">
+            <h1> @Html.DisplayFor(m => m.customer.name)</h1>
 
-    </div>
-
-
-
-
-   
-
-    <div class="col-md-3" style="height:400px;overflow:hidden;border-right:2px solid black;background-color:grey;color:white;">
-        <h3>Search Panel</h3>
-@using (Html.BeginForm("getPack", "Profile",new { email=Model.customer.email}, FormMethod.Post, new { name = "eventForm", @class = "form-horizontal", role = "form", onsubmit = "return validateForm()" }))
-{
-    <p>@Html.TextBoxFor(m=>m.packagesDate,new { @class = "form-control",type="Date" })</p>
-   
-    <button type="submit" value="submit" name="submit" class="btn btn-primary">Search</button>
-}
-        <div class="col-md-12">
-            <table class="table-hover" style="width:100%;">
-                <tr>
-                    <th style="width:100%;">Package Name</th>
-                    <th style="width:100%;">Available Number</th>
-
-                </tr>
-                @foreach (var package in Model.searchpackage)
+            <h3> @Html.DisplayFor(m => m.customer.address)</h3>
+            <p>
+                @for (int i = 0; i < @Model.customer.rating; i++)
                 {
-
-                <tr>
-                   <td>@package.name</td>
-                    <td>@package.number</td>
-                </tr>
-
-                    }
-
-                
-
-            </table>
+                    <span class="glyphicon glyphicon-star" style="color:gold;"></span>
+                }
+                @for (int i = 0; i < 5 - @Model.customer.rating; i++)
+                {
+                    <span class="glyphicon glyphicon-star"></span>
+                }
         </div>
+
+
+
     </div>
-    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-    <link href="@Url.Content("~/Styles/boostrap.min.css")" rel="stylesheet" />
-    <link href="@Url.Content("~/Styles/Site.css")" rel="stylesheet" />
-    <div class="col-md-9 body-content" style="height:70px;background-color:cornflowerblue;">
 
 
-
-        <a href="@Url.Action("post","Profile", new { email = Model.customer.email })">
-            <div class="col-md-2" style="height:70px;" id="bar">
-                <p></p>
-                <span style="font-size:35px; margin-left:30%;" class="glyphicon glyphicon-home"></span>
-                <p style="margin-left:30%;">Profile</p>
-
+    <div class="col-md-3" style="background-color:black;">
+     
+            
+            <div class="col-md-12" id="map" style="">
             </div>
-        </a>
-        <a href="@Url.Action("photo","Profile", new { email = Model.customer.email })">
-            <div class="col-md-2" style="height:70px;" id="bar">
-                <p></p>
-                <span style="font-size:35px; margin-left:30%;" class="glyphicon glyphicon-picture"></span>
-                <p style="margin-left:28%;">Photos</p>
 
+            <div class="col-md-12" style="overflow:hidden;border:2px solid gold;color:white;margin-top:10px;border-radius:5px;">
+                <h3 style="color:goldenrod">Search Panel</h3>
+                <p>Enter Date for search available number of packages</p>
+                @using (Html.BeginForm("getPack", "Profile", new { email = Model.customer.email }, FormMethod.Post, new { name = "eventForm", @class = "form-horizontal", role = "form", onsubmit = "return getTable()" }))
+            {
+                    <p>@Html.TextBoxFor(m => m.packagesDate, new { @class = "form-control", type = "Date" })</p>
+
+                    <button type="submit" value="submit" name="submit" class="btn1">Search</button>
+                }
+                <div class="col-md-12" id="panel" style="min-height:300px;">
+                    <table class="table-responsive" style="width:100%;">
+                        <tr>
+                            <th style="width:100%;">Package Name</th>
+                            <th style="width:100%;">Available Number</th>
+
+                        </tr>
+                        @foreach (var package in Model.searchpackage)
+                        {
+
+                            <tr>
+                                <td>@package.name</td>
+                                <td>@package.number</td>
+                            </tr>
+
+                        }
+
+
+
+                    </table>
+                </div>
+                <div class="col-md-12">
+                    <a href="@Url.Action("payment","Profile", new { email = Model.customer.email })">
+                        <button type="button" class="btn1 " style="">
+                            <span class="glyphicon glyphicon-shopping-cart"><p>Booking</p></span>
+
+                        </button>
+                    </a>
+                </div>
+                <div class="col-md-12" style="height:10px;">
+
+                </div>
             </div>
-        </a>
-        <a href="@Url.Action("Package","Profile", new { email = Model.customer.email })">
-            <div class="col-md-2" style="height:70px;" id="bar">
-                <p></p>
-                <span style="font-size:35px; margin-left:30%;" class="glyphicon glyphicon-shopping-cart"></span>
-                <p style="margin-left:28%;">Packages</p>
 
-            </div>
-        </a>
-        <a href="@Url.Action("viewEvents","Profile", new { email = Model.customer.email })">
-            <div class="col-md-2" style="height:70px;" id="bar">
-                <p></p>
-                <span style="font-size:35px; margin-left:30%;" class="glyphicon glyphicon-music"></span>
-                <p style="margin-left:28%;">Events</p>
 
-            </div>
-        </a>
-   
 
-    @if (Session["Email"] != null)
-    {
-        if (Session["Email"].ToString() == Model.customer.email)
-        {
-    <a href="@Url.Action("settings", "Profile", new { email = Model.customer.email })">
-        <div class="col-md-2" style="height:70px;" id="bar">
-            <p></p>
-            <span style="font-size:35px; margin-left:30%;" class="glyphicon glyphicon-cog"></span>
-            <p style="margin-left:28%;">Setting</p>
+
 
         </div>
-    </a>
-  
-            <a href="@Url.Action("searchTable", "Profile", new { email = Model.customer.email })">
+    <div class="col-md-9" style="background-color:black;">
+
+        <div class="col-md-12" style="background-color:#0084F9;height:5px;padding-bottom:5px;"></div>
+        <div class="col-md-12 body-content" style="min-height:70px;margin-top:5px;">
+
+
+
+            <a href="@Url.Action("post","Profile", new { email = Model.customer.email })">
                 <div class="col-md-2" style="height:70px;" id="bar">
                     <p></p>
-                    <span style="font-size:35px; margin-left:30%;" class="glyphicon glyphicon-plus-sign"></span>
-                    <p style="margin-left:10%;">Add Booking</p>
+                    <span style="font-size:35px; margin-left:30%;" class="glyphicon glyphicon-home"></span>
+                    <p style="margin-left:30%;">Profile</p>
 
                 </div>
             </a>
-        }
-        else
-        {
-            <a href="@Url.Action("viewEvents", "Profile", new { email = Model.customer.email })">
+            <a href="@Url.Action("photo","Profile", new { email = Model.customer.email })">
+                <div class="col-md-2" style="height:70px;" id="bar">
+                    <p></p>
+                    <span style="font-size:35px; margin-left:30%;" class="glyphicon glyphicon-picture"></span>
+                    <p style="margin-left:28%;">Photos</p>
+
+                </div>
+            </a>
+            <a href="@Url.Action("Package","Profile", new { email = Model.customer.email })">
+                <div class="col-md-2" style="height:70px;" id="bar">
+                    <p></p>
+                    <span style="font-size:35px; margin-left:30%;" class="glyphicon glyphicon-shopping-cart"></span>
+                    <p style="margin-left:28%;">Packages</p>
+
+                </div>
+            </a>
+            <a href="@Url.Action("viewEvents","Profile", new { email = Model.customer.email })">
                 <div class="col-md-2" style="height:70px;" id="bar">
                     <p></p>
                     <span style="font-size:35px; margin-left:30%;" class="glyphicon glyphicon-music"></span>
@@ -170,11 +174,56 @@ var map;
 
                 </div>
             </a>
-        }
-    }
-</div>
-<div class="col-md-9">
-    @RenderBody()
-    @RenderSection("scripts", required: false)
+
+
+            @if (Session["Email"] != null)
+            {
+                if (Session["Email"].ToString() == Model.customer.email)
+                {
+                    <a href="@Url.Action("settings", "Profile", new { email = Model.customer.email })">
+                        <div class="col-md-2" style="height:70px;" id="bar">
+                            <p></p>
+                            <span style="font-size:35px; margin-left:30%;" class="glyphicon glyphicon-cog"></span>
+                            <p style="margin-left:28%;">Setting</p>
+
+                        </div>
+                    </a>
+
+                    <a href="@Url.Action("searchTable", "Profile", new { email = Model.customer.email })">
+                        <div class="col-md-2" style="height:70px;" id="bar">
+                            <p></p>
+                            <span style="font-size:35px; margin-left:30%;" class="glyphicon glyphicon-plus-sign"></span>
+                            <p style="margin-left:10%;">Add Booking</p>
+
+                        </div>
+                    </a>
+                }
+                else
+                {
+                    <a href="@Url.Action("viewEvents", "Profile", new { email = Model.customer.email })">
+                        <div class="col-md-2" style="height:70px;" id="bar">
+                            <p></p>
+                            <span style="font-size:35px; margin-left:30%;" class="glyphicon glyphicon-cog"></span>
+                            <p style="margin-left:28%;">Details</p>
+
+                        </div>
+                    </a>
+                }
+            }
+        </div>
+        <div class="col-md-12" style="background-color:#0084F9;height:5px;padding-bottom:5px;margin-top:5px;margin-bottom:10px;"></div>
+        <div class="col-md-12" >
+            @RenderBody()
+            @RenderSection("scripts", required: false)
+        </div>
     </div>
-</div>
+
+
+    </div>
+
+
+
+
+        
+        
+       

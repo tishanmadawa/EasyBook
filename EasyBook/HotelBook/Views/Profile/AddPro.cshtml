@@ -1,0 +1,323 @@
+﻿
+@using HotelBook.Models;
+@model Customer
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title = EasyBook</title>
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+
+    <link href="@Url.Content("~/Styles/boostrap.css")" rel="stylesheet" />
+    <link href="@Url.Content("~/Styles/Site.css")" rel="stylesheet" />
+    <script src="@Url.Content("~/Script/modernizr-2.6.2.js")" language="javascript" type="text/javascript"></script>
+    <script src="https://code.jquery.com/jquery-1.12.4.js" language="javascript" type="text/javascript"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js" language="javascript" type="text/javascript"></script>
+    <script type="text/javascript" language="javascript" src="@Url.Content("~/Script/jquery.min.js")"></script>
+    <script type="text/javascript" language="javascript" src="@Url.Content("~/Script/jquery.Jcrop.js")"></script>
+    <script src="@Url.Content("~/Script/jquery.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Script/bootstrap.js")" type="text/javascript"></script>
+
+    <script src="@Url.Content("~/Script/jquery.js")" language="javascript" type="text/javascript"></script>
+    <script src="@Url.Content("~/Script/boostrap.js")" language="javascript" type="text/javascript"></script>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+    <script type="text/javascript" src="http://cdn.rawgit.com/tapmodo/Jcrop/master/js/jquery.Jcrop.min.js"></script>
+    <script type="text/javascript" src="http://cdn.rawgit.com/tapmodo/Jcrop/master/js/jquery.Jcrop.js"></script>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3/jquery.min.js"></script>
+    <script type="text/javascript" src="script/jquery.Jcrop.pack.js"></script>
+    <script>
+        function readURL(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                    $('#blah')
+                        .attr('src', e.target.result)
+                        .width(200)
+                        .height(200);
+                };
+
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+    </script>
+    <script>
+    function validateForm() {
+
+            document.getElementById("emailVal").innerHTML = "";
+            document.getElementById("idVal").innerHTML = "";
+            document.getElementById("nameVal").innerHTML = "";
+            document.getElementById("stateVal").innerHTML = "";
+            document.getElementById("cityVal").innerHTML = "";
+            document.getElementById("addressVal").innerHTML = "";
+            document.getElementById("passwordVal").innerHTML = "";
+            document.getElementById("cPasswordVal").innerHTML = "";
+            document.getElementById("ratingVal").innerHTML = "";
+            document.getElementById("mapVal").innerHTML = "";
+        var letterNumber = /^[ ,0-9a-zA-Z]+$/;
+
+        var value = true;
+
+        var ResNumber = $('#reg').val();
+        var name = $('#name').val();
+        var email = $('#email').val();
+        var state = $('#state').val();
+        var city = $('#city').val();
+        var address = $('#address').val();
+        var password = $('#password').val();
+        var cPassword = $('#cPassword').val();
+        var rating = $('#rating').val();
+        var map = $('#map').val();
+        if (ResNumber == "" || email == "" || name=="" || state=="" || city=="" || rating ==0 || reg == "" || map=="" ) {
+            if (email == "") {
+                document.getElementById("emailVal").innerHTML = "Enter Email";
+
+            }
+
+            if (map == "") {
+                document.getElementById("mapVal").innerHTML = "Enter Google Map Link";
+
+            }
+            if (ResNumber == "") {
+                document.getElementById("idVal").innerHTML = "Enter Register Number";
+
+            }
+            if (name == "") {
+                document.getElementById("nameVal").innerHTML = "Enter Hotel Name";
+
+            }
+            if (state == "") {
+                document.getElementById("stateVal").innerHTML = "Enter Hotel State";
+
+            }
+            if (city == "") {
+                document.getElementById("cityVal").innerHTML = "Enter Hotel City";
+
+            }
+            if (address == "") {
+                document.getElementById("addressVal").innerHTML = "Enter Hotel Address";
+
+            }
+            if (password == "") {
+                document.getElementById("passwordVal").innerHTML = "Enter Password";
+
+            }
+            if (cPassword == "") {
+                document.getElementById("cPasswordVal").innerHTML = "Enter Confirm Password";
+
+            }
+            if (rating == 0) {
+                document.getElementById("ratingVal").innerHTML = "Enter Rating of Hotel";
+
+            }
+            value= false;
+        }
+
+        if (ResNumber.match(letterNumber)==null) {
+
+            document.getElementById("idVal").innerHTML = "Enter Valid ID";
+            value= false;
+        }
+
+        if (name.match(letterNumber) == null) {
+
+            document.getElementById("nameVal").innerHTML = "Enter Valid Name";
+            value = false;
+        }
+        if (state.match(letterNumber) == null) {
+
+            document.getElementById("stateVal").innerHTML = "Enter Valid State";
+            value = false;
+        }
+        if (city.match(letterNumber) == null) {
+
+            document.getElementById("cityVal").innerHTML = "Enter Valid City";
+            value = false;
+
+        }
+        if (address.match(letterNumber) == null) {
+
+            document.getElementById("addressVal").innerHTML = "Enter Valid Address";
+            value = false;
+        }
+        if (password != cPassword) {
+
+            document.getElementById("cPasswordVal").innerHTML = "Confirm Password";
+            value = false;
+
+
+        }
+        if(value==true){
+            alert("Signup is confirm");
+        }
+        return value;
+
+
+    }
+    </script>
+</head>
+<body style="background-color:white;">
+<div class="row">
+    <div class="col-md-2">
+    </div>
+    <div class="col-md-8">
+
+        <div>
+            <section id="loginForm">
+                @using (Html.BeginForm("AddPro", "Login", new {email=Model.email }, FormMethod.Post, new { enctype = "multipart/form-data", onsubmit = "return validateForm()" }))
+                {
+                    @Html.AntiForgeryToken()
+
+                    <div>
+                        <div class="col-md-8" style="height:50px;">
+
+                            <h3 style="margin-left:40%;">Create Your Profile</h3>
+
+                        </div>
+                        <div class="col-md-12" style="height:50px;">
+
+
+
+                        </div>
+                       
+
+                            <div class="col-md-12">
+
+                                <h4>Please enter the Correct information</h4>
+                            </div>
+                            <div class="form-group" >
+
+                                <div class="col-md-4" style="height:70px;">
+                                    @Html.Label("Register No", new { @class = "col-md-6" })
+
+                                </div>
+                                <div class="col-md-5" style="height:70px;">
+                                    @Html.TextBoxFor(m => m.regId, new { @id = "reg", @class = "form-control" })
+
+                                </div>
+                                <div class="col-md-3">
+                                    <p id="idVal" style="color:red">@Html.ValidationMessageFor(m => m.regId, "", new { style = "color:red;" })</p>
+
+                                </div>
+                            </div>
+                            <div class="form-group" style="height:70px;">
+
+                                <div class="col-md-4" style="height:70px;">
+                                    @Html.Label("Email", new { @class = "col-md-6" })
+
+                                </div>
+                                <div class="col-md-5" style="height:70px;">
+                                    @Html.TextBoxFor(m => m.email, new { @id = "email", @class = "form-control" })
+
+                                </div>
+                                <div class="col-md-3" style="height:70px;">
+                                    <p id="emailVal" style="color:red">@Html.ValidationMessageFor(m => m.email, "", new { style = "color:red;", @id = "emailVal" })</p>
+
+                                </div>
+                            </div>
+
+
+                            <div class="form-group">
+                                <div class="col-md-4" style="height:70px;">
+                                    @Html.Label("Hotel Name   ", new { @class = "col-md-6 " })
+                                </div><div class="col-md-5" style="height:70px;">
+                                    @Html.TextBoxFor(m => m.name, new { @id = "name", @class = "form-control" })
+                                </div>
+                                <div class="col-md-3" style="height:70px;">
+                                    <p id="nameVal" style="color:red">@Html.ValidationMessageFor(m => m.name, "", new { style = "color:red;", @id = "nameVal" })</p>
+
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-4" v>
+                                    @Html.Label("State  ", new { @class = "col-md-6 " })
+                                </div><div class="col-md-5" style="height:70px;">
+                                    @Html.TextBoxFor(m => m.state, new { @id = "state", @class = "form-control" })
+                                </div>
+                                <div class="col-md-3" style="height:70px;">
+                                    <p id="stateVal" style="color:red">@Html.ValidationMessageFor(m => m.state, "", new { style = "color:red;", @id = "stateVal" })</p>
+
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-4" style="height:70px;">
+                                    @Html.Label("City  ", new { @class = "col-md-6 " })
+                                </div><div class="col-md-5" style="height:70px;">
+                                    @Html.TextBoxFor(m => m.city, new { @id = "city", @class = "form-control" })
+                                </div>
+                                <div class="col-md-3" style="height:70px;">
+                                    <p id="cityVal" style="color:red"> @Html.ValidationMessageFor(m => m.city, "", new { style = "color:red;", @id = "cityVal" })</p>
+
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-4" style="height:70px;">
+                                    @Html.Label("Hotel Address   ", new { @class = "col-md-6 " })
+                                </div><div class="col-md-5" style="height:70px;">
+                                    @Html.TextBoxFor(m => m.address, new { @id = "address", @class = "form-control" })
+                                </div>
+                                <div class="col-md-3" style="height:70px;">
+                                    <p id="addressVal" style="color:red">@Html.ValidationMessageFor(m => m.address, "", new { style = "color:red;", @id = "addressVal" })</p>
+
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-4" style="height:70px;">
+                                    @Html.Label("Hotel star rating", new { @class = "col-md-6 " })
+                                </div><div class="col-md-5" style="height:70px;">
+                                    @Html.TextBoxFor(m => m.rating, new { type = "number", @id = "rating", @class = "form-control" })
+                                </div>
+                                <div class="col-md-3" style="height:70px;">
+                                    <p id="ratingVal" style="color:red">
+                                        @Html.ValidationMessageFor(m => m.rating, "", new { style = "color:red;", @id = "ratingVal" })
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-4" style="height:70px;">
+                                    @Html.Label("Map location link", new { @class = "col-md-6 " })
+                                </div><div class="col-md-5" style="height:70px;">
+                                    @Html.TextBoxFor(m => m.map, new { @id = "map", @class = "form-control" })
+                                </div>
+                                <div class="col-md-3" style="height:70px;">
+                                    <p id="mapVal" style="color:red">
+                                        @Html.ValidationMessageFor(m => m.map, "", new { style = "color:red;", @id = "mapVal" })
+                                    </p>
+                                </div>
+                            </div>
+                           
+                            <div class="col-md-5" style="height:70px;">
+                                @Html.Label("Image", new { @class = "col-md-6" })
+                            </div>
+                            <div class="col-md-6" style="height:300px;">
+                                <img id="blah" style="position:absolute" />
+                                @Html.TextBox("fileupload", "fileupload", new { id = "fileupload", type = "file", @style = "min-width:250px;min-height:250px;background-color:transparent;z-index:900;", @class = "form-control", onchange = "readURL(this)", accept = ".jpg,.png,.gif" })
+                                
+
+                            </div>
+
+
+                            <div class="col-md-6">
+                            </div>
+                            <div class="col-md-2">
+                                <input type="submit" ID="btnUpload" value="Submit" class="btn btn-primary" />
+
+
+
+                            </div>
+
+
+                    </div>
+
+
+
+                }
+            </section>
+        </div>
+    </div>
+
+</div>
+
+    </body>
+</html>

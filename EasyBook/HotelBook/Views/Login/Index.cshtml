@@ -31,6 +31,10 @@
     }
 </script>
 
+
+<div class="row" style="width:100%;height:350px;background: linear-gradient(to right, black, transparent, black);position:absolute">
+
+</div>
 <div class="row" id="login">
     <div class="col-md-4">
 
@@ -40,6 +44,7 @@
     </div>
     <div class="col-md-4" id="login-form">
         <h3 style="margin-left:40%;">LogIn</h3>
+       
         <div>
             <div>
                 @using (Html.BeginForm("Index", "Login", FormMethod.Post, new { @class = "form-horizontal", role = "form", onsubmit = "return validateForm()" }))

@@ -120,6 +120,83 @@
 
     }
 </script>
+
+<script>
+    function validateForm1() {
+
+            document.getElementById("emailVal1").innerHTML = "";
+            document.getElementById("nameVal1").innerHTML = "";
+            document.getElementById("addressVal1").innerHTML = "";
+            document.getElementById("passwordVal1").innerHTML = "";
+            document.getElementById("cPasswordVal1").innerHTML = "";
+        var letterNumber = /^[ ,0-9a-zA-Z]+$/;
+
+        var value = true;
+
+        var name = $('#name1').val();
+        var email = $('#email1').val();
+        var address = $('#address1').val();
+        var password = $('#password1').val();
+        var cPassword = $('#cPassword1').val();
+       
+        if (address == "" || email == "" || name=="" || password=="" || cPassword==""  ) {
+            if (email == "") {
+                document.getElementById("emailVal1").innerHTML = "Enter Email";
+
+            }
+
+           
+           
+            if (name == "") {
+                document.getElementById("nameVal1").innerHTML = "Enter Name";
+
+            }
+            
+            if (address == "") {
+                document.getElementById("addressVal1").innerHTML = "Enter Address";
+
+            }
+            if (password == "") {
+                document.getElementById("passwordVal1").innerHTML = "Enter Password";
+
+            }
+            if (cPassword == "") {
+                document.getElementById("cPasswordVal1").innerHTML = "Enter Confirm Password";
+
+            }
+            
+            value= false;
+        }
+
+        
+
+        if (name.match(letterNumber) == null) {
+
+            document.getElementById("nameVal1").innerHTML = "Enter Valid Name";
+            value = false;
+        }
+       
+        if (address.match(letterNumber) == null) {
+
+            document.getElementById("addressVal1").innerHTML = "Enter Valid Address";
+            value = false;
+        }
+        if (password != cPassword) {
+
+            document.getElementById("cPasswordVal1").innerHTML = "Confirm Password";
+            value = false;
+
+
+        }
+        if(value==true){
+            alert("Signup is confirm");
+        }
+        return value;
+
+
+    }
+</script>
+
 <div class="row" >
     <div class="col-md-3">
 
@@ -128,9 +205,15 @@
         </p>
     </div>
     <div class="col-md-9">
-        
-        
-            <div>
+        <div id="userclick" class="col-md-4" style="height:50px;background-color:white;border-top-left-radius:10px 10px;border-top-right-radius:10px 10px;border: 2px solid black;border-bottom:2px solid white;">
+            <h4>User</h4>
+        </div>
+
+        <div id="hotelclick" class="col-md-4" style="height:50px;background-color:lightgray;border-top-left-radius:10px 10px;border-top-right-radius:10px 10px;border: 2px solid black;border-bottom:2px solid white;">
+            <h4>Hotel</h4>
+        </div>
+       
+            <div class="col-md-12" id="hotel" style="display:none;background-color:white;border:2px solid black;">
                
                     @using (Html.BeginForm("signUp", "Login", FormMethod.Post, new { @class = "form-horizontal", role = "form", onsubmit = "return validateForm()" }))
                     {
@@ -139,7 +222,7 @@
                         <div>
                             <div class="col-md-12">
 
-                                <h3 style="margin-left:40%;">SignUp Form</h3>
+                                <h3 style="margin-left:20%;">SignUp Form</h3>
                                 <h4>Please enter the Correct information</h4>
                             </div>
                             <div class="form-group">
@@ -187,7 +270,7 @@
                             </div>
                             <div class="form-group">
                                 <div class="col-md-4">
-                                    @Html.Label("State  ", new { @class = "col-md-6 " })
+                                    @Html.Label("province  ", new { @class = "col-md-6 " })
                                 </div><div class="col-md-5">
                                     @Html.TextBoxFor(m=>m.state, new {@id="state", @class = "form-control" })
                                 </div>
@@ -266,7 +349,7 @@
                             </div>
                             
                             <div class="form-group">
-                                <div class="col-md-5">
+                                <div class="col-md-7">
 
 
                                 </div>
@@ -279,6 +362,100 @@
 
 
 </div>
+        <div id="user"  class="col-md-12" style="border:2px solid black;">
+
+            @using (Html.BeginForm("userSignUp", "Login", FormMethod.Post, new { @class = "form-horizontal", role = "form", onsubmit = "return validateForm1()" }))
+            {
+                @Html.AntiForgeryToken()
+
+                <div>
+                    <div class="col-md-12">
+
+                        <h3 style="margin-left:20%;">User SignUp Form</h3>
+                        <h4>Please enter the Correct information</h4>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-4">
+                            @Html.Label("Hotel Name   ", new { @class = "col-md-6 " })
+                        </div><div class="col-md-5">
+                            @Html.TextBoxFor(m => m.name, new { @id = "name1", @class = "form-control" })
+                        </div>
+                        <div class="col-md-3">
+                            <p id="nameVal1" style="color:red">@Html.ValidationMessageFor(m => m.name, "", new { style = "color:red;", @id = "nameVal1" })</p>
+
+                        </div>
+                    </div>
+                    <div class="form-group">
+
+                        <div class="col-md-4">
+                            @Html.Label("Email", new { @class = "col-md-6" })
+
+                        </div>
+                        <div class="col-md-5">
+                            @Html.TextBoxFor(m => m.email, new { @id = "email1", @class = "form-control" })
+
+                        </div>
+                        <div class="col-md-3">
+                            <p id="emailVal1" style="color:red">@Html.ValidationMessageFor(m => m.email, "", new { style = "color:red;", @id = "emailVal1" })</p>
+
+                        </div>
+                    </div>
+
+
+                   
+                    
+                    <div class="form-group">
+                        <div class="col-md-4">
+                            @Html.Label("Hotel Address   ", new { @class = "col-md-6 " })
+                        </div><div class="col-md-5">
+                            @Html.TextBoxFor(m => m.address, new { @id = "address1", @class = "form-control" })
+                        </div>
+                        <div class="col-md-3">
+                            <p id="addressVal1" style="color:red">@Html.ValidationMessageFor(m => m.address, "", new { style = "color:red;", @id = "addressVal1" })</p>
+
+                        </div>
+                    </div>
+                  
+                   
+                    <div class="form-group">
+                        <div class="col-md-4 ">
+                            @Html.Label("Password   ", new { @class = "col-md-6 " })
+                        </div><div class="col-md-5 ">
+                            @Html.PasswordFor(m => m.password, new { @id = "password1", @class = "form-control" })
+                        </div>
+                        <div class="col-md-3">
+                            <p id="passwordVal1" style="color:red">
+                                @Html.ValidationMessageFor(m => m.password, "", new { style = "color:red;", @id = "passwordVal1" })
+                        </p>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-4">
+                        @Html.Label("Confirm Password   ", new { @class = "col-md-6 " })
+                    </div><div class="col-md-5">
+                        @Html.PasswordFor(m => m.cPassword, new { @id = "cPassword1", @class = "form-control" })
+                    </div>
+                    <div class="col-md-3">
+                        <p id="cPasswordVal1" style="color:red">
+                            @Html.ValidationMessageFor(m => m.cPassword, "", new { style = "color:red;", @id = "cPasswordVal1" })
+                        </p>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-7">
+
+
+                    </div>
+                    <div class="col-md-2">
+                        <input type="submit" value="Submit" class="btn btn-primary" />
+                    </div>
+                </div>
+            </div>
+            }
+
+
+        </div>
         </div>
     
     <div class="col-md-4">
@@ -290,5 +467,34 @@
 </div>
 
 
+<script type="text/javascript">
+
+                $('#hotelclick').click(function () {
+                    var modal = document.getElementById('user');
+                    modal.style.display = "none";
+                    var click = document.getElementById('hotelclick');
+                    click.style.backgroundColor = 'white';
+                    var notclick = document.getElementById('userclick');
+                    notclick.style.backgroundColor = 'lightgray';
+                    var rent = document.getElementById('hotel');
+                    rent.style.display = "block";
+
+                });
+                $('#userclick').click(function () {
+
+
+
+                    var modal = document.getElementById('hotel');
+                    modal.style.display = "none";
+                    var click = document.getElementById('hotelclick');
+                    click.style.backgroundColor = 'lightgray';
+                    var notclick = document.getElementById('userclick');
+                    notclick.style.backgroundColor = 'white';
+                    var rent = document.getElementById('user');
+                    rent.style.display = "block";
+                });
+
+
+</script>
 
 

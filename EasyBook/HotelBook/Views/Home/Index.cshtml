@@ -7,232 +7,150 @@
 }
 <link href="~/Styles/Site.css" rel="stylesheet" />
 <style>
-    #hotel,#rent {
-    background-color: white;
-    border-bottom-left-radius: 10px 10px;
-    border-top-right-radius: 10px 10px;
-    border-bottom-right-radius: 10px 10px;
+    #hotel {
+   border-radius:10px 10px;
+    border:2px solid blue;
+
+   
 }
 </style>
 
 <div class="col-md-12" >
    
-    
+   
+
+
    
    
-    <div class="col-md-12" >
+    <div class="col-md-12" style="position:absolute;">
         <!--
         <img style="width:100%;" src="~/image/67567053-hotel-wallpapers.jpg" />
             -->
-        
+            <div class="col-md-2" style="height:50px;"></div>
 
-        <div class="col-md-12" style="width:100%;height:500px;overflow:hidden;">
-            <img class="mySlides" src="~/image/cultureHotel.jpg" style="width:100%">
-            <img class="mySlides" src="~/image/udekki-hotel-kalpitiya-sri-lanka-conde-nast-traveller-pr.jpg" style="width:100%">
-            <img class="mySlides" src="~/image/ulagalla-room-feature.jpg" style="width:100%">
-            <img class="mySlides" src="~/image/XVMc77370b4-8eb6-11e5-beb5-fe16e93d1db2-805x453.jpg" style="width:100%">
-        </div>
+            <div class="col-md-10" style="height:500px;overflow:hidden;">
+                <img class="mySlides" src="~/image/slide1.jpg" style="width:100%;height:500px">
+                <img class="mySlides" src="~/image/udekki-hotel-kalpitiya-sri-lanka-conde-nast-traveller-pr.jpg" style="width:100%;height:500px">
+                <img class="mySlides" src="~/image/d188349808824cb5776935ec8ed4bc64.jpg" style="width:100%;height:500px">
+                <img class="mySlides" src="~/image/slide 3.jpg" style="width:100%;height:500px">
+            </div>
 
-        <script>
-var myIndex = 0;
-carousel();
+            <script>
+                var myIndex = 0;
+                carousel();
 
-function carousel() {
-    var i;
-    var x = document.getElementsByClassName("mySlides");
-    for (i = 0; i < x.length; i++) {
-       x[i].style.display = "none";
-    }
-    myIndex++;
-    if (myIndex > x.length) {myIndex = 1}
-    x[myIndex-1].style.display = "block";
-    setTimeout(carousel, 5000); // Change image every 2 seconds
-}
-        </script>
-        
-            <div class="col-md-8" style="position:absolute;opacity:0.9;">
-                <div class="col-md-12" style="height:20px;">
-
-                </div>
-                <div class="col-md-4" style="height:50px;">
-
-                </div>
-                <div class="col-md-8" style="height:50px;">
-                    <div id="hotelclick" class="col-md-4" style="height:50px;background-color:white;border-top-left-radius:10px 10px;border-top-right-radius:10px 10px;">
-                        <h4>Hotel</h4>
-                    </div>
-                    <div id="rentclick" class="col-md-4" style="height:50px;background-color:lightgray;border-top-left-radius:10px 10px;border-top-right-radius:10px 10px;">
-                        <h4>Rent</h4>
-                    </div>
-
-                    <div class="col-md-12" id="hotel" style="">
-                        <div class="col-md-12" style="height:70px;">
-                            <div class="form-group">
-                                <h2>Search</h2>
-                            </div>
-                        </div>
-
-                        @using (Html.BeginForm("Search", "Home", FormMethod.Post, new { @class = "form-inline", role = "form", style = "color:black;" }))
-            {
-
-                            <div class="col-md-4" style="height:70px;">
-                                <div class="form-group">
-                                    <p>Name</p>
-                                </div>
-                            </div>
-                            <div class="col-md-8" style="height:70px">
-                                <div class="form-group">
-                                    @Html.TextBox("searchstring", "", new { @class = "form-control" })
-                                </div>
-                            </div>
-                            <div class="col-md-4" style="height:70px;">
-                                <div class="form-group">
-                                    <p>City</p>
-                                </div>
-                            </div>
-                            <div class="col-md-8" style="height:70px">
-                                <div class="form-group">
-
-                                    @Html.TextBox("searchstring1", "", new { @class = "form-control" })
-
-                                </div>
-                            </div>
-                            <div class="col-md-4" style="height:70px;">
-                                <div class="form-group">
-                                    <p>Check In</p>
-                                </div>
-                            </div>
-                            <div class="col-md-8" style="height:70px">
-                                <div class="form-group">
-                                    @Html.TextBox("searchstring2", "", new { type = "Date", @class = "form-control", style = "width:110%;" })
-                                </div>
-                            </div>
-
-                            <div class="col-md-4" style="height:70px;">
-                                <div class="form-group">
-                                    <p>Check Out</p>
-                                </div>
-                            </div>
-                            <div class="col-md-8" style="height:70px">
-                                <div class="form-group">
-                                    @Html.TextBox("searchstring2", "", new { type = "Date", @class = "form-control", style = "width:110%; " })
-                                </div>
-                            </div>
-                            <div class="col-md-8" style="height:70px;">
-
-                            </div>
-                            <div class="col-md-2" style="height:70px">
-
-                                <button type="submit" class="btn btn-default">Search</button>
-                            </div>
-
-                        }
-
-
-                    </div>
-                    </div>
-                <div class="col-md-4" style="height:50px;">
-
-                </div>
-                <div class="col-md-8" style="height:50px;">
-                    
-                    <div class="col-md-12" id="rent" style="display:none">
-                        <div class="col-md-12" style="height:70px;">
-                            <div class="form-group">
-                                <h2>Search2</h2>
-                            </div>
-                        </div>
-
-                        @using (Html.BeginForm("Search", "Home", FormMethod.Post, new { @class = "form-inline", role = "form", style = "color:black;" }))
-            {
-
-                            <div class="col-md-4" style="height:70px;">
-                                <div class="form-group">
-                                    <p>Name</p>
-                                </div>
-                            </div>
-                            <div class="col-md-8" style="height:70px">
-                                <div class="form-group">
-                                    @Html.TextBox("searchstring", "", new { @class = "form-control" })
-                                </div>
-                            </div>
-                            <div class="col-md-4" style="height:70px;">
-                                <div class="form-group">
-                                    <p>City</p>
-                                </div>
-                            </div>
-                            <div class="col-md-8" style="height:70px">
-                                <div class="form-group">
-
-                                    @Html.TextBox("searchstring1", "", new { @class = "form-control" })
-
-                                </div>
-                            </div>
-                            <div class="col-md-4" style="height:70px;">
-                                <div class="form-group">
-                                    <p>Check In</p>
-                                </div>
-                            </div>
-                            <div class="col-md-8" style="height:70px">
-                                <div class="form-group">
-                                    @Html.TextBox("searchstring2", "", new { type = "Date", @class = "form-control", style = "width:110%;" })
-                                </div>
-                            </div>
-
-                            <div class="col-md-4" style="height:70px;">
-                                <div class="form-group">
-                                    <p>Check Out</p>
-                                </div>
-                            </div>
-                            <div class="col-md-8" style="height:70px">
-                                <div class="form-group">
-                                    @Html.TextBox("searchstring2", "", new { type = "Date", @class = "form-control", style = "width:110%; " })
-                                </div>
-                            </div>
-                            <div class="col-md-8" style="height:70px;">
-
-                            </div>
-                            <div class="col-md-2" style="height:70px">
-
-                                <button type="submit" class="btn btn-default">Search</button>
-                            </div>
-
-                        }
-
-
-                    </div>
-                    </div>
-                </div>
-            <script type="text/javascript">
-
-                $('#hotelclick').click(function () {
-                    var modal = document.getElementById('rent');
-                    modal.style.display = "none";
-                    var click = document.getElementById('rentclick');
-                    click.style.backgroundColor = 'lightgray';
-                    var notclick = document.getElementById('hotelclick');
-                    notclick.style.backgroundColor = 'white';
-                    var rent = document.getElementById('hotel');
-                    rent.style.display = "block";
-                    
-                });
-                $('#rentclick').click(function () {
-
-                    
-
-                    var modal = document.getElementById('hotel');
-                    modal.style.display = "none";
-                    var click = document.getElementById('hotelclick');
-                    click.style.backgroundColor = 'lightgray';
-                    var notclick = document.getElementById('rentclick');
-                    notclick.style.backgroundColor = 'white';
-                    var rent = document.getElementById('rent');
-                    rent.style.display = "block";
-                });
-
-
+                function carousel() {
+                    var i;
+                    var x = document.getElementsByClassName("mySlides");
+                    for (i = 0; i < x.length; i++) {
+                        x[i].style.display = "none";
+                    }
+                    myIndex++;
+                    if (myIndex > x.length) { myIndex = 1 }
+                    x[myIndex - 1].style.display = "block";
+                    setTimeout(carousel, 5000); // Change image every 2 seconds
+                }
             </script>
 
+          
         </div>
-   
+    <div class="col-md-12" style="position:absolute">
+        <div class="col-md-2" style="height:50px;"></div>
+
+        <div class="col-md-10" style="height:500px;background: linear-gradient(to right, black, transparent, transparent);">
+
+
+        </div>
+    </div>
+    <div class="col-md-12" style="position:absolute">
+        <div class="col-md-2" style="height:50px;"></div>
+
+        <div class="col-md-10" style="height:500px;background: linear-gradient(to left, black, transparent, transparent);">
+
+
+        </div>
+    </div>
+    <div class="col-md-4" style="opacity:0.9;">
+        <div class="col-md-12" style="height:20px;">
+
+        </div>
+
+        <div class="col-md-12" >
+
+            <div class="col-md-12" id="hotel" style="">
+                <div class="col-md-12" style="height:70px;">
+                    <div class="form-group">
+                        <h2 style="color:gold;">Search</h2>
+                    </div>
+                </div>
+
+                @using (Html.BeginForm("Search", "Home", FormMethod.Post, new { @class = "form-inline", role = "form", style = "color:white;" }))
+            {
+
+                    <div class="col-md-4" style="height:70px;">
+                        <div class="form-group">
+                            <p>Name</p>
+                        </div>
+                    </div>
+                    <div class="col-md-8" style="height:70px">
+                        <div class="form-group">
+                            @Html.TextBox("searchstring", "", new { @class = "form-control" })
+                        </div>
+                    </div>
+                            <div class="col-md-4" style="height:70px;">
+                                <div class="form-group">
+                                    <p>City</p>
+                                </div>
+                            </div>
+                            <div class="col-md-8" style="height:70px">
+                                <div class="form-group">
+
+                                    @Html.TextBox("searchstring1", "", new { @class = "form-control" })
+
+                                </div>
+                            </div>
+                            <div class="col-md-4" style="height:70px;">
+                                <div class="form-group">
+                                    <p>Check In</p>
+                                </div>
+                            </div>
+                            <div class="col-md-8" style="height:70px">
+                                <div class="form-group">
+                                    @Html.TextBox("searchstring2", "", new { type = "Date", @class = "form-control", style = "width:110%;" })
+                                </div>
+                            </div>
+
+                            <div class="col-md-4" style="height:70px;">
+                                <div class="form-group">
+                                    <p>Check Out</p>
+                                </div>
+                            </div>
+                            <div class="col-md-8" style="height:70px">
+                                <div class="form-group">
+                                    @Html.TextBox("searchstring2", "", new { type = "Date", @class = "form-control", style = "width:110%; " })
+                                </div>
+                            </div>
+                            <div class="col-md-8" style="height:70px;">
+
+                            </div>
+                            <div class="col-md-2" style="height:70px">
+
+                                <button type="submit" class="btn btn-primary">Search</button>
+                            </div>
+
+                }
+
+
+            </div>
+        </div>
+        <div class="col-md-12" style="height:50px;">
+
+        </div>
+
+
+
+
+
+    </div>
+
 </div>

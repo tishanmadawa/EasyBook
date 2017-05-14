@@ -27,13 +27,21 @@
                 
             
                 <ul class="nav navbar-nav navbar-right" style="margin-right:10px;" >
-                    @if (@Session["Email"] == null)
+                    @if (@Session["Email"] == null && @Session["user"] == null )
                     {
                     <li>@Html.ActionLink("LogIn", "Index", "Login")</li>
                     <li>@Html.ActionLink("SignUp", "Signup", "Login")</li>
-                    }else{
-
+                    }
+                    else if (@Session["user"] != null)
+                    {
+                        <li><p class="navbar-brand" style="font-size:12px;">Logged In as @Session["user"]</p></li>
+                        <li>@Html.ActionLink("LogOut", "LogOut", "Login")</li>
+                    }
+                    else
+                    {
                     <li><p class = "navbar-brand" style="font-size:12px;">Logged In as @Session["Email"]</p></li>
+                    <li>@Html.ActionLink("Profile", "post", "profile", new { email = @Session["Email"].ToString() }, new { })</li>
+
                     <li>@Html.ActionLink("LogOut", "LogOut", "Login")</li>
                     }
 
@@ -54,7 +62,7 @@
     </div>
     <div class="col-lg-12 " style="padding-left:20px;padding-right:20px;">
       
-    <div class="col-lg-12 body-cont;" style="background-color:white;" >
+    <div class="col-lg-12"  >
         @RenderBody()
     
 </div>

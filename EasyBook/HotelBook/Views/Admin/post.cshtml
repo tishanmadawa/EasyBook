@@ -1,0 +1,323 @@
+﻿
+@{
+    ViewBag.Title = "post";
+    Layout = "~/Views/Shared/_Header2.cshtml";
+}
+@using HotelBook.Models;
+@model MyViewModel
+<style>
+    * {
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        box-sizing: border-box;
+    }
+
+    html, body {
+        background: #2D2D2D;
+    }
+
+    nav {
+        font: 700 16px/60px 'Lato', sans-serif;
+        width: 100%;
+        margin: 0 auto 0 auto;
+        background: #242424;
+        overflow: hidden;
+        -webkit-border-radius: 8px;
+        -moz-border-radius: 8px;
+        border-radius: 8px;
+    }
+
+        nav ul {
+            height: 60px;
+            overflow: hidden;
+        }
+
+            nav ul li {
+                width: 25%;
+                float: left;
+                text-align: center;
+            }
+
+    .item-container {
+        top: 0;
+        position: relative;
+        height: 120px;
+        cursor: pointer;
+        -webkit-transition: all 0.3s ease;
+        -moz-transition: all 0.3s ease;
+        -o-transition: all 0.3s ease;
+        transition: all 0.3s ease;
+    }
+
+        .item-container:hover {
+            top: -60px;
+        }
+
+    .item-top,
+    .item-bottom {
+        height: 60px;
+        position: relative;
+    }
+
+    .item-top {
+        color: #797979;
+    }
+
+    .item-bottom {
+        background: #191919;
+        color: yellow;
+    }
+     table {
+        font-family: arial, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    td, th {
+        border: 1px solid #dddddd;
+        text-align: left;
+        padding: 8px;
+    }
+
+    tr:nth-child(even) {
+        background-color: #dddddd;
+    }
+    .dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 1000px;
+    min-height:300px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    padding: 12px 16px;
+    z-index: 1;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+    </style>
+
+<div class="col-md-12" style="background-color:#242424;">
+    <nav>
+        <ul>
+            <li>
+                <div class="item-container">
+                    <div class="item-top"><span class="glyphicon glyphicon-share"></span>&nbsp;&nbsp;Requests</div>
+                    <div class="item-bottom"><span class="glyphicon glyphicon-share"></span>&nbsp;&nbsp;@Html.ActionLink("Requests", "Request", "Admin", new { Style = "color:yellow" })</div>
+                </div>
+            </li>
+            <li>
+                <div class="item-container">
+                    <div class="item-top"><span class="glyphicon glyphicon-picture"></span>&nbsp;&nbsp;Posts</div>
+                    <div class="item-bottom"><span class="glyphicon glyphicon-picture"></span>&nbsp;&nbsp;@Html.ActionLink("Posts", "Post", "Admin", new { Style = "color:yellow" })</div>
+                </div>
+            </li>
+            <li>
+                <div class="item-container">
+                    <div class="item-top"><span class="glyphicon glyphicon-user"></span> &nbsp;&nbsp;Users</div>
+                    <div class="item-bottom"><span class="glyphicon glyphicon-user"></span>&nbsp;&nbsp; @Html.ActionLink("Users", "User", "Admin", new { Style = "color:yellow" })</div>
+                </div>
+            </li>
+            <li>
+                <div class="item-container">
+                    <div class="item-top"><span class="glyphicon glyphicon-home"></span>&nbsp;&nbsp;Bording</div>
+                    <div class="item-bottom"><span class="glyphicon glyphicon-home"></span>&nbsp;&nbsp;Bording</div>
+                </div>
+            </li>
+        </ul>
+    </nav>
+</div>
+<div class="col-md-12" style="height:30px; background-color: #C8C8C8;"></div>
+    <div class="col-md-12" style="background-color: #C8C8C8; overflow:hidden; ">
+
+@{ 
+    DateTime b= @Model.crntdate;
+}    
+@for (int i = 0; i < 15; i++)
+{
+
+
+    foreach (var item in Model.TheFirstTable)
+
+
+    {
+        if (@item.date == b)
+        {
+            <div class="col-md-12" style="border: 5px solid black;padding: 25px; margin: 25px;  border-radius:12px;  " >
+            <div class="col-md-6" style="height:30px;"><b> @item.title</b></div>
+                <div class="col-md-3" style="height:30px;"></div>
+                <div class="col-md-3" style="height:30px;">@item.date</div>
+                <div class="col-md-12">@item.post</div>
+                <div class="col-md-6"></div>
+                @if (@item.accept == "Accept")
+                {
+                    <div class="col-md-2"></div>
+                        <div class="col-md-2"><button class="btn btn-default">@Html.ActionLink("Reject", "doPostReject", "Admin", new { id = @item.id }, new { Style = "color:black" })</button></div>
+                        <div class="col-md-2"><button class="btn btn-default">@Html.ActionLink("Delete", "doPostDelete", "Admin", new { id = @item.id }, new { Style = "color:black" })</button></div>
+
+                        }
+                        else if (@item.accept == "Waiting")
+                        {
+                        <div class="col-md-2">
+                            <button class="btn btn-default">@Html.ActionLink("Accept", "doPostAccept", "Admin", new { id = @item.id }, new { Style = "color:black" })</button>
+                        </div>
+                        <div class="col-md-2">
+                            <button class="btn btn-default">@Html.ActionLink("Reject", "doPostReject", "Admin", new { id = @item.id }, new { Style = "color:black" })</button>
+                        </div>
+                        <div class="col-md-2">
+                            <button class="btn btn-default">@Html.ActionLink("Delete", "doPostDelete", "Admin", new { id = @item.id }, new { Style = "color:black" })</button>
+                        </div>
+                }
+                else
+                {
+
+                    <div class="col-md-2"></div><div class="col-md-2"></div>
+                    <div class="col-md-2">
+                        <button class="btn btn-default">@Html.ActionLink("Delete", "doPostDelete", "Admin", new { id = @item.id }, new { Style = "color:black" })</button>
+                    </div>
+
+                }
+
+                        <div class="col-md-12" style="height:30px;"></div>
+                    </div>
+
+                }
+    }
+    foreach (var item in Model.TheSecondTable)
+    {
+        if (@item.date == b)
+        {
+            <div class="col-md-12" style="border: 5px solid blue; border-radius:12px;   padding: 25px; margin: 25px;">
+                <div class="col-md-6" style="height:30px;"><b> @item.id</b></div>
+                <div class="col-md-3" style="height:30px;"></div>
+                <div class="col-md-3" style="height:30px;">@item.date</div>
+                <div class="col-md-12">
+                    <table class="table-hover">
+                        <tr>
+                            <th>No of Days</th>
+                            <th>Start Time</th>
+                            <th>End Time</th>
+                            <th>Meant</th>
+                            <th>Accomadation</th>
+                            <th>Location</th>
+                            <th>Description</th>
+
+
+
+                        </tr>
+                        <tr style="width:80%">
+                            <td>@item.noDates</td>
+                            <td>@item.startTime</td>
+                            <td>@item.endTime</td>
+                            <td>@item.meant</td>
+
+                            <td>@item.accomadation</td>
+
+                            <td>@item.location</td>
+                            <td>@item.description</td>
+
+                        </tr>
+
+                    </table>
+                </div>
+                <div class="col-md-12" style="height:30px;"></div>
+                <div class="col-md-6"></div>
+                @if (@item.accept == "Accept")
+                {
+                    <div class="col-md-2"></div>
+                        <div class="col-md-2"><button class="btn btn-primary">@Html.ActionLink("Reject", "doEventRejects", "Admin", new { id = @item.id }, new { Style = "color:black" })</button></div>
+                        <div class="col-md-2"><button class="btn btn-primary">@Html.ActionLink("Delete", "doEventDelete", "Admin", new { id = @item.id }, new { Style = "color:black" })</button></div>
+
+                        }
+                        else if (@item.accept == "Waiting")
+                        {
+                        <div class="col-md-2">
+                            <button class="btn btn-primary">@Html.ActionLink("Accept", "doEventAccept", "Admin", new { id = @item.id }, new { Style = "color:black" })</button>
+                        </div>
+                        <div class="col-md-2">
+                            <button class="btn btn-primary">@Html.ActionLink("Reject", "doEventRejects", "Admin", new { id = @item.id }, new { Style = "color:black" })</button>
+                        </div>
+                        <div class="col-md-2">
+                            <button class="btn btn-primary">@Html.ActionLink("Delete", "doEventDelete", "Admin", new { id = @item.id }, new { Style = "color:black" })</button>
+                        </div>
+                }
+                else
+                {
+                    <div class="col-md-2"></div>   
+                    <div class="col-md-2"></div>
+                    <div class="col-md-2">
+                        <button class="btn btn-primary">@Html.ActionLink("Delete", "doEventDelete", "Admin", new { id = @item.id }, new { Style = "color:black" })</button>
+
+                    </div>
+                }
+
+                        <div class="col-md-12" style="height:30px;"></div>
+
+                    </div>
+
+                }
+    }
+    foreach (var item in Model.TheThirdTable)
+    {
+        if (@item.date == b)
+        {
+            <div class="col-md-12" style="border: 5px solid green;   padding: 25px; margin: 25px;  border-radius:12px;  ">
+                <div class="col-md-6" style="height:30px;"><b> @item.albumName</b></div>
+                <div class="col-md-3" style="height:30px;"></div>
+                <div class="col-md-3" style="height:30px;">@item.date</div>
+                <div class="col-md-12">
+                    @foreach (var item2 in Model.ThefourthTable)
+                    {
+                        if (@item2.albumName == @item.albumName)
+                        {
+                            <img src="~/image/@Html.DisplayFor(modelItem =>item2.imag)" style="width:100px; height:100px" /> 
+                        }
+                    }
+                </div>
+                <div class="col-md-6"></div>
+
+                @if (@item.accept == "Accept")
+                {
+                    <div class="col-md-2"></div>
+
+                        <div class="col-md-2"><button class="btn btn-success">@Html.ActionLink("Reject", "doAlbumRejects", "Admin", new { id = @item.id }, new { Style = "color:black" })</button></div>
+                        <div class="col-md-2"><button class="btn btn-success">@Html.ActionLink("Delete", "doAlbumDelete", "Admin", new { id = @item.id }, new { Style = "color:black" })</button></div>
+
+                }
+                else if (@item.accept == "Waiting")
+                {
+                        <div class="col-md-2">
+                            <button class="btn btn-success">@Html.ActionLink("Accept", "doAlbumAccept", "Admin", new { id = @item.id }, new { Style = "color:black" })</button>
+                        </div>
+                        <div class="col-md-2">
+                            <button class="btn btn-success">@Html.ActionLink("Reject", "doAlbumRejects", "Admin", new { id = @item.id }, new { Style = "color:black" })</button>
+                        </div>
+                        <div class="col-md-2">
+                            <button class="btn btn-success">@Html.ActionLink("Delete", "doAlbumDelete", "Admin", new { id = @item.id }, new { Style = "color:black" })</button>
+                        </div>
+
+                }
+                else
+                {
+                    <div class="col-md-2"></div>
+                    <div class="col-md-2"></div>
+                    <div class="col-md-2">
+                        <button class="btn btn-success">@Html.ActionLink("Delete", "doAlbumDelete", "Admin", new { id = @item.id }, new { Style = "color:black" })</button>
+                    </div>
+                }
+
+                    </div>
+
+                }
+                }
+
+                b = b.AddDays(-1);
+
+                }
+            </div>

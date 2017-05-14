@@ -1,0 +1,326 @@
+﻿@{
+    Layout = "~/Views/Profile/Index.cshtml";
+}
+@using HotelBook.Models;
+@model customerProfile
+
+<script>
+    function validateForm() {
+
+       
+        document.getElementById("dateVal").innerHTML = "";
+      
+        document.getElementById("packageNoVal").innerHTML = "";
+        document.getElementById("dateVal").innerHTML = "";
+        document.getElementById("creditCardVal").innerHTML = "";
+        var letterNumber = /^[ ,0-9a-zA-Z]+$/;
+
+        var value = true;
+
+
+      
+      
+        var packageNo = $('#packageNo').val();
+        var creditCard = $('#creditCard').val();
+        var date = $('#date').val();
+        var date1 = new Date($('#date').val());
+        var now = new Date();
+       
+
+       
+
+        if (packageNo=="" || !date || creditCard =="") {
+          
+           
+            if (packageNo == "") {
+                document.getElementById("packageNoVal").innerHTML = "Enter Package No";
+
+            }
+            if (!date) {
+                document.getElementById("dateVal").innerHTML = "Enter date ";
+
+            }
+            if (creditCard == "") {
+                document.getElementById("creditCardVal").innerHTML = "Enter credit Card No";
+
+            }
+           
+         
+            value = false;
+        } else {
+            
+
+
+            
+            if (packageNo < 0) {
+                document.getElementById("packageNoVal").innerHTML = "Enter valid Package No";
+                value = false;
+            }
+            if(date1<now){
+                document.getElementById("dateVal").innerHTML = "Enter valid date";
+                value = false;
+            }
+            if (creditCard < 0) {
+                document.getElementById("creditCardVal").innerHTML = "Enter valid credit Card No";
+                value = false;
+            }
+
+        }
+        
+
+
+        if (value == true) {
+            var modal = document.getElementById('myModal1');
+            modal.style.display = "block";
+            
+
+            var span = document.getElementsByClassName("close")[0];
+            span.onclick = function () {
+                modal.style.display = "none";
+            }
+
+            // When the user clicks anywhere outside of the modal, close it
+            window.onclick = function (event) {
+                if (event.target == modal) {
+                    modal.style.display = "none";
+                }
+            }
+        }
+
+        return value;
+
+
+    }
+</script>
+
+<style>
+    
+/* The Modal (background) */
+.modal1 {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+    //-webkit-animation-name: fadeIn; /* Fade in the background */
+   // -webkit-animation-duration: 0.4s;
+  //  animation-name: fadeIn;
+   // animation-duration: 0.4s
+}
+
+/* Modal Content */
+.modal1-content {
+    position: fixed;
+    bottom: 40%;
+    background-color: #fefefe;
+    width: 50%;
+    margin-left:10%;
+    margin-top:-100%;
+    //-webkit-animation-name: slideIn;
+   // -webkit-animation-duration: 0.4s;
+  //  animation-name: slideIn;
+   // animation-duration: 0.4s
+}
+
+/* The Close Button */
+.close {
+    color: white;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.modal1-header {
+    padding: 2px 16px;
+    background-color: darkblue;
+    color: white;
+}
+
+.modal1-body {padding: 2px 16px;}
+
+.modal1-footer {
+    padding: 2px 16px;
+    background-color: darkblue;
+    color: white;
+}
+
+
+
+</style>
+<div class="row">
+    <div class="col-md-1">
+
+        <p>
+
+        </p>
+    </div>
+    <div class="col-md-11" style="color:darkgoldenrod">
+
+
+        <div>
+
+            @using (Html.BeginForm("payments", "Profile",new {mail=Model.customer.email }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+            {
+                @Html.AntiForgeryToken()
+
+                <div>
+                    <div class="col-md-12">
+
+                        <h3 style="margin-left:40%;">Booking</h3>
+                        <h4>Please enter the Correct information</h4>
+                    </div>
+                  
+                    <div class="form-group">
+
+                        <div class="col-md-4">
+                            @Html.Label("Date", new { @class = "col-md-12" })
+
+                        </div>
+                        <div class="col-md-5">
+                            @Html.TextBoxFor(m => m.payment.date, new { @id = "date", @class = "form-control" ,type="date"})
+
+                        </div>
+                        <div class="col-md-3">
+                            <p id="dateVal" style="color:red">@Html.ValidationMessageFor(m => m.payment.date, "", new { style = "color:red;", @id = "dateVal" })</p>
+
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-4">
+                            @Html.Label("Packages  ", new { @class = "col-md-12 " })
+                        </div><div class="col-md-5">
+                                  @{
+                                      List<SelectListItem> listItems = new List<SelectListItem>();
+                                      foreach (var item in Model.range)
+                                      {
+                                          listItems.Add(new SelectListItem
+                                          {
+                                              Text = @item.name,
+                                              Value = @item.id.ToString()
+                                              
+
+                                          });
+                                         
+                                      }
+                                      ;
+
+                                      
+                                  }
+                            @Html.DropDownListFor(m => m.payment.package, listItems, new { @class = "form-control" })
+                        </div>
+                        <div class="col-md-3">
+                            <p id="packageVal" style="color:red">@Html.ValidationMessageFor(m => m.payment.packageNo, "", new { style = "color:red;", @id = "packageVal" })</p>
+
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-4">
+                            @Html.Label("Number of Packages  ", new { @class = "col-md-12 " })
+                        </div><div class="col-md-5">
+                            @Html.TextBoxFor(m => m.payment.packageNo, new { @id = "packageNo", @class = "form-control",type="number" })
+                        </div>
+                        <div class="col-md-3">
+                            <p id="packageNoVal" style="color:red">@Html.ValidationMessageFor(m => m.payment.packageNo, "", new { style = "color:red;", @id = "packageNoVal" })</p>
+
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-4">
+                            @Html.Label("Price  ", new { @class = "col-md-12 " })
+                        </div><div class="col-md-5">
+                            @Html.TextBoxFor(m => m.payment.price, new { @id = "price", @class = "form-control", type = "number" })
+                        </div>
+                        <div class="col-md-3">
+                            <p id="priceVal" style="color:red">@Html.ValidationMessageFor(m => m.payment.creditCard, "", new { style = "color:red;", @id = "priceVal" })</p>
+
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-4">
+                            @Html.Label("Credit card No   ", new { @class = "col-md-12 " })
+                        </div><div class="col-md-5">
+                            @Html.TextBoxFor(m => m.payment.creditCard, new { @id = "creditCard", @class = "form-control", type = "number" })
+                        </div>
+                        <div class="col-md-3">
+                            <p id="creditCardVal" style="color:red">@Html.ValidationMessageFor(m => m.payment.creditCard, "", new { style = "color:red;", @id = "creditCardVal" })</p>
+
+                        </div>
+                    </div>
+                   
+                <div class="form-group">
+                    <div class="col-md-7">
+
+
+                    </div>
+                    <div class="col-md-2">
+                        <input type="button" value="Pay" class="btn btn-primary" onclick="return validateForm()" />
+                        <input type="submit" id="submit" value="Pay" class="btn btn-primary" style="display:none" />
+                    </div>
+                </div>
+            </div>
+            }
+
+
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <section id="socialLoginForm"></section>
+    </div>
+
+</div>
+
+<div id="myModal1" class="modal1">
+    <div class="col-md-2"></div>
+    <div class="col-md-12">
+        <div class="modal1-content ">
+            <div class="modal1-content">
+                <div class="modal1-header">
+                    <span class="close" style="color:red">&times;</span>
+                    <h2>Successfull</h2>
+                    <hr />
+                </div>
+                <div class="modal1-body">
+                    <p></p>
+                   <h4>Your payment is successfully done</h4>
+                    <p></p>
+
+                </div>
+                <div class="modal1-footer">
+                    <div  style="margin-left:65%;">
+                        <button class="btn btn-success" onclick="submitbtn() " style="width:100px;">OK</button>
+                        <button class="btn btn-danger"  onclick="cancelbtn()" style="width:100px;" >Cancel</button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<script>
+    function submitbtn() {
+       
+       
+        var button = document.getElementById('submit');
+        button.click();
+    }
+    function cancelbtn() {
+        var modal = document.getElementById('myModal1');
+        modal.style.display = "none";
+
+    }
+</script>
+
+
