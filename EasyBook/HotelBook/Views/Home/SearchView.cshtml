@@ -7,12 +7,13 @@
 @model List<Customer>
 
 <div class="row" style="padding-top:10px;">
+    <div class="col-md-12" style="height:30px"></div>
     <div class="col-md-4" style="border-radius:10px 10px;color:gold;border:2px solid blue">
         <div class="col-md-12" style="height:100px;">
             <div class="form-group">
                 <h2 style="color:gold;">Search</h2>
             </div>
-        </div>
+        </div>  
 
         @using (Html.BeginForm("Search", "Home", FormMethod.Post, new { @class = "form-inline", role = "form"}))
         {
@@ -72,36 +73,38 @@
 
 
     </div>
-    <div class="col-md-1"></div>
-    <div class="col-md-7">
+   
+    <div class="col-md-8">
 
 
 
         @foreach (var item in Model)
         {
             <a href="@Url.Action("post","Profile", new { email = item.email})">
-                <div class="col-md-12" style="padding-bottom:5px;padding-top:5px;border:5px solid black;border-radius:10px 10px;">
-                    <div class="col-md-4" style="padding-bottom:5px;padding-top:5px;">
-                        <img src="~/image/@item.image" alt="" style="width:100%;" />
+                <div class="col-md-12" style="padding-bottom:5px;padding-top:5px;border:2px solid black;border-radius:10px 10px;background-color:lightgray;">
+    <div class="col-md-4" style="padding-bottom:5px;padding-top:5px;">
+        <img src="~/image/@item.image" alt="" style="width:100%;" />
+    </div>
+                    <div class="col-md-8">
+                        <h1>@item.name</h1>
+
+                        <h4>@item.address</h4>
+                        <p>
+                            @for (int i = 0; i < @item.rating; i++)
+                            {
+                                <span class="glyphicon glyphicon-star" style="color:orange;"></span>
+                            }
+                            @for (int i = 0; i < 5 - @item.rating; i++)
+                            {
+                                <span class="glyphicon glyphicon-star"></span>
+                            }
+
+                        </p>
+
                     </div>
-                    <h1>@item.name</h1>
-
-                    <h4>@item.address</h4>
-                    <p>
-                        @for (int i = 0; i < @item.rating; i++)
-                    {
-                        <span class="glyphicon glyphicon-star" style="color:orange;"></span>
-                    }
-                    @for (int i = 0; i < 5 - @item.rating; i++)
-                    {
-                        <span class="glyphicon glyphicon-star"></span>
-                    }
-                </p>
-
-
             </div>
         </a>
-
+        <div class="col-md-12" style="height:20px;"></div>
 
         }
 

@@ -6,6 +6,164 @@
 }
 @using HotelBook.Models
 @model Boarding
+
+<script>
+    function validateForm() {
+
+       
+        document.getElementById("emailVal").innerHTML = "";
+		document.getElementById("nameVal").innerHTML = "";
+		document.getElementById("addressVal").innerHTML = "";
+		document.getElementById("cityVal").innerHTML = "";
+		document.getElementById("descriptionVal").innerHTML = "";
+		document.getElementById("imageVal").innerHTML = "";
+		document.getElementById("passwordVal").innerHTML = "";
+        var letterNumber = /^[ ,0-9a-zA-Z]+$/;
+
+        var value = true;
+
+        
+        var email = $('#email').val();
+        var name = $('#name').val();
+		var address = $('#address').val();
+		var city = $('#city').val();
+		var description = $('#description').val();
+		var image = $('#image').val();
+		var password = $('#password').val();
+
+        if (email=="" || name =="" || city =="" || address =="" || description =="" || image =="" || password =="" ) {
+          
+           
+            if (email == "") {
+                document.getElementById("emailVal").innerHTML = "Enter Email Address";
+
+            }
+            if (name == "") {
+                document.getElementById("nameVal").innerHTML = "Enter Your Name ";
+
+            }
+			if (address == "") {
+                document.getElementById("addressVal").innerHTML = "Enter Address ";
+
+            }
+			if (city == "") {
+                document.getElementById("cityVal").innerHTML = "Enter City ";
+
+            }
+			if (description == "") {
+                document.getElementById("descriptionVal").innerHTML = "Enter Description";
+
+            }
+			if (image == "") {
+                document.getElementById("imageVal").innerHTML = "Enter Image of your Boarding House ";
+
+            }
+			if (password == "") {
+                document.getElementById("passwordVal").innerHTML = "Enter Password ";
+
+            }
+            value = false;
+        } else {
+            
+            if (email < 0) {
+                document.getElementById("emailVal").innerHTML = "Enter valid Email Address";
+                value = false;
+            }
+            
+
+        }
+        
+
+
+        if (value == true) {
+            var modal = document.getElementById('myModal1');
+            modal.style.display = "block";
+            
+
+            var span = document.getElementsByClassName("close")[0];
+            span.onclick = function () {
+                modal.style.display = "none";
+            }
+
+            // When the user clicks anywhere outside of the modal, close it
+            window.onclick = function (event) {
+                if (event.target == modal) {
+                    modal.style.display = "none";
+                }
+            }
+        }
+
+        return value;
+
+
+    }
+</script>
+<style>
+    
+/* The Modal (background) */
+.modal1 {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+    //-webkit-animation-name: fadeIn; /* Fade in the background */
+   // -webkit-animation-duration: 0.4s;
+  //  animation-name: fadeIn;
+   // animation-duration: 0.4s
+}
+
+/* Modal Content */
+.modal1-content {
+    position: fixed;
+    bottom: 40%;
+    background-color: #fefefe;
+    width: 50%;
+    margin-left:10%;
+    margin-top:-100%;
+    //-webkit-animation-name: slideIn;
+   // -webkit-animation-duration: 0.4s;
+  //  animation-name: slideIn;
+   // animation-duration: 0.4s
+}
+
+/* The Close Button */
+.close {
+    color: white;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.modal1-header {
+    padding: 2px 16px;
+    background-color: darkblue;
+    color: white;
+}
+
+.modal1-body {padding: 2px 16px;}
+
+.modal1-footer {
+    padding: 2px 16px;
+    background-color: darkblue;
+    color: white;
+}
+
+
+
+</style>
 <div class="row">
     <div class="col-md-2">
 
@@ -23,11 +181,7 @@
                         @Html.AntiForgeryToken()
 
                         <div>
-                            <div class="col-md-8">
-
-                                <h3 style="margin-left:40%;">Advertisement Form</h3>
-                                <h4>Please enter the Correct information</h4>
-                            </div>
+                            
                             <div class="form-group">
                                
                                 <div class="col-md-5">
@@ -35,9 +189,13 @@
 
                                 </div>
                                 <div class="col-md-6">
-                                    @Html.TextBox("searchstring", "", new { @class = "form-control" })
+                                    @Html.TextBox("searchstring", "", new {@id = "email", @class = "form-control" })
 
                                 </div>
+								<div class="col-md-3">
+									<p id="emailVal" style="color:red">@Html.ValidationMessage("searchstring", "", new { style = "color:red;", @id = "emailVal" })</p>
+
+								</div>
                             </div>
 
 
@@ -45,18 +203,53 @@
                                 <div class="col-md-5">
                                     <label>Owner:</label>
                                 </div><div class="col-md-6">
-                                    @Html.TextBox("searchstring1", "", new { @class = "form-control" })
+                                    @Html.TextBox("searchstring1", "", new {@id = "name", @class = "form-control" })
                                 </div>
+								<div class="col-md-3">
+									<p id="nameVal" style="color:red">@Html.ValidationMessage("searchstring1", "", new { style = "color:red;", @id = "nameVal" })</p>
 
+								</div>
                             </div>
-                           
+                           <div class="form-group">
+                                <div class="col-md-5">
+                                    <label>Address:</label>
+                                </div><div class="col-md-6">
+                                    @Html.TextBox("searchstring2", "", new {@id = "address", @class = "form-control" })
+                                </div>
+								<div class="col-md-3">
+									<p id="addressVal" style="color:red">@Html.ValidationMessage("searchstring2", "", new { style = "color:red;", @id = "addressVal" })</p>
+
+								</div>
+                            </div>
+							<div class="form-group">
+                                <div class="col-md-5">
+                                    <label>City:</label>
+                                </div><div class="col-md-6">
+                                    @Html.TextBox("searchstring3", "", new {@id = "city", @class = "form-control" })
+                                </div>
+								<div class="col-md-3">
+									<p id="cityVal" style="color:red">@Html.ValidationMessage("searchstring3", "", new { style = "color:red;", @id = "cityVal" })</p>
+
+								</div>
+                            </div>
+							<div class="form-group">
+                                <div class="col-md-5">
+                                    <label>Contact Number:</label>
+                                </div><div class="col-md-6">
+                                    @Html.TextBox("searchstring4", "", new {@id = "telephone", @class = "form-control" })
+                                </div>
+								
+                            </div>
                             <div class="form-group">
                                 <div class="col-md-5 ">
                                     <label>Description:</label>
                                 </div><div class="col-md-6 ">
-                                    @Html.TextArea("searchstring2", "", new { @class = "form-control" })
+                                    @Html.TextArea("searchstring5", "", new {@id = "description", @class = "form-control" })
                                 </div>
+								<div class="col-md-3">
+									<p id="descriptionVal" style="color:red">@Html.ValidationMessage("searchstring5", "", new { style = "color:red;", @id = "descriptionVal" })</p>
 
+								</div>
                             </div>
                             <div class="form-group">
                                 <div class="col-md-5 ">
@@ -64,7 +257,23 @@
                                 </div><div class="col-md-6 ">
                                    <input type="file" name="file" value="Browse">
                                 </div>
+								<div class="col-md-3">
+									<p id="imageVal" style="color:red">@Html.ValidationMessage("", "", new { style = "color:red;", @id = "imageVal" })</p>
 
+								</div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-5">
+
+                                    <label>Enter Password for your add:</label>
+                                </div>
+                                <div class="col-md-6">
+                                    @Html.TextBox("searchstring6", "", new { @id = "password", @class = "form-control" })
+                                </div>
+                                <div class="col-md-3">
+                                    <p id="passwordVal" style="color:red">@Html.ValidationMessage("searchstring6", "", new { style = "color:red;", @id = "passwordVal" })</p>
+
+                                </div>
                             </div>
                             <div class="form-group">
                                 <div class="col-md-5">
@@ -72,14 +281,14 @@
 
                                 </div>
                                 <div class="col-md-2">
-                                    <input type="submit" value="Submit" class="btn btn-primary" />
+                                    
+									<input type="button" value="Submit" class="btn btn-primary" onclick="return validateForm()" />
+									<input type="submit" id="submit" value="Pay" class="btn btn-primary" style="display:none" />
                                 </div>
                             </div>
                         </div>
                     }
-					@if(ViewBag.UploadSuccess=="true"){
-					 <span>Successfull</span>
-					}
+					
 </section>
 
 </div>
@@ -92,4 +301,43 @@
     </div>
 
 </div>
+<div id="myModal1" class="modal1">
+    <div class="col-md-2"></div>
+    <div class="col-md-12">
+        <div class="modal1-content ">
+            <div class="modal1-content">
+                <div class="modal1-header">
+                    <span class="close" style="color:red">&times;</span>
+                    <h2>Successfull</h2>
+                    <hr />
+                </div>
+                <div class="modal1-body">
+                    <p></p>
+                   <h4>Your add is successfully posted</h4>
+                    <p></p>
 
+                </div>
+                <div class="modal1-footer">
+                    <div  style="margin-left:65%;">
+                        <button class="btn btn-success" onclick="submitbtn() " style="width:100px;">OK</button>
+                        <button class="btn btn-danger"  onclick="cancelbtn()" style="width:100px;" >Cancel</button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<script>
+    function submitbtn() {
+       
+       
+        var button = document.getElementById('submit');
+        button.click();
+    }
+    function cancelbtn() {
+        var modal = document.getElementById('myModal1');
+        modal.style.display = "none";
+
+    }
+</script>

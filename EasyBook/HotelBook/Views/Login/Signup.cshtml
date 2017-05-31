@@ -317,7 +317,7 @@
                                 <div class="col-md-4">
                                     @Html.Label("Map location link", new { @class = "col-md-6 " })
                                 </div><div class="col-md-5">
-                                    @Html.TextBoxFor(m => m.map, new {  @id = "map", @class = "form-control" })
+                                    @Html.TextBoxFor(m => m.map, new {  @id = "map1", @class = "form-control" })
                                 </div>
                                 <div class="col-md-3">
                                     <p id="mapVal" style="color:red">
@@ -362,7 +362,7 @@
 
 
 </div>
-        <div id="user"  class="col-md-12" style="border:2px solid black;">
+        <div id="user"  class="col-md-12" style="border:2px solid black;background-color:white;">
 
             @using (Html.BeginForm("userSignUp", "Login", FormMethod.Post, new { @class = "form-horizontal", role = "form", onsubmit = "return validateForm1()" }))
             {

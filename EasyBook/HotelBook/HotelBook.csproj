@@ -185,6 +185,7 @@
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\RentController.cs" />
     <Compile Include="Models\Admin.cs" />
+    <Compile Include="Models\Rent.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
@@ -249,16 +250,18 @@
     <Content Include="Views\Shared\_Header2.cshtml" />
     <Content Include="Views\Admin\user.cshtml" />
     <Content Include="Views\Admin\upsetting.cshtml" />
-    <Content Include="Views\Rent\Advertisement.cshtml" />
-    <Content Include="Views\Rent\Boarding.cshtml" />
-    <Content Include="Views\Rent\Index.cshtml" />
-    <Content Include="Views\Rent\Signup.cshtml" />
-    <Content Include="Views\Shared\_Header1.cshtml" />
     <Content Include="Views\Profile\AddPro.cshtml" />
     <Content Include="Views\Login\login.cshtml" />
     <Content Include="Views\Profile\payment.cshtml" />
     <Content Include="Views\Login\BookingLogin.cshtml" />
     <Content Include="Views\Admin\post.cshtml" />
+    <Content Include="Views\Shared\_Header1.cshtml" />
+    <Content Include="Views\Rent\Advertisement.cshtml" />
+    <Content Include="Views\Rent\Boarding.cshtml" />
+    <Content Include="Views\Rent\DeleteView.cshtml" />
+    <Content Include="Views\Rent\Index.cshtml" />
+    <Content Include="Views\Rent\Settings.cshtml" />
+    <Content Include="Views\Rent\Settings1.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

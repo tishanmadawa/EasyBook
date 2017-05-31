@@ -1,0 +1,65 @@
+﻿
+
+@{
+    ViewBag.Title = "Signup";
+    Layout = "~/Views/Shared/_Header1.cshtml";
+}
+@using HotelBook.Models
+@model List<Boarding>
+<style>
+    table {
+        font-family: arial, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    td, th {
+        border: 1px solid #dddddd;
+        text-align: left;
+        padding: 8px;
+    }
+
+    tr:nth-child(even) {
+        background-color: #dddddd;
+    }
+</style>
+<div class="row">
+    <div class="col-md-2">
+
+        <p>
+
+        </p>
+    </div>
+    <div class="col-md-8">
+        <h3>Search Your Add</h3>
+        
+            <div>
+                @using (Html.BeginForm("Settings1", "Rent", FormMethod.Post, new { @class = "form-inline", role = "form", style = "color:white;" }))
+				{
+           
+					<div class="col-md-8">
+						<div class="form-group" style="color:black">
+							<label>Enter your Name:</label>
+							@Html.TextBox("searchstring", "", new { @class = "form-control" })
+						</div>
+					</div>
+					
+					<div class="col-md-2">
+						<button type="submit" class="btn btn-primary">Search</button>
+					</div>
+                     <div class="col-md-2"></div>      
+                 }
+				 <br><br><br> 
+			</div>
+
+			
+   </div>
+    
+    <div class="col-md-4">
+        <section id="socialLoginForm">
+            
+        </section>
+    </div>
+
+</div>
+

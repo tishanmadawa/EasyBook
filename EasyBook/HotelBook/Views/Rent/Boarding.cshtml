@@ -6,13 +6,15 @@
 @using HotelBook.Models
 @model List<Boarding>
 
-</style>
-<br>
-<h2><center>Advertisements</center></h2>
-    <div class="col-md-2">
-		@using (Html.BeginForm("Boarding", "Rent", FormMethod.Post, new { @class = "form-inline", role = "form", style = "color:white;" }))
+<div class="col-md-12">
+    <h2 style="color:darkgray"><center>Advertisements</center></h2>
+    <div class="col-md-4" style="border: 3px solid lightblue;border-radius:10px 10px;">
+        @using (Html.BeginForm("Boarding", "Rent", FormMethod.Post, new { @class = "form-inline", role = "form", style = "color:white;" }))
         {
-           
+            <div class="col-md-12" style="height:30px;">
+
+            </div>
+
             <div class="col-md-12">
                 <div class="form-group" style="color:black">
                     <label>City:</label>
@@ -20,40 +22,73 @@
 
                 </div>
             </div>
-            <div class="col-md-12">
-                <div class="form-group style="color:black">
-                    <label>State:</label>
-                    @Html.TextBox("searchstring1", "", new { @class = "form-control" })
-                </div>
-            </div>
-            <div class="col-md-12">
-			<div class="col-md-8"></div>
-				<div class="col-md-4">
-					<button type="submit" class="btn btn-default">Search</button>
-				</div>
-                
-            </div>
-                            
-                                }
-	</div> 
-	  <div class="col-md-8" > 
-            @foreach (var boarding in Model)
-            {
-			<div style="background-color:#D2B48C;padding-bottom:5px;padding-left:10px;padding-top:5px;border-radius:10px 10px;">
-				<img src="~/image/upload/@boarding.image" alt="" style="width:100px;height:100px" />
-				<p>
-				<h4>@boarding.name</h4>
-				Boarding Facilities are available in @boarding.address<br> 
-				@boarding.description<br>
-				@boarding.email
-				</p>
-				
-			</div>
-			<br>	
-            }<div></div>
-		</div>	
-		<div class="col-md-2"></div> 
-		<br><br>
-<div class="col-md-2">
+            <div class="col-md-12" style="height:10px;">
 
+            </div>
+            <div class="col-md-12">
+                <div class="col-md-7"></div>
+                <div class="col-md-4">
+                    <button type="submit" class="btn btn-primary">Search</button>
+                </div>
+
+            </div>
+            <div class="col-md-12" style="height:30px;">
+
+            </div>
+        }
+    </div>
+    <div class="col-md-8">
+        @foreach (var boarding in Model)
+            {
+            <div class="col-md-12" style="background-color:lightgray;;padding-bottom:5px;padding-left:10px;padding-top:5px;border-radius:10px 10px;border:3px solid gray;">
+
+                <div class="col-md-5">
+                    <img src="~/image/upload/@boarding.image" alt="" style="width:100px;height:100px" />
+                </div>
+                <div class="col-md-5" style="height:30px">
+                </div>
+
+                <div class="col-md-7">
+                    <h4>@boarding.name</h4>
+                </div>
+                <div class="col-md-12" style="height:10px">
+                </div>
+                <div class="col-md-5">
+                    <p>Boarding Facilities are available in :</p>
+                </div>
+                <div class="col-md-7">
+                    <p>@boarding.address</p>
+                </div>
+                <div class="col-md-12" style="height:10px"></div>
+                <div class="col-md-5">
+                    <p>Description :</p>
+                </div>
+                <div class="col-md-7">
+                    <p>@boarding.description</p>
+                </div>
+                <div class="col-md-5">
+                    <p>Email :</p>
+                </div>
+                <div class="col-md-7">
+                    <p>@boarding.email</p>
+                </div>
+                <div class="col-md-5">
+                    <p>Telephone :</p>
+                </div>
+                <div class="col-md-7">
+                    <p>@boarding.telephone</p>
+                </div>
+
+
+            </div>
+            <div class="col-md-12" style="height:30px;">
+            </div>
+            <br>
+            }<div></div>
+    </div>
+    <div class="col-md-2"></div>
+    <br><br>
+    <div class="col-md-2">
+
+    </div>
 </div>

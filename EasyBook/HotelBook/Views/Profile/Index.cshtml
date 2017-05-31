@@ -48,7 +48,7 @@ var map;
 </script>
 
 
-<div class="body-cont">
+<div style="background-color:white;">
     
         <div class="col-md-8 " id="d1" style="height:350px;">
           
@@ -81,13 +81,13 @@ var map;
     </div>
 
 
-    <div class="col-md-3" style="background-color:black;">
+    <div class="col-md-3" style="background-color:white;;border-radius: 10px 10px;">
      
             
             <div class="col-md-12" id="map" style="">
             </div>
 
-            <div class="col-md-12" style="overflow:hidden;border:2px solid gold;color:white;margin-top:10px;border-radius:5px;">
+            <div class="col-md-12" style="overflow:hidden;border:2px solid gold;margin-top:10px;border-radius:5px;">
                 <h3 style="color:goldenrod">Search Panel</h3>
                 <p>Enter Date for search available number of packages</p>
                 @using (Html.BeginForm("getPack", "Profile", new { email = Model.customer.email }, FormMethod.Post, new { name = "eventForm", @class = "form-horizontal", role = "form", onsubmit = "return getTable()" }))
@@ -212,7 +212,7 @@ var map;
             }
         </div>
         <div class="col-md-12" style="background-color:#0084F9;height:5px;padding-bottom:5px;margin-top:5px;margin-bottom:10px;"></div>
-        <div class="col-md-12" >
+        <div class="col-md-12" style="background-color:white;padding: 0px 0px 0px 0px;border-radius: 10px 10px;">
             @RenderBody()
             @RenderSection("scripts", required: false)
         </div>
